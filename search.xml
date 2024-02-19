@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/02/18/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Linux如何确定文件类型以及文件拓展名</title>
+    <url>/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/</url>
+    <content><![CDATA[<p>前几天在做蒋炎岩老师的PA有一个小<a href="https://www.cprogramming.com/gdb.html">实验</a>在实验中使用<code>g++ main.cpp -o main</code>来编译cpp文件, 但是上面的-o其实是g++的一个选项, 作用是自定义生成文件的名称, 上面的指令就是编译<code>main.cpp</code>文件, 并将编译后的可执行文件命名为main.</p>
+<p>所以编译c文件其实只需要<code>gcc main.c</code>指令, 这条指令会默认生成a.out可执行文件</p>
+<p>我突然想到一个问题, 是不是上面的main也是.out文件, 但是在我查阅资料并询问gpt后发现并不是这样:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">g++ <span class="selector-tag">main</span><span class="selector-class">.cpp</span> -o hello</span><br></pre></td></tr></table></figure>
+
+<p>使用-o选项是可以自定义可执行文件的名称,这里生成的是hello,注意文件的拓展名并不是.out</p>
+<p>文件的拓展名对linux来说并不重要, 可执行文件的性质由其权限和格式决定.</p>
+<blockquote>
+<h4 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h4><p>在Linux和其他类Unix系统中，文件权限控制着文件的可访问性。这些权限指定了哪些用户可以读取、写入或执行某个文件。如果一个文件被标记为可执行（通常通过设置执行权限位，例如使用chmod +x filename命令），那么系统的用户（根据文件的权限设置）就可以尝试执行这个文件。</p>
+</blockquote>
+<blockquote>
+<h4 id="文件格式"><a href="#文件格式" class="headerlink" title="文件格式"></a>文件格式</h4><p>可执行文件需要有特定的格式，最常见的是ELF（Executable and Linkable Format）格式。这个格式告诉操作系统如何加载程序到内存中并执行它。只有符合系统预期的可执行格式的文件才能被作为程序运行。即使一个文件具有执行权限，如果它不是有效的可执行格式，操作系统也无法执行它。</p>
+</blockquote>
+<blockquote>
+<h4 id="文件名"><a href="#文件名" class="headerlink" title="文件名"></a>文件名</h4><p>文件是否可以执行与其名字无关。你可以把一个可执行文件重命名为任何名字，只要它保持了执行权限和有效的可执行格式，它就仍然是可执行的。例如，你可以将一个编译好的程序从program重命名为program.out或任何其他名字，这不会影响其作为可执行文件的能力.</p>
+</blockquote>
+<h4 id="文件扩展名的作用"><a href="#文件扩展名的作用" class="headerlink" title="文件扩展名的作用"></a>文件扩展名的作用</h4><p>用户提示：文件扩展名帮助用户和应用程序理解文件的预期用途和内容类型。例如，.txt通常表示纯文本文件，.png表示PNG图像文件。<br>应用程序关联：许多图形用户界面（GUI）环境和应用程序使用文件扩展名来判断如何打开特定的文件。例如，双击一个.pdf文件通常会打开一个PDF阅读器应用程序。<br>命令行工具：一些命令行工具可能也会根据文件扩展名来处理文件，尽管这不是强制的。例如，编译器如gcc不会根据源代码文件的扩展名来改变其行为，但它默认接受.c作为C语言源代码文件的扩展名。</p>
+<h4 id="Linux如何确定文件类型"><a href="#Linux如何确定文件类型" class="headerlink" title="Linux如何确定文件类型"></a>Linux如何确定文件类型</h4><p>Linux使用几种方法来确定如何处理文件，不仅仅依靠文件扩展名：<br>文件权限：如之前讨论的，文件的权限（特别是执行权限）决定了用户是否可以执行该文件。<br>文件内容：<strong>Linux可以通过文件的前几个字节（称为“魔数(magic number)”）来识别文件的类型</strong>。例如，可执行文件、图像文件等都有特定的开头字节序列。<br>解释器指令行：对于脚本文件（如.sh、.py等），第一行通常包含一个称为shebang（#!）的指令，指明了执行该脚本时应使用的解释器路径。这允许直接执行脚本文件，而不依赖于文件的扩展名。</p>
+]]></content>
+      <tags>
+        <tag>Linux, Cpp/C</tag>
+      </tags>
+  </entry>
+</search>

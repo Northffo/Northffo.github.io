@@ -177,15 +177,15 @@
       </tags>
   </entry>
   <entry>
-    <title>解析C语言中的main()函数</title>
-    <url>/2024/02/26/%E8%A7%A3%E6%9E%90C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84main-%E5%87%BD%E6%95%B0/</url>
+    <title>浅析C语言中的main函数</title>
+    <url>/2024/02/27/%E6%B5%85%E6%9E%90C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<blockquote>
 <h3 id="原文"><a href="#原文" class="headerlink" title="原文"></a><a href="https://cloud.tencent.com/developer/article/1758808">原文</a></h3></blockquote>
 <blockquote>
 <p>some notes:</p>
 </blockquote>
 <p>返回值: main()的返回值应该是int, 而不是void. 虽然在一些编译器中，void main()可以通过编译，但并非所有编译器都支持 void main()，因为标准中从来没有定义过 void main 。</p>
-<p>main返回值类型：<br><img src="/image.png" alt="main返回值类型"></p>
+<p>main返回值类型：<br><img src="/2024/02/27/%E6%B5%85%E6%9E%90C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0/image.png" alt="main返回值类型"></p>
 <blockquote>
 <p>main()函数传参</p>
 </blockquote>
@@ -223,8 +223,5 @@
 <p>原文：<a href="https://blog.csdn.net/z_ryan/category_7316855.html">https://blog.csdn.net/z_ryan/category_7316855.html</a></p>
 <p>免责声明：本文来源网络，免费传达知识，版权归原作者所有。如涉及作品版权问题，请联系我进行删除。</p>
 ]]></content>
-      <tags>
-        <tag>C语言</tag>
-      </tags>
   </entry>
 </search>

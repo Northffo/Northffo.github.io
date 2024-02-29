@@ -112,11 +112,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JYY&#39;s LAB pa1</title>
-    <url>/2024/02/22/JYY-s-LAB-pa1/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>getopt()函数</title>
     <url>/2024/02/26/getopt-%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>在读nemu&#x2F;src&#x2F;monitor&#x2F;monitor.c中遇到了这个函数,原文如下:</p>
@@ -222,6 +217,50 @@
 <p>作者：z_ryan</p>
 <p>原文：<a href="https://blog.csdn.net/z_ryan/category_7316855.html">https://blog.csdn.net/z_ryan/category_7316855.html</a></p>
 <p>免责声明：本文来源网络，免费传达知识，版权归原作者所有。如涉及作品版权问题，请联系我进行删除。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>JYY&#39;s ICS2020 PA1</title>
+    <url>/2024/02/22/JYY-s-ICS2020-PA1/</url>
+    <content><![CDATA[<h2 id="开天辟地的篇章"><a href="#开天辟地的篇章" class="headerlink" title="开天辟地的篇章"></a>开天辟地的篇章</h2><blockquote>
+<p>从状态机视角理解程序运行</p>
+</blockquote>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line">// PC: instruction    | // label: statement</span><br><span class="line"><span class="number">0</span>: <span class="keyword">mov</span>  <span class="built_in">r1</span>, <span class="number">0</span>         |  pc0: <span class="built_in">r1</span> = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"><span class="number">1</span>: <span class="keyword">mov</span>  <span class="built_in">r2</span>, <span class="number">0</span>         |  pc1: <span class="built_in">r2</span> = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"><span class="number">2</span>: addi <span class="built_in">r2</span>, <span class="built_in">r2</span>, <span class="number">1</span>     |  pc2: <span class="built_in">r2</span> = <span class="built_in">r2</span> + <span class="number">1</span><span class="comment">;</span></span><br><span class="line"><span class="number">3</span>: <span class="keyword">add</span>  <span class="built_in">r1</span>, <span class="built_in">r1</span>, <span class="built_in">r2</span>    |  pc3: <span class="built_in">r1</span> = <span class="built_in">r1</span> + <span class="built_in">r2</span><span class="comment">;</span></span><br><span class="line"><span class="number">4</span>: blt  <span class="built_in">r2</span>, <span class="number">100</span>, <span class="number">2</span>    |  pc4: if (<span class="built_in">r2</span> &lt; <span class="number">100</span>) goto pc2<span class="comment">;   // branch if less than</span></span><br><span class="line"><span class="number">5</span>: <span class="keyword">jmp</span> <span class="number">5</span>              |  pc5: goto pc5<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>Q：画出这个程序的状态机</p>
+<p>需要更新的状态只包括PC，r1和r0，所以用三元组表示程序的所有状态:</p>
+<p>(0, x, x) -&gt; (1, 0, x) -&gt; (2, 0, 0) -&gt; (3, 0, 1) -&gt; (4, 1, 1) -&gt; (2, 1, 1) -&gt; (3, 1, 2) -&gt; (4, 3, 2) -&gt; … -&gt; (2, 4851, 98) -&gt; (3, 4851, 99) -&gt; (4, 4950, 99) -&gt; (2, 4950, 99) -&gt; (3, 4950, 100) -&gt; (4, 5050, 100) -&gt; (5, 5050, 100)</p>
+<ul>
+<li><strong>Thoughts</strong> : 如果不是实验中给出了初始的<code>(0, x, x) -&gt; (1, 0, x) -&gt; (2, 0, 0) -&gt; .. </code>, 以我的感觉我极有可能会写(0, 1, x) -&gt; (1, 0, 0) -&gt; .. 我的逻辑是在<code>pc0</code>的时候，<code>r1</code>赋值为0了， 但是在状态机中表示的是一个瞬间的状态所以在<code>pc0</code>的时候, <code>r1</code>还没有被赋值，所以上面的(0, x, x)是对的</li>
+</ul>
+<blockquote>
+<p>RTFSC</p>
+</blockquote>
+<p><strong>函数</strong>: <a href="./getopt-%E5%87%BD%E6%95%B0.md">getopt()</a></p>
+<p><strong>变量</strong>: <code>_IMAGE_START_</code>: 客户程序的固定内存位置</p>
+<p><strong>x86寄存器结构实现</strong>: </p>
+<p>原题： </p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="comment">* <span class="doctag">TODO:</span> Re-organize the `CPU_state&#x27; structure to match the register                                 │</span></span><br><span class="line"><span class="comment">* encoding scheme in i386 instruction format. For example, if we                                    │</span></span><br><span class="line"><span class="comment">* access cpu.gpr[3]._16, we will get the `bx&#x27; register; if we access                                │</span></span><br><span class="line"><span class="comment">* cpu.gpr[1]._8[1], we will get the &#x27;ch&#x27; register. Hint: Use `union&#x27;.                               │</span></span><br><span class="line"><span class="comment">* For more details about the register encoding scheme, see i386 manual.                             │</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+<p>题目很明显需要我们将RTL寄存器与通用寄存器(GPRs)联系起来(很尴尬的是刚开始我并没有看到这段话T_T)， 并提示我们使用union来实现。</p>
+<p>源代码：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="type">uint32_t</span> _32;</span><br><span class="line">    <span class="type">uint16_t</span> _16;</span><br><span class="line">    <span class="type">uint8_t</span> _8[<span class="number">2</span>];</span><br><span class="line">  &#125; gpr[<span class="number">8</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Do NOT change the order of the GPRs&#x27; definitions. */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* In NEMU, rtlreg_t is exactly uint32_t. This makes RTL instructions</span></span><br><span class="line"><span class="comment">    in PA2 able to directly access these registers.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="type">rtlreg_t</span> eax, ecx, edx, ebx, esp, ebp, esi, edi;</span><br><span class="line"></span><br><span class="line">  <span class="type">vaddr_t</span> pc;</span><br><span class="line">&#125; x86_CPU_state;</span><br></pre></td></tr></table></figure>
+
+<p>那么有了提示思路就很明确， 我们只需要把gpr[]数组跟各个rtlreg共享内存位置即可。</p>
+<p>于是我首先是这样构造：</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line">union &#123;</span><br><span class="line">    struct &#123;</span><br><span class="line">        uint32_t _32<span class="comment">;</span></span><br><span class="line">        uint16_t _16<span class="comment">;</span></span><br><span class="line">        uint8_t _8[<span class="number">2</span>]<span class="comment">;</span></span><br><span class="line">    &#125; gpr[<span class="number">8</span>]<span class="comment">;</span></span><br><span class="line">    </span><br><span class="line">    struct &#123;</span><br><span class="line">        rtlreg_t eax<span class="comment">;</span></span><br><span class="line">        rtlreg_t edx<span class="comment">;</span></span><br><span class="line">        rtlreg_t ecx<span class="comment">;</span></span><br><span class="line">        rtlreg_t ebx<span class="comment">;</span></span><br><span class="line">        rtlreg_t ebp<span class="comment">;</span></span><br><span class="line">        rtlreg_t esi<span class="comment">;</span></span><br><span class="line">        rtlreg_t edi<span class="comment">;</span></span><br><span class="line">        rtlreg_t esp<span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;    </span></span><br><span class="line">&#125;<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<p>很明显的，gpr[]数组的跟RTLREG结构体共享同一段地址，我们对gpr[]每个元素的修改也会直接影响到RTLREG的值。</p>
+<p>但是，<font color='red'>测试不通过</font></p>
+<p>我很奇怪，但是找不到任何问题，在我不知道怎么修改的乱修改之后发现只要把gpr[]数组也改成union联合体就可以：</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line">union &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        uint32_t _32<span class="comment">;</span></span><br><span class="line">        uint16_t _16<span class="comment">;</span></span><br><span class="line">        uint8_t _8[<span class="number">2</span>]<span class="comment">;</span></span><br><span class="line">    &#125; gpr[<span class="number">8</span>]<span class="comment">;</span></span><br><span class="line">    </span><br><span class="line">    struct &#123;</span><br><span class="line">        rtlreg_t eax<span class="comment">;</span></span><br><span class="line">        rtlreg_t edx<span class="comment">;</span></span><br><span class="line">        rtlreg_t ecx<span class="comment">;</span></span><br><span class="line">        rtlreg_t ebx<span class="comment">;</span></span><br><span class="line">        rtlreg_t ebp<span class="comment">;</span></span><br><span class="line">        rtlreg_t esi<span class="comment">;</span></span><br><span class="line">        rtlreg_t edi<span class="comment">;</span></span><br><span class="line">        rtlreg_t esp<span class="comment">;</span></span><br><span class="line">    &#125;<span class="comment">;    </span></span><br><span class="line">&#125;<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<p>从整体看，我并没有找到问题， 两段代码都是对rtlreg和gpr[]数组的内存地址统一，从功能上来看都是相同的。</p>
+<p>答案就是, 在第一段代码中gpr[]是一个<strong>结构体</strong>代码，那么就意味着在结构体中的变量是一段连续内存地址中相互独立的：<strong>每个成员占有独立的内存空间</strong>, _32, _16, _8[2]都是独立的内存地址， 而这显然不符合寄存器的结构， 在<a href="https://css.csail.mit.edu/6.858/2013/readings/i386.pdf">i386手册</a>中，通用寄存器是这么定义的:</p>
+<p><img src="/2024/02/22/JYY-s-ICS2020-PA1/PA1-i386%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80.png" alt="PA1-i386通用寄存器内存地址"></p>
+<p>那么在第二段代码中_32, _16, _8[2]本质是共享了同一段内存地址，这意味着对其中任一成员的修改都会影响到同一内存位置的其他成员。</p>
+<p><strong>一些奇怪的问题</strong>：</p>
+<p>在上面图片中可以看到，RTLREG的顺序跟我的结构体中的顺序并不相同，但是却可以<font color=green>正常运行</font>, 但是当我按照图片上的顺序修改之后却<font color=red>无法运行</font>。</p>
 ]]></content>
   </entry>
 </search>

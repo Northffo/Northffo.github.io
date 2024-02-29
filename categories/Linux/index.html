@@ -19,28 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前几天在做蒋炎岩老师的PA有一个小实验在实验中使用g++ main.cpp -o main来编译cpp文件, 但是上面的-o其实是g++的一个选项, 作用是自定义生成文件的名称, 上面的指令就是编译main.cpp文件, 并将编译后的可执行文件命名为main. 所以编译c文件其实只需要gcc main.c指令, 这条指令会默认生成a.out可执行文件 我突然想到一个问题, 是不是上面的main也是">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Linux如何确定文件类型以及文件拓展名">
-<meta property="og:url" content="https://northffo.github.io/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/index.html">
+    <meta name="description" content="时间的线性是温柔的骗局">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ffo&#39;s Blog">
+<meta property="og:url" content="https://northffo.github.io/categories/Linux/index.html">
 <meta property="og:site_name" content="ffo&#39;s Blog">
-<meta property="og:description" content="前几天在做蒋炎岩老师的PA有一个小实验在实验中使用g++ main.cpp -o main来编译cpp文件, 但是上面的-o其实是g++的一个选项, 作用是自定义生成文件的名称, 上面的指令就是编译main.cpp文件, 并将编译后的可执行文件命名为main. 所以编译c文件其实只需要gcc main.c指令, 这条指令会默认生成a.out可执行文件 我突然想到一个问题, 是不是上面的main也是">
+<meta property="og:description" content="时间的线性是温柔的骗局">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-02-19T05:38:12.000Z">
-<meta property="article:modified_time" content="2024-02-29T03:41:23.420Z">
 <meta property="article:author" content="ffo">
-<meta property="article:tag" content="-Linux -Cpp&#x2F;C">
+<meta property="article:tag" content="linux, Debian, C++&#x2F;C">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://northffo.github.io/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/">
+<link rel="canonical" href="https://northffo.github.io/categories/Linux/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://northffo.github.io/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/","path":"2024/02/19/Linux如何确定文件类型以及文件拓展名/","title":"Linux如何确定文件类型以及文件拓展名"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/Linux/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Linux如何确定文件类型以及文件拓展名 | ffo's Blog</title>
+<title>分类: -Linux | ffo's Blog</title>
   
 
 
@@ -126,7 +124,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -139,7 +137,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-number">1.</span> <span class="nav-text">文件权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">文件格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D"><span class="nav-number">3.</span> <span class="nav-text">文件名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">文件扩展名的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">Linux如何确定文件类型</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -181,137 +178,71 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner category posts-collapse">
 
 
   
-
-
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Linux如何确定文件类型以及文件拓展名 | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Linux如何确定文件类型以及文件拓展名
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h1 class="collection-header">-Linux
+          <small>分类</small>
         </h1>
+      </div>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-19 13:38:12" itemprop="dateCreated datePublished" datetime="2024-02-19T13:38:12+08:00">2024-02-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-02-29 11:41:23" itemprop="dateModified" datetime="2024-02-29T11:41:23+08:00">2024-02-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">-Linux</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody"><p>前几天在做蒋炎岩老师的PA有一个小<a target="_blank" rel="noopener" href="https://www.cprogramming.com/gdb.html">实验</a>在实验中使用<code>g++ main.cpp -o main</code>来编译cpp文件, 但是上面的-o其实是g++的一个选项, 作用是自定义生成文件的名称, 上面的指令就是编译<code>main.cpp</code>文件, 并将编译后的可执行文件命名为main.</p>
-<p>所以编译c文件其实只需要<code>gcc main.c</code>指令, 这条指令会默认生成a.out可执行文件</p>
-<p>我突然想到一个问题, 是不是上面的main也是.out文件, 但是在我查阅资料并询问gpt后发现并不是这样:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ <span class="selector-tag">main</span><span class="selector-class">.cpp</span> -o hello</span><br></pre></td></tr></table></figure>
-
-<p>使用-o选项是可以自定义可执行文件的名称,这里生成的是hello,注意文件的拓展名并不是.out</p>
-<p>文件的拓展名对linux来说并不重要, 可执行文件的性质由其权限和格式决定.</p>
-<blockquote>
-<h4 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h4><p>在Linux和其他类Unix系统中，文件权限控制着文件的可访问性。这些权限指定了哪些用户可以读取、写入或执行某个文件。如果一个文件被标记为可执行（通常通过设置执行权限位，例如使用chmod +x filename命令），那么系统的用户（根据文件的权限设置）就可以尝试执行这个文件。</p>
-</blockquote>
-<blockquote>
-<h4 id="文件格式"><a href="#文件格式" class="headerlink" title="文件格式"></a>文件格式</h4><p>可执行文件需要有特定的格式，最常见的是ELF（Executable and Linkable Format）格式。这个格式告诉操作系统如何加载程序到内存中并执行它。只有符合系统预期的可执行格式的文件才能被作为程序运行。即使一个文件具有执行权限，如果它不是有效的可执行格式，操作系统也无法执行它。</p>
-</blockquote>
-<blockquote>
-<h4 id="文件名"><a href="#文件名" class="headerlink" title="文件名"></a>文件名</h4><p>文件是否可以执行与其名字无关。你可以把一个可执行文件重命名为任何名字，只要它保持了执行权限和有效的可执行格式，它就仍然是可执行的。例如，你可以将一个编译好的程序从program重命名为program.out或任何其他名字，这不会影响其作为可执行文件的能力.</p>
-</blockquote>
-<h4 id="文件扩展名的作用"><a href="#文件扩展名的作用" class="headerlink" title="文件扩展名的作用"></a>文件扩展名的作用</h4><p>用户提示：文件扩展名帮助用户和应用程序理解文件的预期用途和内容类型。例如，.txt通常表示纯文本文件，.png表示PNG图像文件。<br>应用程序关联：许多图形用户界面（GUI）环境和应用程序使用文件扩展名来判断如何打开特定的文件。例如，双击一个.pdf文件通常会打开一个PDF阅读器应用程序。<br>命令行工具：一些命令行工具可能也会根据文件扩展名来处理文件，尽管这不是强制的。例如，编译器如gcc不会根据源代码文件的扩展名来改变其行为，但它默认接受.c作为C语言源代码文件的扩展名。</p>
-<h4 id="Linux如何确定文件类型"><a href="#Linux如何确定文件类型" class="headerlink" title="Linux如何确定文件类型"></a>Linux如何确定文件类型</h4><p>Linux使用几种方法来确定如何处理文件，不仅仅依靠文件扩展名：<br>文件权限：如之前讨论的，文件的权限（特别是执行权限）决定了用户是否可以执行该文件。<br>文件内容：<strong>Linux可以通过文件的前几个字节（称为“魔数(magic number)”）来识别文件的类型</strong>。例如，可执行文件、图像文件等都有特定的开头字节序列。<br>解释器指令行：对于脚本文件（如.sh、.py等），第一行通常包含一个称为shebang（#!）的指令，指明了执行该脚本时应使用的解释器路径。这允许直接执行脚本文件，而不依赖于文件的扩展名。</p>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2024</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2024-02-21T15:08:00+08:00"
+              content="2024-02-21">
+          02-21
+        </time>
+      </div>
 
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Linux-Cpp-C/" rel="tag"># -Linux -Cpp/C</a>
-          </div>
+      <div class="post-title">
+        <a class="post-title-link" href="/2024/02/21/Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" itemprop="url">
+          <span itemprop="name">Linux基础命令</span>
+        </a>
+      </div>
 
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-            </div>
-            <div class="post-nav-item">
-                <a href="/2024/02/21/Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" rel="next" title="Linux基础命令">
-                  Linux基础命令 <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
-</div>
 
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2024-02-19T13:38:12+08:00"
+              content="2024-02-19">
+          02-19
+        </time>
+      </div>
 
+      <div class="post-title">
+        <a class="post-title-link" href="/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/" itemprop="url">
+          <span itemprop="name">Linux如何确定文件类型以及文件拓展名</span>
+        </a>
+      </div>
 
+      
+    </header>
+  </article>
 
-
-
-    
-  
-  <div class="comments giscus-container">
+    </div>
   </div>
   
   
+  
+
 </div>
   </main>
 

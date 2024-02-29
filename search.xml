@@ -22,8 +22,11 @@
 <h4 id="文件扩展名的作用"><a href="#文件扩展名的作用" class="headerlink" title="文件扩展名的作用"></a>文件扩展名的作用</h4><p>用户提示：文件扩展名帮助用户和应用程序理解文件的预期用途和内容类型。例如，.txt通常表示纯文本文件，.png表示PNG图像文件。<br>应用程序关联：许多图形用户界面（GUI）环境和应用程序使用文件扩展名来判断如何打开特定的文件。例如，双击一个.pdf文件通常会打开一个PDF阅读器应用程序。<br>命令行工具：一些命令行工具可能也会根据文件扩展名来处理文件，尽管这不是强制的。例如，编译器如gcc不会根据源代码文件的扩展名来改变其行为，但它默认接受.c作为C语言源代码文件的扩展名。</p>
 <h4 id="Linux如何确定文件类型"><a href="#Linux如何确定文件类型" class="headerlink" title="Linux如何确定文件类型"></a>Linux如何确定文件类型</h4><p>Linux使用几种方法来确定如何处理文件，不仅仅依靠文件扩展名：<br>文件权限：如之前讨论的，文件的权限（特别是执行权限）决定了用户是否可以执行该文件。<br>文件内容：<strong>Linux可以通过文件的前几个字节（称为“魔数(magic number)”）来识别文件的类型</strong>。例如，可执行文件、图像文件等都有特定的开头字节序列。<br>解释器指令行：对于脚本文件（如.sh、.py等），第一行通常包含一个称为shebang（#!）的指令，指明了执行该脚本时应使用的解释器路径。这允许直接执行脚本文件，而不依赖于文件的扩展名。</p>
 ]]></content>
+      <categories>
+        <category>-Linux</category>
+      </categories>
       <tags>
-        <tag>Linux, Cpp/C</tag>
+        <tag>-Linux -Cpp/C</tag>
       </tags>
   </entry>
   <entry>
@@ -107,8 +110,11 @@
 <li><code>lsof [options]</code>: 列出被进程打开的文件。</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>-Linux</category>
+      </categories>
       <tags>
-        <tag>Linux命令</tag>
+        <tag>-Linux命令</tag>
       </tags>
   </entry>
   <entry>
@@ -167,8 +173,11 @@
 <figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">ffo<span class="variable">@debian</span><span class="symbol">:~/Cprogramme</span><span class="variable">$ </span>./a.out -a</span><br><span class="line"><span class="title class_">Option</span> a</span><br><span class="line">ffo<span class="variable">@debian</span><span class="symbol">:~/Cprogramme</span><span class="variable">$ </span>./a.out -f <span class="string">&quot;12121&quot;</span></span><br><span class="line"><span class="title class_">Option</span> f <span class="keyword">with</span> argument <span class="string">&#x27;12121&#x27;</span></span><br><span class="line">ffo<span class="variable">@debian</span><span class="symbol">:~/Cprogramme</span><span class="variable">$ </span>./a.out -add</span><br><span class="line"><span class="title class_">Option</span> a</span><br><span class="line"><span class="title class_">Option</span> d <span class="keyword">with</span> argument <span class="string">&#x27;d&#x27;</span></span><br><span class="line">ffo<span class="variable">@debian</span><span class="symbol">:~/Cprogramme</span><span class="variable">$ </span>./a.out --add</span><br><span class="line">./<span class="symbol">a.out:</span> option <span class="string">&#x27;--add&#x27;</span> requires an argument</span><br><span class="line">ffo<span class="variable">@debian</span><span class="symbol">:~/Cprogramme</span><span class="variable">$ </span>./a.out --add <span class="string">&quot;12121&quot;</span></span><br><span class="line"><span class="title class_">Option</span> a</span><br><span class="line">ffo<span class="variable">@debian</span><span class="symbol">:~/Cprogramme</span><span class="variable">$ </span>./a.out --verbose</span><br><span class="line"><span class="title class_">Option</span> v</span><br><span class="line">ffo<span class="variable">@debian</span><span class="symbol">:~/Cprogramme</span><span class="variable">$ </span></span><br></pre></td></tr></table></figure>
 <p>现在我们无论用短选项还是长选项都可以正确解析。</p>
 ]]></content>
+      <categories>
+        <category>-C</category>
+      </categories>
       <tags>
-        <tag>C</tag>
+        <tag>-C -C函数</tag>
       </tags>
   </entry>
   <entry>
@@ -218,6 +227,12 @@
 <p>原文：<a href="https://blog.csdn.net/z_ryan/category_7316855.html">https://blog.csdn.net/z_ryan/category_7316855.html</a></p>
 <p>免责声明：本文来源网络，免费传达知识，版权归原作者所有。如涉及作品版权问题，请联系我进行删除。</p>
 ]]></content>
+      <categories>
+        <category>-C</category>
+      </categories>
+      <tags>
+        <tag>-C -C函数</tag>
+      </tags>
   </entry>
   <entry>
     <title>JYY&#39;s ICS2020 PA1</title>
@@ -262,5 +277,11 @@
 <p><strong>一些奇怪的问题</strong>：</p>
 <p>在上面图片中可以看到，RTLREG的顺序跟我的结构体中的顺序并不相同，但是却可以<font color=green>正常运行</font>, 但是当我按照图片上的顺序修改之后却<font color=red>无法运行</font>。</p>
 ]]></content>
+      <categories>
+        <category>-ICS2020</category>
+      </categories>
+      <tags>
+        <tag>-ICS2020</tag>
+      </tags>
   </entry>
 </search>

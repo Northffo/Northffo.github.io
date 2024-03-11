@@ -284,4 +284,23 @@
         <tag>-ICS2020</tag>
       </tags>
   </entry>
+  <entry>
+    <title>concat宏浅析</title>
+    <url>/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<p>concat 是一个常见的宏编程技术，用于将两个或多个预处理器标记（通常是宏参数或宏定义）连接（concatenate）成一个单一的标记, 通常通过使用预处理器的 ## 操作符实现，该操作符用于连接两个标记。</p>
+<h4 id="Concat-宏的基本用法"><a href="#Concat-宏的基本用法" class="headerlink" title="`Concat`宏的基本用法"></a>`Concat`宏的基本用法</h4><p>假设有一个 <code>concat</code> 宏定义如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#define</span> concat(<span class="selector-tag">a</span>, <span class="selector-tag">b</span>) <span class="selector-tag">a</span> ## <span class="selector-tag">b</span></span><br></pre></td></tr></table></figure>
+<p>这里，## 操作符会将它的两个参数 a 和 b 连接成一个单一的标记。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>使用 concat 来动态创建函数名：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> concat(a, b) a ## b</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个示例函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func123</span>()</span> &#123;</span><br><span class="line">    <span class="comment">// 函数体</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">int</span> <span class="title">main</span>()</span> &#123;</span><br><span class="line">    <span class="comment">// 调用 concat 宏来连接 &#x27;func&#x27; 和 &#x27;123&#x27;，生成函数名 &#x27;func123&#x27;</span></span><br><span class="line">    concat(func, <span class="number">123</span>)();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，concat(func, 123) 会在预处理阶段被展开为 func123，因此 concat(func, 123)(); 实际上调用的是 func123()函数。    </p>
+]]></content>
+      <categories>
+        <category>-C</category>
+      </categories>
+      <tags>
+        <tag>-C</tag>
+      </tags>
+  </entry>
 </search>

@@ -23,10 +23,10 @@
 <h4 id="Linux如何确定文件类型"><a href="#Linux如何确定文件类型" class="headerlink" title="Linux如何确定文件类型"></a>Linux如何确定文件类型</h4><p>Linux使用几种方法来确定如何处理文件，不仅仅依靠文件扩展名：<br>文件权限：如之前讨论的，文件的权限（特别是执行权限）决定了用户是否可以执行该文件。<br>文件内容：<strong>Linux可以通过文件的前几个字节（称为“魔数(magic number)”）来识别文件的类型</strong>。例如，可执行文件、图像文件等都有特定的开头字节序列。<br>解释器指令行：对于脚本文件（如.sh、.py等），第一行通常包含一个称为shebang（#!）的指令，指明了执行该脚本时应使用的解释器路径。这允许直接执行脚本文件，而不依赖于文件的扩展名。</p>
 ]]></content>
       <categories>
-        <category>-Linux</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>-Linux -Cpp/C</tag>
+        <tag>Linux Cpp/C</tag>
       </tags>
   </entry>
   <entry>
@@ -111,10 +111,10 @@
 </ul>
 ]]></content>
       <categories>
-        <category>-Linux</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>-Linux命令</tag>
+        <tag>Linux命令</tag>
       </tags>
   </entry>
   <entry>
@@ -174,10 +174,10 @@
 <p>现在我们无论用短选项还是长选项都可以正确解析。</p>
 ]]></content>
       <categories>
-        <category>-C</category>
+        <category>C/CPP</category>
       </categories>
       <tags>
-        <tag>-C -C函数</tag>
+        <tag>C/CPP C函数</tag>
       </tags>
   </entry>
   <entry>
@@ -228,10 +228,10 @@
 <p>免责声明：本文来源网络，免费传达知识，版权归原作者所有。如涉及作品版权问题，请联系我进行删除。</p>
 ]]></content>
       <categories>
-        <category>-C</category>
+        <category>C/CPP</category>
       </categories>
       <tags>
-        <tag>-C -C函数</tag>
+        <tag>C/CPP C函数</tag>
       </tags>
   </entry>
   <entry>
@@ -278,10 +278,10 @@
 <p>在上面图片中可以看到，RTLREG的顺序跟我的结构体中的顺序并不相同，但是却可以<font color=green>正常运行</font>, 但是当我按照图片上的顺序修改之后却<font color=red>无法运行</font>。</p>
 ]]></content>
       <categories>
-        <category>-ICS2020</category>
+        <category>ICS2020</category>
       </categories>
       <tags>
-        <tag>-ICS2020</tag>
+        <tag>ICS2020</tag>
       </tags>
   </entry>
   <entry>
@@ -297,10 +297,10 @@
 <p>在这个例子中，concat(func, 123) 会在预处理阶段被展开为 func123，因此 concat(func, 123)(); 实际上调用的是 func123()函数。    </p>
 ]]></content>
       <categories>
-        <category>-C</category>
+        <category>C/CPP</category>
       </categories>
       <tags>
-        <tag>-C</tag>
+        <tag>C/CPP</tag>
       </tags>
   </entry>
   <entry>
@@ -350,10 +350,10 @@
 </ul>
 ]]></content>
       <categories>
-        <category>-工具</category>
+        <category>工具</category>
       </categories>
       <tags>
-        <tag>-C/CPP -编译器</tag>
+        <tag>C/CPP 编译器</tag>
       </tags>
   </entry>
   <entry>
@@ -612,8 +612,48 @@
 <li>【文章】<a href="https://algo.itcharge.cn/07.Tree/01.Binary-Tree/02.Binary-Tree-Traverse/">二叉树的遍历知识</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
       <tags>
         <tag>数据结构 算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>unordered_map的排序</title>
+    <url>/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="unordered-map-的排序"><a href="#unordered-map-的排序" class="headerlink" title="unordered_map 的排序"></a>unordered_map 的排序</h1><p><code>unordered_map</code>是C++的哈希表结构， <code>unorded_map</code>并不能直接排序， 如果要排序，一般来说需要将<code>unordered_map</code>转换为<code>vector</code>再通过自定义排序函数使用<code>sort</code>进行排序。</p>
+<p>实例：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(pair&lt;<span class="type">char</span>, <span class="type">int</span>&gt;&amp; a, pair&lt;<span class="type">char</span>,<span class="type">int</span>&gt;&amp; b)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> a.second &gt; b.second;   <span class="comment">// 按照second降序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sort_unordered_map</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   unordered_map&lt;<span class="type">char</span>, <span class="type">int</span>&gt; mp;</span><br><span class="line"></span><br><span class="line">   <span class="type">int</span> idx = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">char</span> c = <span class="string">&#x27;a&#x27;</span>; c &lt;= <span class="string">&#x27;z&#x27;</span>; c++) &#123;</span><br><span class="line">      mp[c] = idx++;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 利用vector构造函数快速转换</span></span><br><span class="line">   vector&lt;pair&lt;<span class="type">char</span>, <span class="type">int</span>&gt;&gt; <span class="built_in">sorted_mp</span>(mp.<span class="built_in">begin</span>(), mp.<span class="built_in">end</span>());</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">sort</span>(sorted_mp.<span class="built_in">begin</span>(), sorted_mp.<span class="built_in">end</span>(), cmp);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 此时可以选择直接使用排序后的vector或者再转换为哈希表</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">auto</span> [a, b] : sorted_mp) &#123;</span><br><span class="line">      cout &lt;&lt; a &lt;&lt; <span class="string">&quot;&quot;</span> &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<blockquote>
+<p>关于<code>sort</code>函数：</p>
+<p>默认函数有两种，第一个参数和第二个参数都是容器的起始地址和结束地址，第三个参数是排序函数，接受范围内的两个元素作为参数并返回可转换为布尔值的二元函数。返回的值表示作为第一个参数传递的元素是否被视为在其定义的特定严格弱排序中位于第二个参数之前。</p>
+<table>
+<thead>
+<tr>
+<th><code>template &lt;class RandomAccessIterator&gt;  void sort (RandomAccessIterator first, RandomAccessIterator last);</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>template &lt;class RandomAccessIterator, class Compare&gt;  void sort (RandomAccessIterator first, RandomAccessIterator last, Compare comp);</code></td>
+</tr>
+</tbody></table>
+<p><code>sort</code>对于不同类型的默认排序：</p>
+<p>对数组排序： 默认从小到大排序</p>
+<p>对<code>pair</code>排序，默认对first从小到大排序，first相同是对second从小到大排序</p>
+<p>对结构体： 一般需要自定义函数</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>C/CPP 数据结构 算法</tag>
       </tags>
   </entry>
 </search>

@@ -656,4 +656,30 @@
         <tag>C/CPP 数据结构 算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>记忆化搜索求斐波那契数列的土亢</title>
+    <url>/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/</url>
+    <content><![CDATA[<blockquote>
+<p>闲来无事刷个题目用所有方法解一遍斐波那契，没想到在记忆化翻车了</p>
+</blockquote>
+<p><b> 呆码 </b></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; mdfs = [&amp;](<span class="type">int</span> i) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(i &lt;= <span class="number">1</span>) <span class="keyword">return</span> i;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(memo[i] != <span class="number">-1</span>) <span class="keyword">return</span> memo[i];</span><br><span class="line"></span><br><span class="line">            memo[i] = <span class="built_in">mdfs</span>(i - <span class="number">1</span>) + <span class="built_in">mdfs</span>(i - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> memo[i];</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">mdfs</span>(n);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>看到代码通不过案例真的破防，检查了很多遍发现lambda函数没有问题，其他地方都看起来很河狸。</p>
+<p>也问了gpt-4o, 同样没有给我正确的解释，对于gpt来说还是超前了嘛(黑人问号)</p>
+<p>最后解决问题是因为这段代码只有<code>n = 0</code>时无法通过，所以我加代码又重试了两次， 都通过了，第一次是在函数开头加了<code>if (n &lt;= 1) return n;</code>第二次是将第4行的<code>memo[1] = 1;</code>改为<code>if(n &gt; 0) memo[1] = 1;</code></p>
+<p>! 诶，立马意识到是memo数组出了问题, 所以将代码改了一个地方：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">10</span>, <span class="number">-1</span>)</span></span>;		<span class="comment">// 改为了n + 10, n == 0时memo数组长度只有1, 那么第4行的memo[1] = 1数组越界</span></span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; mdfs = [&amp;](<span class="type">int</span> i) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(i &lt;= <span class="number">1</span>) <span class="keyword">return</span> i;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(memo[i] != <span class="number">-1</span>) <span class="keyword">return</span> memo[i];</span><br><span class="line"></span><br><span class="line">            memo[i] = <span class="built_in">mdfs</span>(i - <span class="number">1</span>) + <span class="built_in">mdfs</span>(i - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> memo[i];</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">mdfs</span>(n);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此， 精神状态又美丽了几分。</p>
+]]></content>
+      <categories>
+        <category>烂活大赏</category>
+      </categories>
+      <tags>
+        <tag>烂活大赏 C/CPP 算法</tag>
+      </tags>
+  </entry>
 </search>

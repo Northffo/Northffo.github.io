@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="闲来无事刷个题目用所有方法解一遍斐波那契，没想到在记忆化翻车了   呆码  1234567891011121314151617int fib(int n) &#123;        vector&lt;int&gt; memo(n + 1, -1);        memo[0] &#x3D; 0;        memo[1] &#x3D; 1;        function&lt;int(int)&gt;">
+    <meta name="description" content="前情提要野指针（Wild Pointer）： 野指针是指指向任意未知位置的指针，它没有被初始化或者指向无效的内存。 悬挂指针（dangling pointer）：指指向已释放或无效内存的指针。当一个指向动态分配内存的指针所指向的内存被释放后，该指针仍然保留着原来的指向，但此时使用该指针访问所指向的内存将导致未定义的行为。 RAII (Resource Acquisition Is Initiali">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记忆化搜索求斐波那契数列的土亢">
-<meta property="og:url" content="https://northffo.github.io/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/index.html">
+<meta property="og:title" content="浅谈智能指针">
+<meta property="og:url" content="https://northffo.github.io/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/index.html">
 <meta property="og:site_name" content="ffo&#39;s Blog">
-<meta property="og:description" content="闲来无事刷个题目用所有方法解一遍斐波那契，没想到在记忆化翻车了   呆码  1234567891011121314151617int fib(int n) &#123;        vector&lt;int&gt; memo(n + 1, -1);        memo[0] &#x3D; 0;        memo[1] &#x3D; 1;        function&lt;int(int)&gt;">
+<meta property="og:description" content="前情提要野指针（Wild Pointer）： 野指针是指指向任意未知位置的指针，它没有被初始化或者指向无效的内存。 悬挂指针（dangling pointer）：指指向已释放或无效内存的指针。当一个指向动态分配内存的指针所指向的内存被释放后，该指针仍然保留着原来的指向，但此时使用该指针访问所指向的内存将导致未定义的行为。 RAII (Resource Acquisition Is Initiali">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-12T03:32:55.000Z">
-<meta property="article:modified_time" content="2025-02-27T10:34:56.198Z">
+<meta property="article:published_time" content="2025-02-19T16:18:41.000Z">
+<meta property="article:modified_time" content="2025-03-03T15:01:40.371Z">
 <meta property="article:author" content="ffo">
-<meta property="article:tag" content="烂活大赏 C&#x2F;CPP 算法">
+<meta property="article:tag" content="C&#x2F;C++ 智能指针">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://northffo.github.io/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/">
+<link rel="canonical" href="https://northffo.github.io/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://northffo.github.io/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/","path":"2024/06/12/记忆化搜索求斐波那契数列的土亢/","title":"记忆化搜索求斐波那契数列的土亢"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://northffo.github.io/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/","path":"2025/02/20/智能指针/","title":"浅谈智能指针"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>记忆化搜索求斐波那契数列的土亢 | ffo's Blog</title>
+<title>浅谈智能指针 | ffo's Blog</title>
   
 
 
@@ -127,7 +127,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -140,6 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">前情提要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">智能指针</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -192,7 +193,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -205,12 +206,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="记忆化搜索求斐波那契数列的土亢 | ffo's Blog">
+      <meta itemprop="name" content="浅谈智能指针 | ffo's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          记忆化搜索求斐波那契数列的土亢
+          浅谈智能指针
         </h1>
 
         <div class="post-meta-container">
@@ -221,14 +222,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-06-12 11:32:55" itemprop="dateCreated datePublished" datetime="2024-06-12T11:32:55+08:00">2024-06-12</time>
+      <time title="创建时间：2025-02-20 00:18:41" itemprop="dateCreated datePublished" datetime="2025-02-20T00:18:41+08:00">2025-02-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
+      <time title="修改时间：2025-03-03 23:01:40" itemprop="dateModified" datetime="2025-03-03T23:01:40+08:00">2025-03-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -236,7 +237,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%83%82%E6%B4%BB%E5%A4%A7%E8%B5%8F/" itemprop="url" rel="index"><span itemprop="name">烂活大赏</span></a>
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
         </span>
     </span>
 
@@ -256,21 +257,58 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><blockquote>
-<p>闲来无事刷个题目用所有方法解一遍斐波那契，没想到在记忆化翻车了</p>
-</blockquote>
-<p><b> 呆码 </b></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; mdfs = [&amp;](<span class="type">int</span> i) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(i &lt;= <span class="number">1</span>) <span class="keyword">return</span> i;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(memo[i] != <span class="number">-1</span>) <span class="keyword">return</span> memo[i];</span><br><span class="line"></span><br><span class="line">            memo[i] = <span class="built_in">mdfs</span>(i - <span class="number">1</span>) + <span class="built_in">mdfs</span>(i - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> memo[i];</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">mdfs</span>(n);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>野指针（Wild Pointer）： 野指针是指指向任意未知位置的指针，它没有被初始化或者指向无效的内存。</p>
+<p>悬挂指针（dangling pointer）：指指向已释放或无效内存的指针。当一个指向动态分配内存的指针所指向的内存被释放后，该指针仍然保留着原来的指向，但此时使用该指针访问所指向的内存将导致未定义的行为。</p>
+<p>RAII (Resource Acquisition Is Initialization): 资源获取即初始化， R使用一个对象，在其构造时获取对应的资源，在对象生命期内控制对资源的访问，使之始终保持有效，最后在对象析构的时候，释放构造时获取的资源。像下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">str_</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">str_</span>() &#123; data = <span class="keyword">new</span> <span class="type">char</span>[<span class="number">1024</span>]; &#125;</span><br><span class="line">    ~<span class="built_in">str_</span>() &#123; <span class="keyword">delete</span> data; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span>* data_&#123; <span class="literal">nullptr</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> pdata = <span class="keyword">new</span> <span class="type">char</span>[<span class="number">1024</span>];			<span class="comment">// 这样的做法容易漏掉delete，导致内存泄漏</span></span><br><span class="line">    <span class="keyword">delete</span>[] pdata;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        这样当我们在一个函数内部使用局部变量，当退出了这个局部变量的作用域时，这个变量也就被毁了；当这个变量是类对象时，这个时候，就会自动调用这个类的析构函数，而这一切都是自动发生的，不要程序员显式调用完成。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    &#123;</span><br><span class="line">        str_ data;							</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p>看到代码通不过案例真的破防，检查了很多遍发现lambda函数没有问题，其他地方都看起来很河狸。</p>
-<p>也问了gpt-4o, 同样没有给我正确的解释，对于gpt来说还是超前了嘛(黑人问号)</p>
-<p>最后解决问题是因为这段代码只有<code>n = 0</code>时无法通过，所以我加代码又重试了两次， 都通过了，第一次是在函数开头加了<code>if (n &lt;= 1) return n;</code>第二次是将第4行的<code>memo[1] = 1;</code>改为<code>if(n &gt; 0) memo[1] = 1;</code></p>
-<p>! 诶，立马意识到是memo数组出了问题, 所以将代码改了一个地方：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">10</span>, <span class="number">-1</span>)</span></span>;		<span class="comment">// 改为了n + 10, n == 0时memo数组长度只有1, 那么第4行的memo[1] = 1数组越界</span></span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; mdfs = [&amp;](<span class="type">int</span> i) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(i &lt;= <span class="number">1</span>) <span class="keyword">return</span> i;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(memo[i] != <span class="number">-1</span>) <span class="keyword">return</span> memo[i];</span><br><span class="line"></span><br><span class="line">            memo[i] = <span class="built_in">mdfs</span>(i - <span class="number">1</span>) + <span class="built_in">mdfs</span>(i - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> memo[i];</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">mdfs</span>(n);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>至此， 精神状态又美丽了几分。</p>
+
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>因为C++使用内存的时候很容易出现野指针、悬空指针、内存泄露等问题。所以C++11引入了智能指针来管理内存。使用智能指针（如<code>std::unique_ptr</code>、<code>std::shared_ptr</code>）来自动管理资源生命周期，避免手动释放内存和引入悬垂指针和野指针问题。共有四种智能指针:</p>
+<ul>
+<li><code>auto_ptr</code>：已经不用了</li>
+<li><code>unique_ptr</code>：独占式指针，同一时刻只能有一个指针指向同一个对象</li>
+<li><code>shared_ptr</code>：共享式指针，同一时刻可以有多个指针指向同一个对象</li>
+<li><code>weak_ptr</code>：用来解决<code>shared_ptr</code>相互引用导致的死锁问题</li>
+</ul>
+<p>总的来说，智能指针是一个RAII类模板，用于动态分配内存，其设计思想是将基本类型指针封装为（模板）类对象指针，并在离开作用域时调用析构函数，使用delete删除指针所执行的内存空间。</p>
+<ul>
+<li><p><code>unique_ptr</code>:</p>
+<ul>
+<li><p>独占式指针，与所指对象的内存绑定紧密，禁止其他智能指针与其他共享同一个对象。也就是<strong>同一时间只能有一个智能指针可以指向该对象</strong></p>
+</li>
+<li><p>独占的意思是不可以复制(拷贝构造和拷贝复制)，但是我们可以利用std::move将其转移给其他unique_ptr(可以移动构造和移动赋值)。一旦转移，这个所有权就会失去，除非被显示归还</p>
+</li>
+<li><p>从实现上来讲，unique_ptr是一个删除了拷贝构造函数，保留了移动构造函数的指针类型。可以使用右值对unique_ptr进行构造</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><code>shared_ptr</code>：</p>
+<ul>
+<li>实现了共享式拥有的概念，即<strong>多个智能指针可以指向相同的对象，该对象以及相关资源会在其所指对象不再使用之后，自动释放与对象相关的资源</strong></li>
+</ul>
+<ul>
+<li><p>它是使用计数机制来表明资源被几个指针共享</p>
+</li>
+<li><p>可以通过成员函数 use_count() 来查看资源的所有者个数，除了可以通过 new 来构造，还可以通过传⼊auto_ptr,unique_ptr,weak_ptr 来构造。当我们调⽤ release() 时，当前指针会释放资源所有权，计数减⼀。当计数等于 0时，资源会被释放。</p>
+</li>
+</ul>
+</li>
+<li><p><code>weak_ptr</code>，解决shared_ptr相互引用的问题，两个指针的引用计数永远不会下降为0，从而导致死锁问题。而weak_ptr是对对象的一种弱引用，可以绑定到shared_ptr，但不会增加对象的引用计数。</p>
+<ul>
+<li><p>weak_ptr是为了配合shared_ptr而引入的一种智能指针，它更像是shared_ptr的一个助手而不是智能智能，因为它没有普通指针的行为，没有重置*和→。它得最大作用是协助shared_ptr工作，像是旁观者那样观测资源的使用情况</p>
+</li>
+<li><p>weak_ptr是一种不控制对象生命周期的智能指针，它指向一个shared_ptr管理的对象。进行该对象的内存管理的是那个强引用的shared_ptr</p>
+</li>
+<li><p>weak_ptr只是提供了对管理对象的一个访问手段。weak_ptr设计的目的是为了配合shared_ptr而引入的一种智能指针来协助shared_ptr工作，它只可以从一个 shared_ptr 或另⼀个 weak_ptr 对象构造,，它的构造和析构不会引起引用计数的增加或者减少</p>
+</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -280,20 +318,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%83%82%E6%B4%BB%E5%A4%A7%E8%B5%8F-C-CPP-%E7%AE%97%E6%B3%95/" rel="tag"># 烂活大赏 C/CPP 算法</a>
+              <a href="/tags/C-C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" rel="tag"># C/C++ 智能指针</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/" rel="prev" title="unordered_map的排序">
-                  <i class="fa fa-angle-left"></i> unordered_map的排序
+                <a href="/2025/02/17/oatpp%E7%9A%84%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2/" rel="prev" title="oatpp的初步探索">
+                  <i class="fa fa-angle-left"></i> oatpp的初步探索
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/01/06/%E5%AE%89%E8%A3%85Anolis%E7%9A%84%E5%9D%91/" rel="next" title="实机安装Anolis的坑及安装之后的网络修复">
-                  实机安装Anolis的坑及安装之后的网络修复 <i class="fa fa-angle-right"></i>
+                <a href="/2025/02/26/%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB/" rel="next" title="分层领域模型解读">
+                  分层领域模型解读 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

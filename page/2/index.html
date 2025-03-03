@@ -152,18 +152,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -180,6 +180,224 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/" class="post-title-link" itemprop="url">gcc常用选项</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-14 10:39:45" itemprop="dateCreated datePublished" datetime="2024-03-14T10:39:45+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一些gcc常用的选项"><a href="#一些gcc常用的选项" class="headerlink" title="一些gcc常用的选项"></a>一些gcc常用的选项</h3><ul>
+<li><code>-c</code>: 只编译但不链接， 生成目标文件(.o)， 无法识别的文件将被忽略; 原文：</li>
+</ul>
+<p>Compile or assemble the source files, but do not link. The linking stage simply is not done. The ultimate output is in the form of an object file for each source file.</p>
+<p>By default, the object file name for a source file is made by replacing the suffix ‘.c’, ‘.i’, ‘.s’, etc., with ‘.o’.</p>
+<p>Unrecognized input files, not requiring compilation or assembly, are ignored.</p>
+<ul>
+<li><p><code>-S</code> ： 将源代码编译成汇编代码，而不是直接生成机器代码或可执行文件。使用这个选项时，GCC会执行编译过程中的前几个步骤（如预处理、编译），但会停在生成汇编代码这一步，不会进一步进行汇编成目标代码或进行链接。</p>
+</li>
+<li><p><code>-E</code>: -E选项用于仅执行预处理步骤。GCC会处理源代码中的预处理指令，如宏定义的扩展、条件编译指令的处理、包含文件的插入等，但它不会编译、汇编或链接代码。注意： 默认情况下，这个输出会直接发送到标准输出（即屏幕）， 所以可以使用<code>|</code>传到vim或者其他编辑器中查看:</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E helloworld.c <span class="string">| vim -  </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-o</code>: 这一部分强烈推荐看<a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Overall-Options.html">原文</a>, <code>-o</code>选项允许指定主输出文件的名称和位置，这适用于任何类型的输出，无论是可执行文件、目标文件、汇编文件还是预处理的C代码。</p>
+<ul>
+<li><p>这一部分我直接贴出gpt对原文的解读：</p>
+<p><strong>主输出定位</strong>：如果没有指定-o选项，默认情况下，可执行文件会被放置在a.out中，源文件source.suffix的目标文件会命名为source.o，其汇编文件命名为source.s，预编译头文件命名为source.suffix.gch，所有预处理的C源代码输出到标准输出（屏幕）。</p>
+<p><strong>辅助输出和转储输出</strong>：虽然-o仅指定主输出，但它也影响辅助输出和转储输出的命名和定位。除非有其他指定，这些输出文件默认被放置在主输出文件相同的目录下。对于辅助输出，输入文件的后缀会被替换为辅助输出文件类型的后缀；对于转储输出，转储文件的后缀会被添加到输入文件后缀之后。在编译命令中，辅助输出和转储输出的基础名称是主输出的名称；在编译并链接命令中，主输出名称（去掉可执行文件后缀）与输入文件名称结合使用。如果它们的基础名称相同，结果就是该基础名称，否则，它们通过短横线连接。</p>
+<p> <strong>示例</strong>：</p>
+<p> <code>gcc -c foo.c ...</code>会产生<code>foo.o</code>作为主输出，辅助输出和转储输出也会放置在它旁边，例如辅助文件<code>foo.dwo</code>（对于<code>-gsplit-dwarf</code>）和转储文件<code>foo.c.???r.final</code>（对于<code>-fdump-rtl-final</code>）。</p>
+<p>如果明确指定了非链接器的输出文件，辅助和转储文件默认使用相同的基础名称。例如，<code>gcc -c foo.c -o dir/foobar.o ...</code>将辅助输出命名为<code>dir/foobar.*</code>，转储输出命名为<code>dir/foobar.c.*</code>。</p>
+<p>链接输出会为辅助和转储输出添加前缀。例如，<code>gcc foo.c bar.c -o dir/foobar ...</code>通常会将辅助输出命名为<code>dir/foobar-foo.*和dir/foobar-bar.*</code>，转储输出命名为<code>dir/foobar-foo.c.*</code>和<code>dir/foobar-bar.c.*</code>。</p>
+<p>唯一的例外是当可执行文件与单一输入文件共享基础名称时，例如<code>gcc foo.c -o dir/foo ...</code>，这种情况下，辅助输出被命名为<code>dir/foo.*</code>，转储输出被命名为<code>dir/foo.c.*</code>。</p>
+<p><strong>调整辅助和转储输出的位置和名称</strong>：可以通过<code>-dumpbase</code>、<code>-dumpbase-ext</code>、<code>-dumpdir</code>、<code>-save-temps=cwd</code>和<code>-save-temps=obj</code>选项调整辅助和转储输出的位置和名称。</p>
+<p>简而言之，-o选项不仅允许你指定主输出文件的名称和位置，它还间接影响了辅助输出和转储输出的命名和定位规则。这在管理大型项目和自定义构建过程时非常有用。</p>
+</li>
+</ul>
+</li>
+<li><p><code>-g</code>: 在可执行文件中生成标准调试信息。<code>-g</code>选项生成的调试信息会尽量适配不同的调试器，但主要还是以GDB（GNU Debugger）为主。</p>
+</li>
+<li><p><code>-ggdb</code> :为GDB调试器优化，生成最丰富的调试信息,包括一些特定于GDB的优化，以提供更好的调试体验。</p>
+</li>
+<li><p><code>-Wall</code>: 开启大多数编译器警告，有助于发现潜在的错误。</p>
+</li>
+<li><p><code>Werror</code>: 将所有的警告当作错误处理。</p>
+</li>
+<li><p><code>-D</code>: 定义宏，即在编译时从命令行向源代码中引入宏定义。 基本语法如下： <code>-Dname</code>或者<code>-Dname=definition</code>, 其中，name是要定义的宏的名称，definition是这个宏的值。如果没有指定definition，宏name的值默认为1。</p>
+<ul>
+<li>eg:  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Debug mode is enabled.\n&quot;</span>);</span><br><span class="line">    <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Debug mode is not enabled.\n&quot;</span>);</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>  使用-D选项来定义DEBUG宏：<br>  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -DDEBUG <span class="built_in">example</span>.c -o <span class="built_in">example</span></span><br></pre></td></tr></table></figure><br>  这将使得编译的程序在运行时输出：“Debug mode is enabled.” 因为DEBUG宏在编译时被定义了，所以预处理器会包含#ifdef DEBUG和#endif之间的代码。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/" class="post-title-link" itemprop="url">concat宏浅析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-11 11:39:29" itemprop="dateCreated datePublished" datetime="2024-03-11T11:39:29+08:00">2024-03-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-03 23:10:22" itemprop="dateModified" datetime="2025-03-03T23:10:22+08:00">2025-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>concat 是一个常见的宏编程技术，用于将两个或多个预处理器标记（通常是宏参数或宏定义）连接（concatenate）成一个单一的标记, 通常通过使用预处理器的 ## 操作符实现，该操作符用于连接两个标记。</p>
+<h4 id="Concat-宏的基本用法"><a href="#Concat-宏的基本用法" class="headerlink" title="`Concat`宏的基本用法"></a>`Concat`宏的基本用法</h4><p>假设有一个 <code>concat</code> 宏定义如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#define</span> concat(<span class="selector-tag">a</span>, <span class="selector-tag">b</span>) <span class="selector-tag">a</span> ## <span class="selector-tag">b</span></span><br></pre></td></tr></table></figure>
+<p>这里，## 操作符会将它的两个参数 a 和 b 连接成一个单一的标记。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>使用 concat 来动态创建函数名：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> concat(a, b) a ## b</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个示例函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func123</span>()</span> &#123;</span><br><span class="line">    <span class="comment">// 函数体</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">int</span> <span class="title">main</span>()</span> &#123;</span><br><span class="line">    <span class="comment">// 调用 concat 宏来连接 &#x27;func&#x27; 和 &#x27;123&#x27;，生成函数名 &#x27;func123&#x27;</span></span><br><span class="line">    concat(func, <span class="number">123</span>)();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，concat(func, 123) 会在预处理阶段被展开为 func123，因此 concat(func, 123)(); 实际上调用的是 func123()函数。    </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -772,7 +990,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
+      <time title="修改时间：2025-03-01 00:03:19" itemprop="dateModified" datetime="2025-03-01T00:03:19+08:00">2025-03-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -796,7 +1014,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>前几天在做蒋炎岩老师的PA有一个小<a target="_blank" rel="noopener" href="https://www.cprogramming.com/gdb.html">实验</a>在实验中使用<code>g++ main.cpp -o main</code>来编译cpp文件, 但是上面的-o其实是g++的一个选项, 作用是自定义生成文件的名称, 上面的指令就是编译<code>main.cpp</code>文件, 并将编译后的可执行文件命名为main.</p>
 <p>所以编译c文件其实只需要<code>gcc main.c</code>指令, 这条指令会默认生成a.out可执行文件</p>
-<p>我突然想到一个问题, 是不是上面的main也是.out文件, 但是在我查阅资料并询问gpt后发现并不是这样:</p>
+<p>我突然想到一个问题, 是不是上面的main也是.out文件, 但是在我查阅资料后发现并不是这样:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ <span class="selector-tag">main</span><span class="selector-class">.cpp</span> -o hello</span><br></pre></td></tr></table></figure>
 
 <p>使用-o选项是可以自定义可执行文件的名称,这里生成的是hello,注意文件的拓展名并不是.out</p>

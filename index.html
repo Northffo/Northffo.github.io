@@ -152,18 +152,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -180,6 +180,245 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/26/%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/26/%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB/" class="post-title-link" itemprop="url">分层领域模型解读</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-26 23:02:31" itemprop="dateCreated datePublished" datetime="2025-02-26T23:02:31+08:00">2025-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-03 23:32:38" itemprop="dateModified" datetime="2025-03-03T23:32:38+08:00">2025-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>最近在开发项目的时候碰到了领域模型，但是并没有对其中的各层关系以及各层传递数据方式理解清晰。在此记录下分层领域模型数据的传递过程</p>
+<h2 id="所谓领域模型"><a href="#所谓领域模型" class="headerlink" title="所谓领域模型"></a>所谓领域模型</h2><p>所谓领域模型，其实就是<strong>C++类</strong>，再详细一点就是有作用范围的实体类。</p>
+<p>其核心目标是<strong>业务抽象</strong>：将现实业务中的实体、流程和规则转化为可被代码理解和操作的结构。</p>
+<p>其中的领域对象描述是这样的：</p>
+<ul>
+<li><code>DO</code>（Data Object）：此对象与数据库表结构一一对应，通过 <code>DAO</code> 层向上传输数据源对象。</li>
+<li><code>DTO</code>（Data Transfer Object）：数据传输对象，Service 或 Manager 向外传输的对象。 </li>
+<li><code>BO</code>（Business Object）：业务对象，可以由 Service 层输出的封装业务逻辑的对象。<ul>
+<li><code>Query</code>：数据查询对象，各层接收上层的查询请求。</li>
+</ul>
+</li>
+<li><code>VO</code>（View Object）：显示层对象，通常是 Web 向模板渲染引擎层传输的对象。</li>
+</ul>
+<p><img src="/2024/02/22/JYY-s-ICS2020-PA1/" alt="领域模型"></p>
+<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p><strong>订单领域模型</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">聚合根：Order（订单）</span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>实体：OrderItem（订单项）</span><br><span class="line"><span class="bullet">- </span>值对象：Address（配送地址）</span><br><span class="line"><span class="bullet">- </span>领域服务：OrderService（处理订单创建、取消）</span><br><span class="line"><span class="bullet">- </span>领域事件：OrderCreatedEvent（订单创建事件）</span><br><span class="line"><span class="bullet">- </span>仓储：OrderRepository（持久化订单）</span><br></pre></td></tr></table></figure>
+
+<p>很明显可以看出领域模型与数据模型不同，领域模型的代码直接反映业务概念，领域模型关注行为，而数据模型关注存储。领域模型的业务逻辑独立于基础设施，<strong>每个微服务对应一个限界上下文，领域模型帮助定义服务边界。</strong>最重要的是有限界上下文，要明白模型的边界。而且领域模型也不等同于数据库表，模型可以随业务需求演进，而非受限于数据库结构。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>领域模型是<strong>以业务为核心</strong>的设计方法，通过抽象关键概念、规则和交互，帮助开发者构建灵活、可维护的系统。它不仅是技术工具，更是一种思维方式，强调从业务视角出发解决问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="post-title-link" itemprop="url">浅谈智能指针</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-20 00:18:41" itemprop="dateCreated datePublished" datetime="2025-02-20T00:18:41+08:00">2025-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-03 23:01:40" itemprop="dateModified" datetime="2025-03-03T23:01:40+08:00">2025-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>野指针（Wild Pointer）： 野指针是指指向任意未知位置的指针，它没有被初始化或者指向无效的内存。</p>
+<p>悬挂指针（dangling pointer）：指指向已释放或无效内存的指针。当一个指向动态分配内存的指针所指向的内存被释放后，该指针仍然保留着原来的指向，但此时使用该指针访问所指向的内存将导致未定义的行为。</p>
+<p>RAII (Resource Acquisition Is Initialization): 资源获取即初始化， R使用一个对象，在其构造时获取对应的资源，在对象生命期内控制对资源的访问，使之始终保持有效，最后在对象析构的时候，释放构造时获取的资源。像下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">str_</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">str_</span>() &#123; data = <span class="keyword">new</span> <span class="type">char</span>[<span class="number">1024</span>]; &#125;</span><br><span class="line">    ~<span class="built_in">str_</span>() &#123; <span class="keyword">delete</span> data; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span>* data_&#123; <span class="literal">nullptr</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> pdata = <span class="keyword">new</span> <span class="type">char</span>[<span class="number">1024</span>];			<span class="comment">// 这样的做法容易漏掉delete，导致内存泄漏</span></span><br><span class="line">    <span class="keyword">delete</span>[] pdata;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        这样当我们在一个函数内部使用局部变量，当退出了这个局部变量的作用域时，这个变量也就被毁了；当这个变量是类对象时，这个时候，就会自动调用这个类的析构函数，而这一切都是自动发生的，不要程序员显式调用完成。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    &#123;</span><br><span class="line">        str_ data;							</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>因为C++使用内存的时候很容易出现野指针、悬空指针、内存泄露等问题。所以C++11引入了智能指针来管理内存。使用智能指针（如<code>std::unique_ptr</code>、<code>std::shared_ptr</code>）来自动管理资源生命周期，避免手动释放内存和引入悬垂指针和野指针问题。共有四种智能指针:</p>
+<ul>
+<li><code>auto_ptr</code>：已经不用了</li>
+<li><code>unique_ptr</code>：独占式指针，同一时刻只能有一个指针指向同一个对象</li>
+<li><code>shared_ptr</code>：共享式指针，同一时刻可以有多个指针指向同一个对象</li>
+<li><code>weak_ptr</code>：用来解决<code>shared_ptr</code>相互引用导致的死锁问题</li>
+</ul>
+<p>总的来说，智能指针是一个RAII类模板，用于动态分配内存，其设计思想是将基本类型指针封装为（模板）类对象指针，并在离开作用域时调用析构函数，使用delete删除指针所执行的内存空间。</p>
+<ul>
+<li><p><code>unique_ptr</code>:</p>
+<ul>
+<li><p>独占式指针，与所指对象的内存绑定紧密，禁止其他智能指针与其他共享同一个对象。也就是<strong>同一时间只能有一个智能指针可以指向该对象</strong></p>
+</li>
+<li><p>独占的意思是不可以复制(拷贝构造和拷贝复制)，但是我们可以利用std::move将其转移给其他unique_ptr(可以移动构造和移动赋值)。一旦转移，这个所有权就会失去，除非被显示归还</p>
+</li>
+<li><p>从实现上来讲，unique_ptr是一个删除了拷贝构造函数，保留了移动构造函数的指针类型。可以使用右值对unique_ptr进行构造</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><code>shared_ptr</code>：</p>
+<ul>
+<li>实现了共享式拥有的概念，即<strong>多个智能指针可以指向相同的对象，该对象以及相关资源会在其所指对象不再使用之后，自动释放与对象相关的资源</strong></li>
+</ul>
+<ul>
+<li><p>它是使用计数机制来表明资源被几个指针共享</p>
+</li>
+<li><p>可以通过成员函数 use_count() 来查看资源的所有者个数，除了可以通过 new 来构造，还可以通过传⼊auto_ptr,unique_ptr,weak_ptr 来构造。当我们调⽤ release() 时，当前指针会释放资源所有权，计数减⼀。当计数等于 0时，资源会被释放。</p>
+</li>
+</ul>
+</li>
+<li><p><code>weak_ptr</code>，解决shared_ptr相互引用的问题，两个指针的引用计数永远不会下降为0，从而导致死锁问题。而weak_ptr是对对象的一种弱引用，可以绑定到shared_ptr，但不会增加对象的引用计数。</p>
+<ul>
+<li><p>weak_ptr是为了配合shared_ptr而引入的一种智能指针，它更像是shared_ptr的一个助手而不是智能智能，因为它没有普通指针的行为，没有重置*和→。它得最大作用是协助shared_ptr工作，像是旁观者那样观测资源的使用情况</p>
+</li>
+<li><p>weak_ptr是一种不控制对象生命周期的智能指针，它指向一个shared_ptr管理的对象。进行该对象的内存管理的是那个强引用的shared_ptr</p>
+</li>
+<li><p>weak_ptr只是提供了对管理对象的一个访问手段。weak_ptr设计的目的是为了配合shared_ptr而引入的一种智能指针来协助shared_ptr工作，它只可以从一个 shared_ptr 或另⼀个 weak_ptr 对象构造,，它的构造和析构不会引起引用计数的增加或者减少</p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -985,7 +1224,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
+      <time title="修改时间：2025-03-01 00:17:54" itemprop="dateModified" datetime="2025-03-01T00:17:54+08:00">2025-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
     </span>
 
   
@@ -998,7 +1246,57 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <p>文件描述符在Unix系统中是一个整数，用来标识打开的文件或者I&#x2F;O资源，每个进程默认会打开三个标准文件描述符（File Descriptors, FDs），用于处理输入和输出。下面介绍这三个FD</p>
+<ol>
+<li><strong>标准输入（Standard Input）</strong><ul>
+<li><strong>文件描述符编号</strong>：<code>0</code></li>
+<li><strong>作用</strong>：用于进程读取输入数据（默认来自键盘输入）</li>
+<li><strong>相关符号</strong>：在Shell中通常用 <code>&lt;</code> 或 <code>&lt;&lt;</code> 进行重定向（如 <code>command &lt; input.txt</code>）</li>
+</ul>
+</li>
+<li><strong>标准输出（Standard Output）</strong><ul>
+<li><strong>文件描述符编号</strong>：<code>1</code></li>
+<li><strong>作用</strong>：用于进程输出正常结果（默认显示到终端）</li>
+<li><strong>相关符号</strong>：在Shell中通常用 <code>&gt;</code> 或 <code>&gt;&gt;</code> 进行重定向（如 <code>command &gt; output.txt</code>）</li>
+</ul>
+</li>
+<li><strong>标准错误（Standard Error）</strong><ul>
+<li><strong>文件描述符编号</strong>：<code>2</code></li>
+<li><strong>作用</strong>：用于输出错误或诊断信息（默认显示到终端）</li>
+<li><strong>相关符号</strong>：在Shell中用 <code>2&gt;</code> 或 <code>2&gt;&gt;</code> 重定向错误（如 <code>command 2&gt; error.txt</code>）</li>
+</ul>
+</li>
+</ol>
+<p>​	</p>
+<p>那我们在看以下代码便会清晰的多：</p>
+<p><code>echo log &gt; /dev/null 2&gt;&amp;1</code></p>
+<p>这条命令由以下部分组成：</p>
+<ul>
+<li>**<code>echo log</code>**：向标准输出（stdout）打印字符串 <code>log</code></li>
+<li>**<code>&gt; /dev/null</code>**：将标准输出（文件描述符 <code>1</code>）重定向到 <code>/dev/null</code></li>
+<li>**<code>2&gt;&amp;1</code>**：将标准错误（文件描述符 <code>2</code>）重定向到当前标准输出（即 <code>/dev/null</code>）</li>
+</ul>
+<h3 id="关键概念"><a href="#关键概念" class="headerlink" title="关键概念"></a><strong>关键概念</strong></h3><h4 id="1-dev-null-的作用"><a href="#1-dev-null-的作用" class="headerlink" title="(1) /dev/null 的作用"></a><strong>(1) <code>/dev/null</code> 的作用</strong></h4><ul>
+<li><code>/dev/null</code> 是一个特殊的设备文件，写入它的内容会被直接丢弃</li>
+<li>常用于屏蔽命令的输出或错误信息</li>
+</ul>
+<h4 id="2-文件描述符重定向"><a href="#2-文件描述符重定向" class="headerlink" title="(2) 文件描述符重定向"></a><strong>(2) 文件描述符重定向</strong></h4><ul>
+<li><code>&gt;</code> 默认重定向标准输出（<code>1&gt;</code> 的简写）</li>
+<li><code>2&gt;</code> 表示重定向标准错误（文件描述符 <code>2</code>）</li>
+<li><code>&amp;1</code> 表示引用当前标准输出的目标（即 <code>/dev/null</code>）</li>
+</ul>
+<hr>
+<h3 id="3-执行流程"><a href="#3-执行流程" class="headerlink" title="3. 执行流程"></a><strong>3. 执行流程</strong></h3><ol>
+<li><strong><code>echo log</code> 输出内容</strong><br><code>echo</code> 命令默认将 <code>log</code> 写入标准输出（文件描述符 <code>1</code>）。</li>
+<li><strong><code>&gt; /dev/null</code> 重定向标准输出</strong><br>将标准输出（<code>1</code>）从默认的终端屏幕重定向到 <code>/dev/null</code>，导致 <code>log</code> 被丢弃，不会显示在终端。</li>
+<li><strong><code>2&gt;&amp;1</code> 重定向标准错误</strong><ul>
+<li><code>2&gt;</code> 表示重定向标准错误（文件描述符 <code>2</code>）。</li>
+<li><code>&amp;1</code> 表示将标准错误指向当前标准输出的目标（即 <code>/dev/null</code>）。</li>
+<li>因此，标准错误（如有）也会被丢弃。</li>
+</ul>
+</li>
+</ol>
+
       
     </div>
 
@@ -1165,224 +1463,6 @@
 <h2 id="第4段：编译前的准备（行50-95）"><a href="#第4段：编译前的准备（行50-95）" class="headerlink" title="第4段：编译前的准备（行50-95）"></a>第4段：编译前的准备（行50-95）</h2><p>这段涉及到编译前的准备工作，包括对信号处理的设置（如<code>rt_sigaction</code>调用），以确保在编译过程中能够正确处理诸如中断（SIGINT）和挂起（SIGHUP）等信号。接着，gcc进行一系列的路径和文件检查，确认编译器组件和工具链的位置（如查找gcc，cc1，以及相关库文件的位置）。这些步骤确保了编译过程可以找到所有必要的编译器组件和工具。</p>
 <h2 id="第5段：编译过程（行96-204）"><a href="#第5段：编译过程（行96-204）" class="headerlink" title="第5段：编译过程（行96-204）"></a>第5段：编译过程（行96-204）</h2><p>这是实际编译过程的核心部分，涉及多个阶段，包括预处理、编译、汇编和链接。在这一段中，gcc生成了临时文件（如汇编代码文件），调用子进程（通过<code>vfork</code>和<code>execve</code>）来执行如cc1（gcc的编译器前端），汇编器（as），以及链接器（ld或collect2）。此外，通过<code>pipe2</code>和<code>wait4</code>等系统调用进行进程间通信和同步，确保编译过程按顺序进行。各种临时文件被创建和删除（<code>unlink</code>），是编译过程中间步骤的产物。</p>
 <h2 id="第6段：清理和退出（行205-210）"><a href="#第6段：清理和退出（行205-210）" class="headerlink" title="第6段：清理和退出（行205-210）"></a>第6段：清理和退出（行205-210）</h2><p>在编译任务完成后，gcc进行清理工作，包括删除临时文件，并最终通过<code>exit_group</code>系统调用退出程序。这表示编译过程已经全部完成，所有资源被适当地释放，gcc以返回状态码0正常退出，标志着编译成功。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/" class="post-title-link" itemprop="url">gcc常用选项</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-14 10:39:45" itemprop="dateCreated datePublished" datetime="2024-03-14T10:39:45+08:00">2024-03-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一些gcc常用的选项"><a href="#一些gcc常用的选项" class="headerlink" title="一些gcc常用的选项"></a>一些gcc常用的选项</h3><ul>
-<li><code>-c</code>: 只编译但不链接， 生成目标文件(.o)， 无法识别的文件将被忽略; 原文：</li>
-</ul>
-<p>Compile or assemble the source files, but do not link. The linking stage simply is not done. The ultimate output is in the form of an object file for each source file.</p>
-<p>By default, the object file name for a source file is made by replacing the suffix ‘.c’, ‘.i’, ‘.s’, etc., with ‘.o’.</p>
-<p>Unrecognized input files, not requiring compilation or assembly, are ignored.</p>
-<ul>
-<li><p><code>-S</code> ： 将源代码编译成汇编代码，而不是直接生成机器代码或可执行文件。使用这个选项时，GCC会执行编译过程中的前几个步骤（如预处理、编译），但会停在生成汇编代码这一步，不会进一步进行汇编成目标代码或进行链接。</p>
-</li>
-<li><p><code>-E</code>: -E选项用于仅执行预处理步骤。GCC会处理源代码中的预处理指令，如宏定义的扩展、条件编译指令的处理、包含文件的插入等，但它不会编译、汇编或链接代码。注意： 默认情况下，这个输出会直接发送到标准输出（即屏幕）， 所以可以使用<code>|</code>传到vim或者其他编辑器中查看:</p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E helloworld.c <span class="string">| vim -  </span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>-o</code>: 这一部分强烈推荐看<a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Overall-Options.html">原文</a>, <code>-o</code>选项允许指定主输出文件的名称和位置，这适用于任何类型的输出，无论是可执行文件、目标文件、汇编文件还是预处理的C代码。</p>
-<ul>
-<li><p>这一部分我直接贴出gpt对原文的解读：</p>
-<p><strong>主输出定位</strong>：如果没有指定-o选项，默认情况下，可执行文件会被放置在a.out中，源文件source.suffix的目标文件会命名为source.o，其汇编文件命名为source.s，预编译头文件命名为source.suffix.gch，所有预处理的C源代码输出到标准输出（屏幕）。</p>
-<p><strong>辅助输出和转储输出</strong>：虽然-o仅指定主输出，但它也影响辅助输出和转储输出的命名和定位。除非有其他指定，这些输出文件默认被放置在主输出文件相同的目录下。对于辅助输出，输入文件的后缀会被替换为辅助输出文件类型的后缀；对于转储输出，转储文件的后缀会被添加到输入文件后缀之后。在编译命令中，辅助输出和转储输出的基础名称是主输出的名称；在编译并链接命令中，主输出名称（去掉可执行文件后缀）与输入文件名称结合使用。如果它们的基础名称相同，结果就是该基础名称，否则，它们通过短横线连接。</p>
-<p> <strong>示例</strong>：</p>
-<p> <code>gcc -c foo.c ...</code>会产生<code>foo.o</code>作为主输出，辅助输出和转储输出也会放置在它旁边，例如辅助文件<code>foo.dwo</code>（对于<code>-gsplit-dwarf</code>）和转储文件<code>foo.c.???r.final</code>（对于<code>-fdump-rtl-final</code>）。</p>
-<p>如果明确指定了非链接器的输出文件，辅助和转储文件默认使用相同的基础名称。例如，<code>gcc -c foo.c -o dir/foobar.o ...</code>将辅助输出命名为<code>dir/foobar.*</code>，转储输出命名为<code>dir/foobar.c.*</code>。</p>
-<p>链接输出会为辅助和转储输出添加前缀。例如，<code>gcc foo.c bar.c -o dir/foobar ...</code>通常会将辅助输出命名为<code>dir/foobar-foo.*和dir/foobar-bar.*</code>，转储输出命名为<code>dir/foobar-foo.c.*</code>和<code>dir/foobar-bar.c.*</code>。</p>
-<p>唯一的例外是当可执行文件与单一输入文件共享基础名称时，例如<code>gcc foo.c -o dir/foo ...</code>，这种情况下，辅助输出被命名为<code>dir/foo.*</code>，转储输出被命名为<code>dir/foo.c.*</code>。</p>
-<p><strong>调整辅助和转储输出的位置和名称</strong>：可以通过<code>-dumpbase</code>、<code>-dumpbase-ext</code>、<code>-dumpdir</code>、<code>-save-temps=cwd</code>和<code>-save-temps=obj</code>选项调整辅助和转储输出的位置和名称。</p>
-<p>简而言之，-o选项不仅允许你指定主输出文件的名称和位置，它还间接影响了辅助输出和转储输出的命名和定位规则。这在管理大型项目和自定义构建过程时非常有用。</p>
-</li>
-</ul>
-</li>
-<li><p><code>-g</code>: 在可执行文件中生成标准调试信息。<code>-g</code>选项生成的调试信息会尽量适配不同的调试器，但主要还是以GDB（GNU Debugger）为主。</p>
-</li>
-<li><p><code>-ggdb</code> :为GDB调试器优化，生成最丰富的调试信息,包括一些特定于GDB的优化，以提供更好的调试体验。</p>
-</li>
-<li><p><code>-Wall</code>: 开启大多数编译器警告，有助于发现潜在的错误。</p>
-</li>
-<li><p><code>Werror</code>: 将所有的警告当作错误处理。</p>
-</li>
-<li><p><code>-D</code>: 定义宏，即在编译时从命令行向源代码中引入宏定义。 基本语法如下： <code>-Dname</code>或者<code>-Dname=definition</code>, 其中，name是要定义的宏的名称，definition是这个宏的值。如果没有指定definition，宏name的值默认为1。</p>
-<ul>
-<li>eg:  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Debug mode is enabled.\n&quot;</span>);</span><br><span class="line">    <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Debug mode is not enabled.\n&quot;</span>);</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>  使用-D选项来定义DEBUG宏：<br>  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -DDEBUG <span class="built_in">example</span>.c -o <span class="built_in">example</span></span><br></pre></td></tr></table></figure><br>  这将使得编译的程序在运行时输出：“Debug mode is enabled.” 因为DEBUG宏在编译时被定义了，所以预处理器会包含#ifdef DEBUG和#endif之间的代码。</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/" class="post-title-link" itemprop="url">concat宏浅析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-11 11:39:29" itemprop="dateCreated datePublished" datetime="2024-03-11T11:39:29+08:00">2024-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>concat 是一个常见的宏编程技术，用于将两个或多个预处理器标记（通常是宏参数或宏定义）连接（concatenate）成一个单一的标记, 通常通过使用预处理器的 ## 操作符实现，该操作符用于连接两个标记。</p>
-<h4 id="Concat-宏的基本用法"><a href="#Concat-宏的基本用法" class="headerlink" title="`Concat`宏的基本用法"></a>`Concat`宏的基本用法</h4><p>假设有一个 <code>concat</code> 宏定义如下：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#define</span> concat(<span class="selector-tag">a</span>, <span class="selector-tag">b</span>) <span class="selector-tag">a</span> ## <span class="selector-tag">b</span></span><br></pre></td></tr></table></figure>
-<p>这里，## 操作符会将它的两个参数 a 和 b 连接成一个单一的标记。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>使用 concat 来动态创建函数名：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> concat(a, b) a ## b</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个示例函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func123</span>()</span> &#123;</span><br><span class="line">    <span class="comment">// 函数体</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">int</span> <span class="title">main</span>()</span> &#123;</span><br><span class="line">    <span class="comment">// 调用 concat 宏来连接 &#x27;func&#x27; 和 &#x27;123&#x27;，生成函数名 &#x27;func123&#x27;</span></span><br><span class="line">    concat(func, <span class="number">123</span>)();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，concat(func, 123) 会在预处理阶段被展开为 func123，因此 concat(func, 123)(); 实际上调用的是 func123()函数。    </p>
 
       
     </div>

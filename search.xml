@@ -898,7 +898,7 @@
   </entry>
   <entry>
     <title>分层领域模型解读</title>
-    <url>/2025/02/26/%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB/</url>
+    <url>/2025/02/26/%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB-1/</url>
     <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>最近在开发项目的时候碰到了领域模型，但是并没有对其中的各层关系以及各层传递数据方式理解清晰。在此记录下分层领域模型数据的传递过程</p>
 <h2 id="所谓领域模型"><a href="#所谓领域模型" class="headerlink" title="所谓领域模型"></a>所谓领域模型</h2><p>所谓领域模型，其实就是<strong>C++类</strong>，再详细一点就是有作用范围的实体类。</p>
 <p>其核心目标是<strong>业务抽象</strong>：将现实业务中的实体、流程和规则转化为可被代码理解和操作的结构。</p>
@@ -906,13 +906,11 @@
 <ul>
 <li><code>DO</code>（Data Object）：此对象与数据库表结构一一对应，通过 <code>DAO</code> 层向上传输数据源对象。</li>
 <li><code>DTO</code>（Data Transfer Object）：数据传输对象，Service 或 Manager 向外传输的对象。 </li>
-<li><code>BO</code>（Business Object）：业务对象，可以由 Service 层输出的封装业务逻辑的对象。<ul>
+<li><code>BO</code>（Business Object）：业务对象，可以由 Service 层输出的封装业务逻辑的对象。</li>
 <li><code>Query</code>：数据查询对象，各层接收上层的查询请求。</li>
-</ul>
-</li>
 <li><code>VO</code>（View Object）：显示层对象，通常是 Web 向模板渲染引擎层传输的对象。</li>
 </ul>
-<p><img src="/2024/02/22/JYY-s-ICS2020-PA1/" alt="领域模型"></p>
+<p><img src="/2024/02/22/JYY-s-ICS2020-PA1/ng" alt="img"></p>
 <h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p><strong>订单领域模型</strong></p>
 <figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">聚合根：Order（订单）</span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>实体：OrderItem（订单项）</span><br><span class="line"><span class="bullet">- </span>值对象：Address（配送地址）</span><br><span class="line"><span class="bullet">- </span>领域服务：OrderService（处理订单创建、取消）</span><br><span class="line"><span class="bullet">- </span>领域事件：OrderCreatedEvent（订单创建事件）</span><br><span class="line"><span class="bullet">- </span>仓储：OrderRepository（持久化订单）</span><br></pre></td></tr></table></figure>
 

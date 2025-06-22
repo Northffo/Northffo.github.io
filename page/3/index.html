@@ -23,7 +23,7 @@
     <meta name="description" content="时间的线性是温柔的骗局">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ffo&#39;s Blog">
-<meta property="og:url" content="https://northffo.github.io/categories/OS/index.html">
+<meta property="og:url" content="https://northffo.github.io/page/3/index.html">
 <meta property="og:site_name" content="ffo&#39;s Blog">
 <meta property="og:description" content="时间的线性是温柔的骗局">
 <meta property="og:locale" content="zh_CN">
@@ -32,14 +32,14 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://northffo.github.io/categories/OS/">
+<link rel="canonical" href="https://northffo.github.io/page/3/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/OS/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/3/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>分类: OS | ffo's Blog</title>
+<title>ffo's Blog</title>
   
 
 
@@ -72,7 +72,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">ffo's Blog</p>
+      <h1 class="site-title">ffo's Blog</h1>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -182,50 +182,105 @@
 
     </div>
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner index posts-expand">
+
+    
 
 
+<div class="post-block">
   
   
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">OS
-          <small>分类</small>
-        </h1>
-      </div>
 
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/" class="post-title-link" itemprop="url">Linux如何确定文件类型以及文件拓展名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-02-19 13:38:12" itemprop="dateCreated datePublished" datetime="2024-02-19T13:38:12+08:00">2024-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:12" itemprop="dateModified" datetime="2025-06-16T15:51:12+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>前几天在做蒋炎岩老师的PA有一个小<a target="_blank" rel="noopener" href="https://www.cprogramming.com/gdb.html">实验</a>在实验中使用<code>g++ main.cpp -o main</code>来编译cpp文件, 但是上面的-o其实是g++的一个选项, 作用是自定义生成文件的名称, 上面的指令就是编译<code>main.cpp</code>文件, 并将编译后的可执行文件命名为main.</p>
+<p>所以编译c文件其实只需要<code>gcc main.c</code>指令, 这条指令会默认生成a.out可执行文件</p>
+<p>我突然想到一个问题, 是不是上面的main也是.out文件, 但是在我查阅资料后发现并不是这样:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-03-14T20:55:36+08:00"
-              content="2024-03-14">
-          03-14
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-        <a class="post-title-link" href="/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/" itemprop="url">
-          <span itemprop="name">追踪一个main.c的周期</span>
-        </a>
-      </div>
-
+    <footer class="post-footer">
+        <div class="post-eof"></div>
       
-    </header>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
 
 </div>
   </main>

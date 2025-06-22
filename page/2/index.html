@@ -152,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -183,6 +183,100 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">unordered_map的排序</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-18 21:32:50" itemprop="dateCreated datePublished" datetime="2024-05-18T21:32:50+08:00">2024-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:25" itemprop="dateModified" datetime="2025-06-16T15:51:25+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="unordered-map-的排序"><a href="#unordered-map-的排序" class="headerlink" title="unordered_map 的排序"></a>unordered_map 的排序</h1><p><code>unordered_map</code>是C++的哈希表结构， <code>unorded_map</code>并不能直接排序， 如果要排序，一般来说需要将<code>unordered_map</code>转换为<code>vector</code>再通过自定义排序函数使用<code>sort</code>进行排序。</p>
+<p>实例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(pair&lt;<span class="type">char</span>, <span class="type">int</span>&gt;&amp; a, pair&lt;<span class="type">char</span>,<span class="type">int</span>&gt;&amp; b)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> a.second &gt; b.second;   <span class="comment">// 按照second降序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sort_unordered_map</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   unordered_map&lt;<span class="type">char</span>, <span class="type">int</span>&gt; mp;</span><br><span class="line"></span><br><span class="line">   <span class="type">int</span> idx = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">char</span> c = <span class="string">&#x27;a&#x27;</span>; c &lt;= <span class="string">&#x27;z&#x27;</span>; c++) &#123;</span><br><span class="line">      mp[c] = idx++;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 利用vector构造函数快速转换</span></span><br><span class="line">   vector&lt;pair&lt;<span class="type">char</span>, <span class="type">int</span>&gt;&gt; <span class="built_in">sorted_mp</span>(mp.<span class="built_in">begin</span>(), mp.<span class="built_in">end</span>());</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">sort</span>(sorted_mp.<span class="built_in">begin</span>(), sorted_mp.<span class="built_in">end</span>(), cmp);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 此时可以选择直接使用排序后的vector或者再转换为哈希表</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">auto</span> [a, b] : sorted_mp) &#123;</span><br><span class="line">      cout &lt;&lt; a &lt;&lt; <span class="string">&quot;&quot;</span> &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1117,102 +1211,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/" class="post-title-link" itemprop="url">Linux如何确定文件类型以及文件拓展名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-19 13:38:12" itemprop="dateCreated datePublished" datetime="2024-02-19T13:38:12+08:00">2024-02-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-16 15:51:12" itemprop="dateModified" datetime="2025-06-16T15:51:12+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>前几天在做蒋炎岩老师的PA有一个小<a target="_blank" rel="noopener" href="https://www.cprogramming.com/gdb.html">实验</a>在实验中使用<code>g++ main.cpp -o main</code>来编译cpp文件, 但是上面的-o其实是g++的一个选项, 作用是自定义生成文件的名称, 上面的指令就是编译<code>main.cpp</code>文件, 并将编译后的可执行文件命名为main.</p>
-<p>所以编译c文件其实只需要<code>gcc main.c</code>指令, 这条指令会默认生成a.out可执行文件</p>
-<p>我突然想到一个问题, 是不是上面的main也是.out文件, 但是在我查阅资料后发现并不是这样:</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/02/19/Linux%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%96%87%E4%BB%B6%E6%8B%93%E5%B1%95%E5%90%8D/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

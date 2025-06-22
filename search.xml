@@ -1093,4 +1093,142 @@ let guess: u32 = guess.trim().parse().expect(&quot;Please type a number!&quot;)	
         <tag>Rust</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Rust_CommonConcept</title>
+    <url>/2025/06/17/Rust-CommonConcept/</url>
+    <content><![CDATA[<ul>
+<li><p>Rust中的变量默认是不可变的, 但是可以添加<code>mut</code>关键字使之可变</p>
+<p>Rust有单次赋值(Single assignment)原则, 尽管Rust变量默认是不可变的, 但是它允许你在声明变量后延迟赋值一次, 只要编译器能确定该变量只会被赋值一次即可.</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 下面的语句是可以通过编译的</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>;</span><br><span class="line"><span class="keyword">if</span> cond &#123;</span><br><span class="line">	x = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	x = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>常量声明方式:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> THREE_HOURS_IN_SENCONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+<p>常量不允许使用<code>mut</code>关键字来修饰, 也就是说常量是不可改变的.</p>
+<p>常量存活在程序运行的整个生命周期, 也就是说在常量定义的范围内一直生效</p>
+</li>
+<li><p><strong>Shadowing</strong>: 新变量覆盖了旧变量,导致在特定作用域内旧变量的值不可见</p>
+</li>
+<li><h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><p><strong>整形:</strong><img src="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/Concept/DataType.png" alt="DataType"></p>
+<p>其中,有符号数采用二进制补码存储, <code>isize</code>和<code>usize</code>取决于计算机的架构</p>
+<p>另外编译的时候,如果使用debug模式, 编译器会检查整形溢出. 但是如果采用release模式, 则不会进行溢出检查, 而是会类型回绕</p>
+</li>
+</ul>
+<p>​	</p>
+<p>​	<strong>浮点数:</strong> 默认为<code>f64</code>, 根据IEEE-754标准表示</p>
+<p>​	</p>
+<p>​	<strong>布尔类型:</strong>  <code>true</code> <code>false</code></p>
+<p>​	</p>
+<p>​	<strong>字符类型:</strong> 一个Rust字符占4字节, 可以表示其他语言, 并且零宽空格也是有效的char值</p>
+<p>​	</p>
+<p>​	<strong>元组类型:</strong> 固定长度, 元组中的元素类型不必相同 </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">tup</span>: (<span class="type">i32</span>, <span class="type">f64</span>, <span class="type">u8</span>) = (<span class="number">500</span>, <span class="number">6.4</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​	可以通过模式匹配(pattern matching)解构元组值:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">tup</span> = (<span class="number">500</span>, <span class="number">6.4</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">let</span> (x, y, z) = tup;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The value of y is &#123;y&#125;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​	也可以通过点(.)来获取每个位置的元素</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span>: (<span class="type">i32</span>, <span class="type">f64</span>, <span class="type">u8</span>) = (<span class="number">500</span>, <span class="number">6.4</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">one</span> = x.<span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">two</span> = x.<span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">three</span> = x.<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​	空元组也叫单元(unit), 这个值及对应类型都写作(), 代表空值或者空返回类型.如果表达式没有返回其他任何值, 则隐式返回单元值.</p>
+<p>​	</p>
+<p>​	<strong>数组类型</strong>: 固定长度, 每个元素类型都相同</p>
+<p>​	声明方式:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">months</span> = [<span class="string">&quot;January&quot;</span>, <span class="string">&quot;February&quot;</span>, <span class="string">&quot;March&quot;</span>, <span class="string">&quot;April&quot;</span>, <span class="string">&quot;May&quot;</span>, <span class="string">&quot;June&quot;</span>, <span class="string">&quot;July&quot;</span>,</span><br><span class="line">              <span class="string">&quot;August&quot;</span>, <span class="string">&quot;September&quot;</span>, <span class="string">&quot;October&quot;</span>, <span class="string">&quot;November&quot;</span>, <span class="string">&quot;December&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">a</span>: [<span class="type">i32</span>; <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];			<span class="comment">// 声明为5个i32类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">a</span> = [<span class="number">3</span>; <span class="number">5</span>];			<span class="comment">// 生成5个3</span></span><br></pre></td></tr></table></figure>
+
+<p>​	可以通过中括号声明, eg: months[1], month[2] st.</p>
+<ul>
+<li><p><strong>Statements(语句) 和 Expressions(表达式)</strong></p>
+<ul>
+<li><p>语句是执行某些操作但不返回值的操作</p>
+<ul>
+<li><p>let 绑定</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表达式语句</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">y</span> = <span class="number">6</span>;</span><br><span class="line">y + <span class="number">1</span>;			<span class="comment">// 这是一个语句, y + 1的结果被丢弃了</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数定义</p>
+</li>
+<li><p>宏调用（作为语句）： <code>println!(&quot;Hello, world!&quot;);</code> （虽然 <code>println!</code> 是一个宏，但当它用作打印输出时，通常作为不返回值的语句使用）</p>
+</li>
+<li><p><strong>任何以分号结尾的表达式：</strong></p>
+</li>
+</ul>
+</li>
+<li><p>表达式是 Rust 中会计算并<strong>产生一个值</strong>的代码块。它们可以由字面量、变量、运算符、函数调用、宏调用，甚至由花括号包围的代码块组成。可以用于赋值, 并且<strong>通常不以分号结尾</strong>, 如果以分号结尾,它就会变成一个语句, 其返回值会被丢弃.</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">y</span> = &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">3</span>;</span><br><span class="line">    x + <span class="number">1</span>		<span class="comment">// 这是一个表达式, 返回4</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// now y is 4</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="总结区别"><a href="#总结区别" class="headerlink" title="总结区别"></a>总结区别</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>表达式 (Expressions)</th>
+<th>语句 (Statements)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>返回值</strong></td>
+<td><strong>会返回值</strong></td>
+<td><strong>不返回值</strong></td>
+</tr>
+<tr>
+<td><strong>结尾</strong></td>
+<td>通常不以分号结尾（在作为代码块的最后一行时）</td>
+<td><strong>通常以分号结尾</strong></td>
+</tr>
+<tr>
+<td><strong>目的</strong></td>
+<td>计算并产生一个值</td>
+<td>执行一个操作</td>
+</tr>
+<tr>
+<td><strong>例子</strong></td>
+<td><code>1 + 2</code>, <code>&#123; let x = 3; x + 1 &#125;</code>, <code>if cond &#123; 1 &#125; else &#123; 0 &#125;</code></td>
+<td><code>let x = 5;</code>, <code>println!(&quot;Hello!&quot;);</code>, <code>x = 10;</code></td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>函数</strong></p>
+<p>声明方法: </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;hello, wworld!&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="title function_ invoke__">another_funtion</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">another_funtion</span>(x: <span class="type">i32</span>) &#123;			<span class="comment">// 必须定义函数形参的类型</span></span><br><span class="line">	prinlin!(<span class="string">&quot;Another funtion.&quot;</span>);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is: &#123;x&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">plus_one</span>(x: <span class="type">i32</span>) &#123;</span><br><span class="line">    x + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">f</span>(x: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;		<span class="comment">// 有返回值的函数</span></span><br><span class="line">    x + <span class="number">1</span></span><br><span class="line">    <span class="comment">// return x + 1;		// 显式返回也可以</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Rust不在乎在哪里定义函数(调用前, 调用后), 只要函数被定义在调用者可以看到的作用域中即可.</p>
+</li>
+<li><p><strong>控制流</strong></p>
+<ul>
+<li><p>条件控制</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">number</span> = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> number &lt; <span class="number">5</span> &#123;				<span class="comment">// if 后面一定是跟一个bool类型, 如果是其他类型并不会隐式转换为bool类型</span></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;condition was true&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;condition was false&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">condition</span> = <span class="literal">true</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> <span class="variable">number</span> = <span class="keyword">if</span> condition &#123; <span class="number">5</span> &#125; <span class="keyword">else</span> &#123; <span class="number">6</span> &#125;;			<span class="comment">// 这里的两个分支都必须是相同的类型, 不然会报错</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of number is &#123;number&#125;. &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为Rust需要在编译时需要知道变量的类型, 而不是运行时再做推断, 所以如果使用上面的语句来进行赋值的时候, 不同分支返回的都必须是相同的类型.</p>
+</li>
+<li><p>循环</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">cnt</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">result</span> = <span class="keyword">loop</span> &#123;</span><br><span class="line">		cnt += <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> cnt == <span class="number">10</span> &#123;</span><br><span class="line">            <span class="keyword">break</span> cnt * <span class="number">2</span>;			<span class="comment">// 使用break 中断循环并且返回值</span></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The result is &#123;result&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果有嵌套循环, 可以通过标签来标注某个特定的循环并且可以<code>break</code>掉特的循环:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">loopwithlabels</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">cnt</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="symbol">&#x27;counting_up</span>: <span class="keyword">loop</span> &#123;			<span class="comment">// 使用单引号来声明一个标签</span></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;cnt = &#123;cnt&#125;&quot;</span>);</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">remaining</span> = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">loop</span> &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;remaining = &#123;remaining&#125;&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> remaining == <span class="number">9</span> &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> cnt == <span class="number">2</span> &#123;</span><br><span class="line">                <span class="keyword">break</span> <span class="symbol">&#x27;counting_up</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            remaining -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cnt += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;End cnt = &#123;cnt&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>while 循环: 与其他语言十分相似</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">number</span> = <span class="number">3</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> number != <span class="number">0</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;number&#125;&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        number -= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;LIFTOFF!!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>遍历集合:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 通过while循环来遍历 */</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">a</span> = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>];</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">idx</span> = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">   	<span class="keyword">while</span> idx &lt; <span class="number">5</span> &#123;</span><br><span class="line">		<span class="built_in">println!</span>(<span class="string">&quot;the value is &#123;&#125;&quot;</span>, a[idx]);</span><br><span class="line">        </span><br><span class="line">        idx += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 通过for循环遍历, 推荐 */</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">a</span> = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> <span class="variable">element</span> <span class="keyword">in</span> a &#123;</span><br><span class="line">		<span class="built_in">println!</span>(<span class="string">&quot;the value is &#123;element&#125;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>​	</p>
+]]></content>
+      <categories>
+        <category>The Rust Programming Language</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
 </search>

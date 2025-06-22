@@ -20,26 +20,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="时间的线性是温柔的骗局">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ffo&#39;s Blog">
-<meta property="og:url" content="https://northffo.github.io/index.html">
+    <meta name="description" content="Rust中的变量默认是不可变的, 但是可以添加mut关键字使之可变 Rust有单次赋值(Single assignment)原则, 尽管Rust变量默认是不可变的, 但是它允许你在声明变量后延迟赋值一次, 只要编译器能确定该变量只会被赋值一次即可. 1234567&#x2F;&#x2F; 下面的语句是可以通过编译的let x;if cond &#123;	x &#x3D; 1;&#125; else &#123;	x &#x3D; 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust_CommonConcept">
+<meta property="og:url" content="https://northffo.github.io/2025/06/17/Rust-CommonConcept/index.html">
 <meta property="og:site_name" content="ffo&#39;s Blog">
-<meta property="og:description" content="时间的线性是温柔的骗局">
+<meta property="og:description" content="Rust中的变量默认是不可变的, 但是可以添加mut关键字使之可变 Rust有单次赋值(Single assignment)原则, 尽管Rust变量默认是不可变的, 但是它允许你在声明变量后延迟赋值一次, 只要编译器能确定该变量只会被赋值一次即可. 1234567&#x2F;&#x2F; 下面的语句是可以通过编译的let x;if cond &#123;	x &#x3D; 1;&#125; else &#123;	x &#x3D; 2">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://northffo.github.io/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/Concept/DataType.png">
+<meta property="article:published_time" content="2025-06-17T08:09:37.000Z">
+<meta property="article:modified_time" content="2025-06-22T06:13:59.618Z">
 <meta property="article:author" content="ffo">
-<meta property="article:tag" content="linux, Debian, C++&#x2F;C">
+<meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://northffo.github.io/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/Concept/DataType.png">
 
 
-<link rel="canonical" href="https://northffo.github.io/">
+<link rel="canonical" href="https://northffo.github.io/2025/06/17/Rust-CommonConcept/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://northffo.github.io/2025/06/17/Rust-CommonConcept/","path":"2025/06/17/Rust-CommonConcept/","title":"Rust_CommonConcept"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>ffo's Blog</title>
+<title>Rust_CommonConcept | ffo's Blog</title>
   
 
 
@@ -72,7 +76,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">ffo's Blog</h1>
+      <p class="site-title">ffo's Blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -125,7 +129,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -138,6 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%8C%BA%E5%88%AB"><span class="nav-number"></span> <span class="nav-text">总结区别</span></a></div>
         </div>
         <!--/noindex-->
 
@@ -182,16 +187,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/06/17/Rust-CommonConcept/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -205,13 +211,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="name" content="Rust_CommonConcept | ffo's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/06/17/Rust-CommonConcept/" class="post-title-link" itemprop="url">Rust_CommonConcept</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Rust_CommonConcept
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -241,6 +247,13 @@
     </span>
 
   
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
 </div>
 
         </div>
@@ -249,8 +262,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <ul>
+    <div class="post-body" itemprop="articleBody"><ul>
 <li><p>Rust中的变量默认是不可变的, 但是可以添加<code>mut</code>关键字使之可变</p>
 <p>Rust有单次赋值(Single assignment)原则, 尽管Rust变量默认是不可变的, 但是它允许你在声明变量后延迟赋值一次, 只要编译器能确定该变量只会被赋值一次即可.</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面的语句是可以通过编译的</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>;</span><br><span class="line"><span class="keyword">if</span> cond &#123;</span><br><span class="line">	x = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	x = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -378,7 +390,6 @@
 </ul>
 <p>​	</p>
 
-      
     </div>
 
     
@@ -386,598 +397,38 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/06/16/Rust-GuessingGame/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/06/16/Rust-GuessingGame/" class="post-title-link" itemprop="url">Rust_GuessingGame</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-06-16 16:31:17 / 修改时间：18:17:12" itemprop="dateCreated datePublished" datetime="2025-06-16T16:31:17+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/The-Rust-Programming-Language/" itemprop="url" rel="index"><span itemprop="name">The Rust Programming Language</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><p>一般crate使用<code>use</code>导入, 但是Rust会自动导入<code>prelude</code>,里面包含了基本的功能, 详见<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/prelude/index.html">standard library documentation</a>.</p>
-</li>
-<li><p>Rust中的变量默认是不可变的, 可以添加<code>mut</code>关键字使之改变</p>
-</li>
-<li><p><code>read_line</code>读取用户输入,并将其<strong>添加</strong>到字符串尾端(append), 而不是覆盖, 不同于<code>cin</code> </p>
-</li>
-<li><p><code>read_line</code>会返回一个Result值</p>
-</li>
-<li><p><code>Result</code>是一个枚举类型,其中有<code>Ok</code>和<code>Err</code>, 所以可以使用<code>read_line(&amp;mut guess).expect(&quot;Failed to read&quot;)</code>  expect函数来处理错误读入, <strong>任何类型的值都有其方法</strong></p>
-</li>
-<li><p>正常情况下,<code>expect()</code>方法会返回用户输入的字节数</p>
-</li>
-<li><p><code>println!()</code> 可以使用{}来输出变量, 但是如果变量名称不存在就会报错</p>
-</li>
-<li><p><code>crate</code>是一组Rust源代码文件,用户构建的项目是一个二进制<code>crate</code>, 它是一个可执行文件. <code>rand crate</code>是一个库crate, <strong>它包含的代码用于其他程序, 并不能单独运行</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/06/16/Rust-GuessingGame/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/06/16/Rust-Intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/06/16/Rust-Intro/" class="post-title-link" itemprop="url">Rust_Intro</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-06-16 16:01:07 / 修改时间：18:17:23" itemprop="dateCreated datePublished" datetime="2025-06-16T16:01:07+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/The-Rust-Programming-Language/" itemprop="url" rel="index"><span itemprop="name">The Rust Programming Language</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>此分类（<em>The Rust Programming Language</em>）采用brown university的<a target="_blank" rel="noopener" href="https://rust-book.cs.brown.edu/">实验版本</a>, 对细节进行解释同时进行学习记录</p>
-</blockquote>
-<p><img src="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/Ferris.png" alt="image-20250616162739328"></p>
-<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a><a target="_blank" rel="noopener" href="https://rust-book.cs.brown.edu/ch01-00-getting-started.html#getting-started">Getting Started</a></h2><ul>
-<li><p><code>rustup</code> 来管理机器上的Rust版本</p>
-</li>
-<li><pre><code class="shell">rustc main.rs				// rustc的用法, rustfmt也可以这么使用
-rustfmt main.rs				// 使用rust的语法格式化文档
-./main
-</code></pre>
-</li>
-<li><p><code>cargo init</code>: 自动获取cargo.toml文件\</p>
-</li>
-<li><p>cargo.lock文件追踪准确的版本依赖</p>
-</li>
-<li><p><code>cargo run</code>  只有代码发生改变的时候才会重新编译运行, 否则直接运行</p>
-</li>
-<li><p><code>cargo build --release</code>会在target&#x2F;release下生成目标文件, 会让Rust代码运行更快,没有debug. 如果要衡量代码效率就是用此命令编译</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/06/16/Rust-Intro/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/04/06/UNIX%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/04/06/UNIX%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-1/" class="post-title-link" itemprop="url">UNIX网络编程_1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-04-06 04:31:59" itemprop="dateCreated datePublished" datetime="2025-04-06T04:31:59+08:00">2025-04-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-16 15:51:18" itemprop="dateModified" datetime="2025-06-16T15:51:18+08:00">2025-06-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="一个简单的时间获取客户程序"><a href="#一个简单的时间获取客户程序" class="headerlink" title="一个简单的时间获取客户程序"></a>一个简单的时间获取客户程序</h1><blockquote>
-<p>本系统： Debian 12</p>
-</blockquote>
-<blockquote>
-<p>如何下载源码并编译运行</p>
-</blockquote>
-<p>官方源码地址：<a target="_blank" rel="noopener" href="https://github.com/unpbook/unpv13e">https://github.com/unpbook/unpv13e</a></p>
-<p><code>git clone https://github.com/unpbook/unpv13e.git </code></p>
-<p>克隆到本地之后，根据README文件一步一步make配置</p>
-<p>接下来可以直接<code> make 想要运行的源码</code> 然后执行即可</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/04/06/UNIX%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/26/%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/26/%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB-1/" class="post-title-link" itemprop="url">分层领域模型解读</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-26 23:02:31" itemprop="dateCreated datePublished" datetime="2025-02-26T23:02:31+08:00">2025-02-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-16 15:51:34" itemprop="dateModified" datetime="2025-06-16T15:51:34+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>最近在开发项目的时候碰到了领域模型，但是并没有对其中的各层关系以及各层传递数据方式理解清晰。在此记录下分层领域模型数据的传递过程</p>
-<h2 id="所谓领域模型"><a href="#所谓领域模型" class="headerlink" title="所谓领域模型"></a>所谓领域模型</h2><p>所谓领域模型，其实就是<strong>C++类</strong>，再详细一点就是有作用范围的实体类。</p>
-<p>其核心目标是<strong>业务抽象</strong>：将现实业务中的实体、流程和规则转化为可被代码理解和操作的结构。</p>
-<p>其中的领域对象描述是这样的：</p>
+<div class="post-copyright">
 <ul>
-<li><code>DO</code>（Data Object）：此对象与数据库表结构一一对应，通过 <code>DAO</code> 层向上传输数据源对象。</li>
-<li><code>DTO</code>（Data Transfer Object）：数据传输对象，Service 或 Manager 向外传输的对象。 </li>
-<li><code>BO</code>（Business Object）：业务对象，可以由 Service 层输出的封装业务逻辑的对象。</li>
-<li><code>Query</code>：数据查询对象，各层接收上层的查询请求。</li>
-<li><code>VO</code>（View Object）：显示层对象，通常是 Web 向模板渲染引擎层传输的对象。</li>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ffo
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://northffo.github.io/2025/06/17/Rust-CommonConcept/" title="Rust_CommonConcept">https://northffo.github.io/2025/06/17/Rust-CommonConcept/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
-<p><img src="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/layer.png" alt="img"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/26/%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Rust/" rel="tag"># Rust</a>
+          </div>
+
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="post-title-link" itemprop="url">浅谈智能指针</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-20 00:18:41" itemprop="dateCreated datePublished" datetime="2025-02-20T00:18:41+08:00">2025-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-16 15:54:12" itemprop="dateModified" datetime="2025-06-16T15:54:12+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>野指针（Wild Pointer）： 野指针是指指向任意未知位置的指针，它没有被初始化或者指向无效的内存。</p>
-<p>悬挂指针（dangling pointer）：指指向已释放或无效内存的指针。当一个指向动态分配内存的指针所指向的内存被释放后，该指针仍然保留着原来的指向，但此时使用该指针访问所指向的内存将导致未定义的行为。</p>
-<p>RAII (Resource Acquisition Is Initialization): 资源获取即初始化， R使用一个对象，在其构造时获取对应的资源，在对象生命期内控制对资源的访问，使之始终保持有效，最后在对象析构的时候，释放构造时获取的资源。像下面的例子：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/06/16/Rust-GuessingGame/" rel="prev" title="Rust_GuessingGame">
+                  <i class="fa fa-angle-left"></i> Rust_GuessingGame
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/17/oatpp%E7%9A%84%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/17/oatpp%E7%9A%84%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2/" class="post-title-link" itemprop="url">oatpp的初步探索</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-17 17:35:24" itemprop="dateCreated datePublished" datetime="2025-02-17T17:35:24+08:00">2025-02-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-16 15:49:58" itemprop="dateModified" datetime="2025-06-16T15:49:58+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一些基本概念"><a href="#一些基本概念" class="headerlink" title="一些基本概念"></a>一些基本概念</h2><p>CORS(跨域资源共享)：浏览器的安全特性，允许你控制哪些外部域名访问你的API</p>
-<p>API路由：简单来说就是根据客户端发起的请求（包括请求的方法，如GET、POST、PUT等，以及请求的URL路径）将请求映射到不同的处理逻辑中：</p>
-<p>1.匹配客户端发来的请求</p>
-<p>2.根据请求的路径和方法，找到并执行相应的代码（处理逻辑）</p>
-<p>3.返回一个响应给客户端</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/02/17/oatpp%E7%9A%84%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+            <div class="post-nav-item">
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          </div>
     </footer>
   </article>
 </div>
@@ -985,301 +436,14 @@ rustfmt main.rs				// 使用rust的语法格式化文档
 
 
 
+
+
     
-
-
-<div class="post-block">
+  
+  <div class="comments giscus-container">
+  </div>
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">(转载)Docker常用命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-05 14:06:31" itemprop="dateCreated datePublished" datetime="2025-02-05T14:06:31+08:00">2025-02-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%BD%AC%E8%BD%BD/" itemprop="url" rel="index"><span itemprop="name">转载</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.yuque.com/leifengyang/sutong/au0lv3sv3eldsmn8">docker常用命令</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/01/06/%E5%AE%89%E8%A3%85Anolis%E7%9A%84%E5%9D%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/01/06/%E5%AE%89%E8%A3%85Anolis%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">实机安装Anolis的坑及安装之后的网络修复</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-01-06 16:31:53" itemprop="dateCreated datePublished" datetime="2025-01-06T16:31:53+08:00">2025-01-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-16 15:51:39" itemprop="dateModified" datetime="2025-06-16T15:51:39+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>前两天突发奇想想把一直在用的实机(Debian 12)换成Anolis OS,在安装这个系统的时候碰到了不少问题,现记录于此.</p>
-<blockquote>
-<h3 id="机器配置"><a href="#机器配置" class="headerlink" title="机器配置:"></a>机器配置:</h3><p><strong>笔记本品牌:</strong> HUAWEI MateBook D 14</p>
-</blockquote>
-<p><strong>CPU型号:</strong> R5 4500U</p>
-<p><strong>内存:</strong> DDR4 16GB 2666MHz</p>
-<p><strong>硬盘:</strong> SSD 512GB </p>
-<p><strong>网络通信:</strong> Realtek RTL8821CE&#x2F;RTL8822CE Wi-Fi</p>
-<blockquote>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装:"></a>安装:</h3><p><strong>准备:</strong> 至少16GB的U盘</p>
-</blockquote>
-<ol>
-<li><p>从<a target="_blank" rel="noopener" href="https://openanolis.cn/">Anolis官网</a>下载需要的镜像</p>
-</li>
-<li><p>通过u盘刻录软件将镜像刻录到U盘(我用的是rufus), 其中刻录的时候要注意的是: </p>
-<p> 1.分区类型(MBR或GPT)一定要选择与系统相匹配的类型, MateBook D 14要选择GPT,不然会导致启动u盘的时候被验证失败(Error: Vertification failed).</p>
-<p> 2.写入模式要选择DD模式, 不要选择ISO模式, 不然会导致进入安装界面的时候本地仓库识别不到.</p>
-</li>
-<li><p>最后根据引导完成安装即可.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/01/06/%E5%AE%89%E8%A3%85Anolis%E7%9A%84%E5%9D%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ffo">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ffo's Blog">
-      <meta itemprop="description" content="时间的线性是温柔的骗局">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ffo's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/" class="post-title-link" itemprop="url">记忆化搜索求斐波那契数列的土亢</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-06-12 11:32:55" itemprop="dateCreated datePublished" datetime="2024-06-12T11:32:55+08:00">2024-06-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-16 15:52:16" itemprop="dateModified" datetime="2025-06-16T15:52:16+08:00">2025-06-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%83%82%E6%B4%BB%E5%A4%A7%E8%B5%8F/" itemprop="url" rel="index"><span itemprop="name">烂活大赏</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>闲来无事刷个题目用所有方法解一遍斐波那契，没想到在记忆化翻车了</p>
-</blockquote>
-<p><b> 呆码 </b></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; mdfs = [&amp;](<span class="type">int</span> i) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(i &lt;= <span class="number">1</span>) <span class="keyword">return</span> i;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(memo[i] != <span class="number">-1</span>) <span class="keyword">return</span> memo[i];</span><br><span class="line"></span><br><span class="line">            memo[i] = <span class="built_in">mdfs</span>(i - <span class="number">1</span>) + <span class="built_in">mdfs</span>(i - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> memo[i];</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">mdfs</span>(n);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
 </div>
   </main>
 

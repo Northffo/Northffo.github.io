@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="pPn8k9CfIz8y7g4mPGuQXy0898iOd2qKEwBHzo94s7k">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="时间的线性是温柔的骗局">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ffo&#39;s Blog">
+<meta property="og:url" content="https://northffo.github.io/page/2/index.html">
+<meta property="og:site_name" content="ffo&#39;s Blog">
+<meta property="og:description" content="时间的线性是温柔的骗局">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="ffo">
+<meta property="article:tag" content="linux, Debian, C++&#x2F;C">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://northffo.github.io/page/2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ffo's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/Northffo/Northffo.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ffo's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ffo"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ffo</p>
+  <div class="site-description" itemprop="description">时间的线性是温柔的骗局</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/" class="post-title-link" itemprop="url">记忆化搜索求斐波那契数列的土亢</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-06-12 11:32:55" itemprop="dateCreated datePublished" datetime="2024-06-12T11:32:55+08:00">2024-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:52:16" itemprop="dateModified" datetime="2025-06-16T15:52:16+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%83%82%E6%B4%BB%E5%A4%A7%E8%B5%8F/" itemprop="url" rel="index"><span itemprop="name">烂活大赏</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>闲来无事刷个题目用所有方法解一遍斐波那契，没想到在记忆化翻车了</p>
+</blockquote>
+<p><b> 呆码 </b></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">memo</span><span class="params">(n + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; mdfs = [&amp;](<span class="type">int</span> i) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(i &lt;= <span class="number">1</span>) <span class="keyword">return</span> i;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(memo[i] != <span class="number">-1</span>) <span class="keyword">return</span> memo[i];</span><br><span class="line"></span><br><span class="line">            memo[i] = <span class="built_in">mdfs</span>(i - <span class="number">1</span>) + <span class="built_in">mdfs</span>(i - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> memo[i];</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">mdfs</span>(n);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/06/12/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2%E6%B1%82%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E5%9C%9F%E4%BA%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">unordered_map的排序</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-18 21:32:50" itemprop="dateCreated datePublished" datetime="2024-05-18T21:32:50+08:00">2024-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:25" itemprop="dateModified" datetime="2025-06-16T15:51:25+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="unordered-map-的排序"><a href="#unordered-map-的排序" class="headerlink" title="unordered_map 的排序"></a>unordered_map 的排序</h1><p><code>unordered_map</code>是C++的哈希表结构， <code>unorded_map</code>并不能直接排序， 如果要排序，一般来说需要将<code>unordered_map</code>转换为<code>vector</code>再通过自定义排序函数使用<code>sort</code>进行排序。</p>
+<p>实例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(pair&lt;<span class="type">char</span>, <span class="type">int</span>&gt;&amp; a, pair&lt;<span class="type">char</span>,<span class="type">int</span>&gt;&amp; b)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> a.second &gt; b.second;   <span class="comment">// 按照second降序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sort_unordered_map</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   unordered_map&lt;<span class="type">char</span>, <span class="type">int</span>&gt; mp;</span><br><span class="line"></span><br><span class="line">   <span class="type">int</span> idx = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">for</span>(<span class="type">char</span> c = <span class="string">&#x27;a&#x27;</span>; c &lt;= <span class="string">&#x27;z&#x27;</span>; c++) &#123;</span><br><span class="line">      mp[c] = idx++;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 利用vector构造函数快速转换</span></span><br><span class="line">   vector&lt;pair&lt;<span class="type">char</span>, <span class="type">int</span>&gt;&gt; <span class="built_in">sorted_mp</span>(mp.<span class="built_in">begin</span>(), mp.<span class="built_in">end</span>());</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">sort</span>(sorted_mp.<span class="built_in">begin</span>(), sorted_mp.<span class="built_in">end</span>(), cmp);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 此时可以选择直接使用排序后的vector或者再转换为哈希表</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">auto</span> [a, b] : sorted_mp) &#123;</span><br><span class="line">      cout &lt;&lt; a &lt;&lt; <span class="string">&quot;&quot;</span> &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/" class="post-title-link" itemprop="url">二叉树的遍历</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-04 17:00:42" itemprop="dateCreated datePublished" datetime="2024-04-04T17:00:42+08:00">2024-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:28" itemprop="dateModified" datetime="2025-06-16T15:51:28+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>二叉树的知识每次用都要重新复习一遍，所以索性写一篇博客加强记忆</p>
+</blockquote>
+<p>二叉树的遍历有四种方式：前序遍历、中序遍历、后续遍历、层序遍历，下面主要通过递归和显式栈的方式来实现前中后序遍历， 层序遍历使用队列实现</p>
+<p>前中后序遍历可以简便的记为： ‘中’的位置，即</p>
+<p>​	前序遍历为：中左右</p>
+<p>​	中序遍历为：左中右</p>
+<p>​	后续遍历为：左右中</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/15/%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A0%87%E5%87%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/03/15/%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A0%87%E5%87%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/" class="post-title-link" itemprop="url">类Unix系统中进程的标准的文件描述符</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-15 16:41:26" itemprop="dateCreated datePublished" datetime="2024-03-15T16:41:26+08:00">2024-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:52:02" itemprop="dateModified" datetime="2025-06-16T15:52:02+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>文件描述符在Unix系统中是一个整数，用来标识打开的文件或者I&#x2F;O资源，每个进程默认会打开三个标准文件描述符（File Descriptors, FDs），用于处理输入和输出。下面介绍这三个FD</p>
+<ol>
+<li><strong>标准输入（Standard Input）</strong><ul>
+<li><strong>文件描述符编号</strong>：<code>0</code></li>
+<li><strong>作用</strong>：用于进程读取输入数据（默认来自键盘输入）</li>
+<li><strong>相关符号</strong>：在Shell中通常用 <code>&lt;</code> 或 <code>&lt;&lt;</code> 进行重定向（如 <code>command &lt; input.txt</code>）</li>
+</ul>
+</li>
+<li><strong>标准输出（Standard Output）</strong><ul>
+<li><strong>文件描述符编号</strong>：<code>1</code></li>
+<li><strong>作用</strong>：用于进程输出正常结果（默认显示到终端）</li>
+<li><strong>相关符号</strong>：在Shell中通常用 <code>&gt;</code> 或 <code>&gt;&gt;</code> 进行重定向（如 <code>command &gt; output.txt</code>）</li>
+</ul>
+</li>
+<li><strong>标准错误（Standard Error）</strong><ul>
+<li><strong>文件描述符编号</strong>：<code>2</code></li>
+<li><strong>作用</strong>：用于输出错误或诊断信息（默认显示到终端）</li>
+<li><strong>相关符号</strong>：在Shell中用 <code>2&gt;</code> 或 <code>2&gt;&gt;</code> 重定向错误（如 <code>command 2&gt; error.txt</code>）</li>
+</ul>
+</li>
+</ol>
+<p>​
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/03/15/%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A0%87%E5%87%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/" class="post-title-link" itemprop="url">追踪一个main.c的周期</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-14 20:55:36" itemprop="dateCreated datePublished" datetime="2024-03-14T20:55:36+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:52:22" itemprop="dateModified" datetime="2025-06-16T15:52:22+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="使用strace工具追踪main-c的gcc编译过程及a-out的执行过程"><a href="#使用strace工具追踪main-c的gcc编译过程及a-out的执行过程" class="headerlink" title="使用strace工具追踪main.c的gcc编译过程及a.out的执行过程"></a>使用strace工具追踪main.c的gcc编译过程及a.out的执行过程</h3><blockquote>
+<p>追踪gcc编译过程</p>
+</blockquote>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">strace</span> -o /dev/stdout gcc hello.c <span class="number">2</span>&gt;&amp;<span class="number">1</span> | vim -</span><br></pre></td></tr></table></figure>
+
+<p>将strace追踪信息利用<code>|</code>(管道) 传递给vim, 这边要注意的是strace的输出是直接发送到标准错误输出<code>stderr</code>, 而不是标准输出<code>stdout</code>, 所以用<code>-o dev/stdout</code>将输出写到标准输出中， <code>2&gt;&amp;1</code>是将标准错误stderr（文件描述符2）重定向到标准输出stdout（文件描述符1）中， 详情见<a href="./%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A0%87%E5%87%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6.md">此处</a>. </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/" class="post-title-link" itemprop="url">gcc常用选项</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-14 10:39:45" itemprop="dateCreated datePublished" datetime="2024-03-14T10:39:45+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:50:46" itemprop="dateModified" datetime="2025-06-16T15:50:46+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一些gcc常用的选项"><a href="#一些gcc常用的选项" class="headerlink" title="一些gcc常用的选项"></a>一些gcc常用的选项</h3><ul>
+<li><code>-c</code>: 只编译但不链接， 生成目标文件(.o)， 无法识别的文件将被忽略; 原文：</li>
+</ul>
+<p>Compile or assemble the source files, but do not link. The linking stage simply is not done. The ultimate output is in the form of an object file for each source file.</p>
+<p>By default, the object file name for a source file is made by replacing the suffix ‘.c’, ‘.i’, ‘.s’, etc., with ‘.o’.</p>
+<p>Unrecognized input files, not requiring compilation or assembly, are ignored.</p>
+<ul>
+<li><p><code>-S</code> ： 将源代码编译成汇编代码，而不是直接生成机器代码或可执行文件。使用这个选项时，GCC会执行编译过程中的前几个步骤（如预处理、编译），但会停在生成汇编代码这一步，不会进一步进行汇编成目标代码或进行链接。</p>
+</li>
+<li><p><code>-E</code>: -E选项用于仅执行预处理步骤。GCC会处理源代码中的预处理指令，如宏定义的扩展、条件编译指令的处理、包含文件的插入等，但它不会编译、汇编或链接代码。注意： 默认情况下，这个输出会直接发送到标准输出（即屏幕）， 所以可以使用<code>|</code>传到vim或者其他编辑器中查看:</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E helloworld.c <span class="string">| vim -  </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-o</code>: 这一部分强烈推荐看<a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Overall-Options.html">原文</a>, <code>-o</code>选项允许指定主输出文件的名称和位置，这适用于任何类型的输出，无论是可执行文件、目标文件、汇编文件还是预处理的C代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/" class="post-title-link" itemprop="url">concat宏浅析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-11 11:39:29" itemprop="dateCreated datePublished" datetime="2024-03-11T11:39:29+08:00">2024-03-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:50:13" itemprop="dateModified" datetime="2025-06-16T15:50:13+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>concat 是一个常见的宏编程技术，用于将两个或多个预处理器标记（通常是宏参数或宏定义）连接（concatenate）成一个单一的标记, 通常通过使用预处理器的 ## 操作符实现，该操作符用于连接两个标记。</p>
+<h4 id="Concat-宏的基本用法"><a href="#Concat-宏的基本用法" class="headerlink" title="`Concat`宏的基本用法"></a>`Concat`宏的基本用法</h4><p>假设有一个 <code>concat</code> 宏定义如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#define</span> concat(<span class="selector-tag">a</span>, <span class="selector-tag">b</span>) <span class="selector-tag">a</span> ## <span class="selector-tag">b</span></span><br></pre></td></tr></table></figure>
+<p>这里，## 操作符会将它的两个参数 a 和 b 连接成一个单一的标记。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/02/27/%E6%B5%85%E6%9E%90C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/27/%E6%B5%85%E6%9E%90C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">浅析C语言中的main函数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-02-27 11:34:20" itemprop="dateCreated datePublished" datetime="2024-02-27T11:34:20+08:00">2024-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:51" itemprop="dateModified" datetime="2025-06-16T15:51:51+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<h3 id="原文"><a href="#原文" class="headerlink" title="原文"></a><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1758808">原文</a></h3></blockquote>
+<blockquote>
+<p>some notes:</p>
+</blockquote>
+<p>返回值: main()的返回值应该是int, 而不是void. 虽然在一些编译器中，void main()可以通过编译，但并非所有编译器都支持 void main()，因为标准中从来没有定义过 void main 。</p>
+<p>main返回值类型：<br><img src="/2024/02/27/%E6%B5%85%E6%9E%90C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0/image.png" alt="main返回值类型"></p>
+<blockquote>
+<p>main()函数传参</p>
+</blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc , <span class="type">char</span>* argv[],<span class="type">char</span>* envp[])</span></span>; </span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<p>①、第一个参数argc表示的是传入参数的个数 。</p>
+<p>②、第二个参数char* argv[]，是字符串数组，用来存放指向的字符串参数的指针数组，每一个元素指向一个参数。各成员含义如下：</p>
+<p>argv[0]：指向程序运行的全路径名。</p>
+<p>argv[1]：指向执行程序名后的第一个字符串 ，表示真正传入的第一个参数。</p>
+<p>argv[2]：指向执行程序名后的第二个字符串 ，表示传入的第二个参数。</p>
+<p>……argv[n]：指向执行程序名后的第n个字符串 ，表示传入的第n个参数。</p>
+<p>规定：argv[argc]为NULL ，表示参数的结尾。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/02/27/%E6%B5%85%E6%9E%90C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/02/26/getopt-%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/26/getopt-%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">getopt()函数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-02-26 08:44:41" itemprop="dateCreated datePublished" datetime="2024-02-26T08:44:41+08:00">2024-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:50:58" itemprop="dateModified" datetime="2025-06-16T15:50:58+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在读nemu&#x2F;src&#x2F;monitor&#x2F;monitor.c中遇到了这个函数,原文如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title">parse_args</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">  <span class="type">const</span> <span class="keyword">struct</span> <span class="title class_">option</span> table[] = &#123;</span><br><span class="line">    &#123;<span class="string">&quot;batch&quot;</span>    , no_argument      , <span class="literal">NULL</span>, <span class="string">&#x27;b&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;log&quot;</span>      , required_argument, <span class="literal">NULL</span>, <span class="string">&#x27;l&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;diff&quot;</span>     , required_argument, <span class="literal">NULL</span>, <span class="string">&#x27;d&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;port&quot;</span>     , required_argument, <span class="literal">NULL</span>, <span class="string">&#x27;p&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;help&quot;</span>     , no_argument      , <span class="literal">NULL</span>, <span class="string">&#x27;h&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="number">0</span>          , <span class="number">0</span>                , <span class="literal">NULL</span>,  <span class="number">0</span> &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="type">int</span> o;</span><br><span class="line">  <span class="keyword">while</span> ( (o = <span class="built_in">getopt_long</span>(argc, argv, <span class="string">&quot;-bhl:d:p:&quot;</span>, table, <span class="literal">NULL</span>)) != <span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (o) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;b&#x27;</span>: batch_mode = <span class="literal">true</span>; <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;p&#x27;</span>: <span class="built_in">sscanf</span>(optarg, <span class="string">&quot;%d&quot;</span>, &amp;difftest_port); <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;l&#x27;</span>: log_file = optarg; <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;d&#x27;</span>: diff_so_file = optarg; <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> (img_file != <span class="literal">NULL</span>) <span class="built_in">Log</span>(<span class="string">&quot;too much argument &#x27;%s&#x27;, ignored&quot;</span>, optarg);</span><br><span class="line">        <span class="keyword">else</span> img_file = optarg;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Usage: %s [OPTION...] IMAGE\n\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\t-b,--batch              run with batch mode\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\t-l,--log=FILE           output log to FILE\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\t-p,--port=PORT          run DiffTest with port PORT\n&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/02/26/getopt-%E5%87%BD%E6%95%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/02/22/JYY-s-ICS2020-PA1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/02/22/JYY-s-ICS2020-PA1/" class="post-title-link" itemprop="url">JYY's ICS2020 PA1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-02-22 15:58:01" itemprop="dateCreated datePublished" datetime="2024-02-22T15:58:01+08:00">2024-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:02" itemprop="dateModified" datetime="2025-06-16T15:51:02+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ICS2020/" itemprop="url" rel="index"><span itemprop="name">ICS2020</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="开天辟地的篇章"><a href="#开天辟地的篇章" class="headerlink" title="开天辟地的篇章"></a>开天辟地的篇章</h2><blockquote>
+<p>从状态机视角理解程序运行</p>
+</blockquote>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// PC: instruction    | // label: statement</span><br><span class="line"><span class="number">0</span>: <span class="keyword">mov</span>  <span class="built_in">r1</span>, <span class="number">0</span>         |  pc0: <span class="built_in">r1</span> = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"><span class="number">1</span>: <span class="keyword">mov</span>  <span class="built_in">r2</span>, <span class="number">0</span>         |  pc1: <span class="built_in">r2</span> = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"><span class="number">2</span>: addi <span class="built_in">r2</span>, <span class="built_in">r2</span>, <span class="number">1</span>     |  pc2: <span class="built_in">r2</span> = <span class="built_in">r2</span> + <span class="number">1</span><span class="comment">;</span></span><br><span class="line"><span class="number">3</span>: <span class="keyword">add</span>  <span class="built_in">r1</span>, <span class="built_in">r1</span>, <span class="built_in">r2</span>    |  pc3: <span class="built_in">r1</span> = <span class="built_in">r1</span> + <span class="built_in">r2</span><span class="comment">;</span></span><br><span class="line"><span class="number">4</span>: blt  <span class="built_in">r2</span>, <span class="number">100</span>, <span class="number">2</span>    |  pc4: if (<span class="built_in">r2</span> &lt; <span class="number">100</span>) goto pc2<span class="comment">;   // branch if less than</span></span><br><span class="line"><span class="number">5</span>: <span class="keyword">jmp</span> <span class="number">5</span>              |  pc5: goto pc5<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>Q：画出这个程序的状态机</p>
+<p>需要更新的状态只包括PC，r1和r0，所以用三元组表示程序的所有状态:</p>
+<p>(0, x, x) -&gt; (1, 0, x) -&gt; (2, 0, 0) -&gt; (3, 0, 1) -&gt; (4, 1, 1) -&gt; (2, 1, 1) -&gt; (3, 1, 2) -&gt; (4, 3, 2) -&gt; … -&gt; (2, 4851, 98) -&gt; (3, 4851, 99) -&gt; (4, 4950, 99) -&gt; (2, 4950, 99) -&gt; (3, 4950, 100) -&gt; (4, 5050, 100) -&gt; (5, 5050, 100)</p>
+<ul>
+<li><strong>Thoughts</strong> : 如果不是实验中给出了初始的<code>(0, x, x) -&gt; (1, 0, x) -&gt; (2, 0, 0) -&gt; .. </code>, 以我的感觉我极有可能会写(0, 1, x) -&gt; (1, 0, 0) -&gt; .. 我的逻辑是在<code>pc0</code>的时候，<code>r1</code>赋值为0了， 但是在状态机中表示的是一个瞬间的状态所以在<code>pc0</code>的时候, <code>r1</code>还没有被赋值，所以上面的(0, x, x)是对的</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/02/22/JYY-s-ICS2020-PA1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ffo</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<!-- <br /> -->
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<!-- <span id="times">载入时分秒...</span> -->
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("2/18/2024 18:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); 
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        // var times = document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "+hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Northffo/Northffo.github.io","repo_id":"R_kgDOLTOWzQ","category":"General","category_id":"DIC_kwDOLTOWzc4CdVaO","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

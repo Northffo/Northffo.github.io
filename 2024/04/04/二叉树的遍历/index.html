@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="pPn8k9CfIz8y7g4mPGuQXy0898iOd2qKEwBHzo94s7k">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="二叉树的知识每次用都要重新复习一遍，所以索性写一篇博客加强记忆  二叉树的遍历有四种方式：前序遍历、中序遍历、后续遍历、层序遍历，下面主要通过递归和显式栈的方式来实现前中后序遍历， 层序遍历使用队列实现 前中后序遍历可以简便的记为： ‘中’的位置，即 ​	前序遍历为：中左右 ​	中序遍历为：左中右 ​	后续遍历为：左右中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树的遍历">
+<meta property="og:url" content="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/index.html">
+<meta property="og:site_name" content="ffo&#39;s Blog">
+<meta property="og:description" content="二叉树的知识每次用都要重新复习一遍，所以索性写一篇博客加强记忆  二叉树的遍历有四种方式：前序遍历、中序遍历、后续遍历、层序遍历，下面主要通过递归和显式栈的方式来实现前中后序遍历， 层序遍历使用队列实现 前中后序遍历可以简便的记为： ‘中’的位置，即 ​	前序遍历为：中左右 ​	中序遍历为：左中右 ​	后续遍历为：左右中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/preorder.png">
+<meta property="og:image" content="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/inorder.png">
+<meta property="og:image" content="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/postorder.png">
+<meta property="og:image" content="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/levelorder.png">
+<meta property="article:published_time" content="2024-04-04T09:00:42.000Z">
+<meta property="article:modified_time" content="2025-06-16T07:51:28.748Z">
+<meta property="article:author" content="ffo">
+<meta property="article:tag" content="数据结构 算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/preorder.png">
+
+
+<link rel="canonical" href="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/","path":"2024/04/04/二叉树的遍历/","title":"二叉树的遍历"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>二叉树的遍历 | ffo's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/Northffo/Northffo.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ffo's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">0.二叉树的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">2.</span> <span class="nav-text">1.前序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 前序遍历的递归实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E6%98%BE%E5%BC%8F%E6%A0%88%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 前序遍历的显式栈实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">3.</span> <span class="nav-text">2. 中序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 中序遍历的递归实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E6%98%BE%E5%BC%8F%E6%A0%88%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 中序遍历的显式栈实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">4.</span> <span class="nav-text">3. 后序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 后序遍历递归实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E6%98%BE%E5%BC%8F%E6%A0%88%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 后序遍历显式栈实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">5.</span> <span class="nav-text">4.层序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 层序遍历的队列实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ffo"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ffo</p>
+  <div class="site-description" itemprop="description">时间的线性是温柔的骗局</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="二叉树的遍历 | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          二叉树的遍历
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-04 17:00:42" itemprop="dateCreated datePublished" datetime="2024-04-04T17:00:42+08:00">2024-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:28" itemprop="dateModified" datetime="2025-06-16T15:51:28+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>二叉树的知识每次用都要重新复习一遍，所以索性写一篇博客加强记忆</p>
+</blockquote>
+<p>二叉树的遍历有四种方式：前序遍历、中序遍历、后续遍历、层序遍历，下面主要通过递归和显式栈的方式来实现前中后序遍历， 层序遍历使用队列实现</p>
+<p>前中后序遍历可以简便的记为： ‘中’的位置，即</p>
+<p>​	前序遍历为：中左右</p>
+<p>​	中序遍历为：左中右</p>
+<p>​	后续遍历为：左右中</p>
+<span id="more"></span>
+
+
+<h2 id="0-二叉树的定义"><a href="#0-二叉树的定义" class="headerlink" title="0.二叉树的定义"></a>0.二叉树的定义</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">TreeNode</span>&#123;</span><br><span class="line">   T val;</span><br><span class="line">   TreeNode* left;</span><br><span class="line">   TreeNode* right;</span><br><span class="line">   <span class="built_in">TreeNode</span>(T val): <span class="built_in">val</span>(val), <span class="built_in">left</span>(<span class="literal">nullptr</span>), <span class="built_in">right</span>(<span class="literal">nullptr</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="1-前序遍历"><a href="#1-前序遍历" class="headerlink" title="1.前序遍历"></a>1.前序遍历</h2><blockquote>
+<p>前序遍历笼统来讲就是先访问根节点，再访问根节点的左子树，最后访问根节点的右子树</p>
+<p>具体规则如下：</p>
+<ul>
+<li>如果根节点为空，则返回</li>
+<li>如果根节点不为空：<ol>
+<li>访问根节点</li>
+<li>以前序遍历的方式访问左子树</li>
+<li>以前序遍历的方式访问右子树</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p><img src="/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/preorder.png" alt="img"></p>
+<h3 id="1-1-前序遍历的递归实现"><a href="#1-1-前序遍历的递归实现" class="headerlink" title="1.1 前序遍历的递归实现"></a>1.1 前序遍历的递归实现</h3><p>步骤：</p>
+<ol>
+<li>判断根结点是否为空， 为空则返回</li>
+<li>访问根节点</li>
+<li>递归遍历左子树</li>
+<li>递归遍历右子树</li>
+</ol>
+<p>递归代码实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">preorder</span><span class="params">(TreeNode&lt;<span class="type">int</span>&gt;* root)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(!root) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">   res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">   <span class="built_in">preorder</span>(root-&gt;left);</span><br><span class="line">   <span class="built_in">preorder</span>(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度分析： 每个节点只会被访问一次，即<em>O</em>(<em>n</em>)， 其中n是树中节点的数量</p>
+<p>空间复杂度分析： 递归的空间复杂度取决于树的高度，最坏情况下（完全不平衡的树）可以达到<em>O</em>(<em>n</em>)，其中n是树的节点数。对于平衡树，空间复杂度为<em>O</em>(<em>log n</em>)。</p>
+<h3 id="1-2-前序遍历的显式栈实现"><a href="#1-2-前序遍历的显式栈实现" class="headerlink" title="1.2 前序遍历的显式栈实现"></a>1.2 前序遍历的显式栈实现</h3><p>显式栈即使用栈来模拟递归的过程</p>
+<p>前序遍历的顺序为：根节点 - 左子树 - 右子树， 根据栈的特点， 入栈的顺序为: 右子树 - 左子树 - 根节点</p>
+<p>步骤：</p>
+<ol>
+<li>判断根节点时候为空， 为空则返回</li>
+<li>初始化维护一个栈，将根节点入栈</li>
+<li>当栈不为空时：<ol>
+<li>弹出并访问栈顶元素</li>
+<li>当node右子树不为空，将右子树入栈</li>
+<li>当node左子树不为空，将左子树入栈</li>
+</ol>
+</li>
+</ol>
+<p>显式栈的代码实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">preorder</span><span class="params">(TreeNode&lt;<span class="type">int</span>&gt;* root)</span> </span>&#123;</span><br><span class="line">   vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">   stack&lt;TreeNode&lt;<span class="type">int</span>&gt;*&gt; st;</span><br><span class="line">   st.<span class="built_in">push</span>(root);</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">while</span>(st.<span class="built_in">size</span>()) &#123;</span><br><span class="line">      TreeNode&lt;<span class="type">int</span>&gt;* node = st.<span class="built_in">top</span>();</span><br><span class="line">      res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">      st.<span class="built_in">pop</span>();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(node-&gt;right) st.<span class="built_in">push</span>(node-&gt;right);</span><br><span class="line">      <span class="keyword">if</span>(node-&gt;left) st.<span class="built_in">push</span>(node-&gt;left);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度分析：与递归相同， 每个节点只会被访问一次，即<em>O</em>(<em>n</em>)， 其中n是树中节点的数量</p>
+<p>空间复杂度分析：理论上与递归相同，但在实践中，因为手动管理栈，有时可以通过优化减少空间使用。</p>
+<h2 id="2-中序遍历"><a href="#2-中序遍历" class="headerlink" title="2. 中序遍历"></a>2. 中序遍历</h2><blockquote>
+<p>中序遍历简单来说就是先访问根节点的左子树，再访问根节点，最后访问根节点的右子树</p>
+<p>具体规则如下：</p>
+<ol>
+<li>如果root为空则返回</li>
+<li>如果root非空：<ol>
+<li>中序遍历根节点左子树</li>
+<li>访问根节点</li>
+<li>中序遍历根节点右子树</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p><img src="/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/inorder.png" alt="img"></p>
+<p>因为中序遍历的顺序是左中右，所以如果二叉树是搜索树， 可以利用中序遍历来验证</p>
+<h3 id="2-1-中序遍历的递归实现"><a href="#2-1-中序遍历的递归实现" class="headerlink" title="2.1 中序遍历的递归实现"></a>2.1 中序遍历的递归实现</h3><p>步骤：</p>
+<ol>
+<li>判断根结点是否为空， 为空则返回</li>
+<li>递归遍历左子树</li>
+<li>访问根节点</li>
+<li>递归遍历右子树</li>
+</ol>
+<p>递归代码实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">inorder</span><span class="params">(TreeNode&lt;<span class="type">int</span>&gt;* root)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(!root) <span class="keyword">return</span> ;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">if</span>(root-&gt;left) <span class="built_in">inorder</span>(root-&gt;left);</span><br><span class="line">   res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">   <span class="keyword">if</span>(root-&gt;right) <span class="built_in">inorder</span>(root-&gt;right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度分析： <em>O</em>(<em>n</em>)，同前序遍历</p>
+<p>空间复杂度分析：同前序遍历</p>
+<h3 id="2-2-中序遍历的显式栈实现"><a href="#2-2-中序遍历的显式栈实现" class="headerlink" title="2.2 中序遍历的显式栈实现"></a>2.2 中序遍历的显式栈实现</h3><p>因为是递归的显式栈实现，所以会比较难理解。</p>
+<p>与前序遍历不同，访问根节点要放在左子树遍历完之后。因此我们需要保证：<strong>在左子树访问之前，当前节点不能提前出栈</strong>。</p>
+<p>我们应该从根节点开始，循环遍历左子树，不断将当前子树的根节点放入栈中，直到当前节点无左子树时，从栈中弹出该节点并进行处理。</p>
+<p>然后再访问该元素的右子树，并进行上述循环遍历左子树的操作。这样可以保证最终遍历顺序为中序遍历顺序。</p>
+<p>二叉树的中序遍历显式栈实现步骤如下：</p>
+<ol>
+<li>判断二叉树是否为空，为空则直接返回。</li>
+<li>初始化维护一个空栈。</li>
+<li>当根节点或者栈不为空时：<ol>
+<li>如果当前节点不为空，则循环遍历左子树，并不断将当前子树的根节点入栈。</li>
+<li>如果当前节点为空，说明当前节点无左子树，则弹出栈顶元素<em>node</em>，并访问该元素，然后尝试访问该节点的右子树。</li>
+</ol>
+</li>
+</ol>
+<p>迭代代码实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">inorder</span><span class="params">(TreeNode&lt;<span class="type">int</span>&gt;* root)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(!root) <span class="keyword">return</span> ;</span><br><span class="line">   vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line"></span><br><span class="line">   stack&lt;TreeNode&lt;<span class="type">int</span>&gt;*&gt; st;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span>(root || st.<span class="built_in">size</span>()) &#123;</span><br><span class="line">      <span class="keyword">while</span>(root) &#123;</span><br><span class="line">         st.<span class="built_in">push</span>(root);</span><br><span class="line">         root = root-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      TreeNode&lt;<span class="type">int</span>&gt;* node = st.<span class="built_in">top</span>();</span><br><span class="line">      st.<span class="built_in">pop</span>();</span><br><span class="line">      res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">      root = node-&gt;right;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-后序遍历"><a href="#3-后序遍历" class="headerlink" title="3. 后序遍历"></a>3. 后序遍历</h2><blockquote>
+<ul>
+<li>如果二叉树为空，则返回。</li>
+<li>如果二叉树不为空，则：</li>
+</ul>
+<ol>
+<li>以后序遍历的方式遍历根节点的左子树。</li>
+<li>以后序遍历的方式遍历根节点的右子树。</li>
+<li>访问根节点。</li>
+</ol>
+</blockquote>
+<p><img src="/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/postorder.png" alt="img"></p>
+<h3 id="3-1-后序遍历递归实现"><a href="#3-1-后序遍历递归实现" class="headerlink" title="3.1 后序遍历递归实现"></a>3.1 后序遍历递归实现</h3><p>二叉树的后序遍历递归实现步骤为：</p>
+<ol>
+<li>判断二叉树是否为空，为空则直接返回。</li>
+<li>先递归遍历左子树。</li>
+<li>然后递归遍历右子树。</li>
+<li>最后访问根节点。</li>
+</ol>
+<p>二叉树的后序遍历递归实现代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">postorder</span><span class="params">(TreeNode&lt;<span class="type">int</span>&gt;* root)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(!root) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span>(root-&gt;left) <span class="built_in">postorder</span>(root-&gt;left);</span><br><span class="line">   <span class="keyword">if</span>(root-&gt;right) <span class="built_in">postorder</span>(root-&gt;right);</span><br><span class="line">   res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-后序遍历显式栈实现"><a href="#3-2-后序遍历显式栈实现" class="headerlink" title="3.2 后序遍历显式栈实现"></a>3.2 后序遍历显式栈实现</h3><p>不同于前两个遍历, 后续遍历需要保证: 再访问完根节点的左右两颗子树前, 不能访问根节点.</p>
+<p>所以我们需要先遍历到最左边的节点, 然后访问判断其右子树是否存在或者已经访问过, 如果不存在或者访问过, 那么就访问根节点,否则访问右子树</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">postorder</span><span class="params">(TreeNode&lt;<span class="type">int</span>&gt;* root)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(!root) <span class="keyword">return</span> ;</span><br><span class="line">   vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">   stack&lt;TreeNode&lt;<span class="type">int</span>&gt;*&gt; st;</span><br><span class="line">   TreeNode&lt;<span class="type">int</span>&gt;* prev;       </span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span>(root || st.<span class="built_in">size</span>()) &#123;</span><br><span class="line">      <span class="keyword">while</span>(root) &#123;</span><br><span class="line">         st.<span class="built_in">push</span>(root);</span><br><span class="line">         root = root-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      TreeNode&lt;<span class="type">int</span>&gt;* node = st.<span class="built_in">top</span>();</span><br><span class="line">      st.<span class="built_in">pop</span>();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(!node-&gt;right || prev == node-&gt;right) &#123;</span><br><span class="line">         res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">         prev = node;</span><br><span class="line">         root = <span class="literal">nullptr</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">         st.<span class="built_in">push</span>(node);</span><br><span class="line">         root = node-&gt;right;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> res;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-层序遍历"><a href="#4-层序遍历" class="headerlink" title="4.层序遍历"></a>4.层序遍历</h2><blockquote>
+<p>层序遍历顾名思义， 就是按照树的层数一层一层遍历，一般采用双向队列实现</p>
+<p>层序遍历规则如下：</p>
+<ol>
+<li>如果二叉树为空则返回</li>
+<li>如果二叉树不为空:<ol>
+<li>访问第一层的节点</li>
+<li>访问第二层的节点</li>
+<li>…</li>
+<li>访问最后一层的节点</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p><img src="/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/levelorder.png" alt="img"></p>
+<h3 id="4-1-层序遍历的队列实现"><a href="#4-1-层序遍历的队列实现" class="headerlink" title="4.1 层序遍历的队列实现"></a>4.1 层序遍历的队列实现</h3><p>按照上面的规则我们很容易实现代码:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">levelorder</span>(TreeNode&lt;<span class="type">int</span>&gt;* root) &#123;</span><br><span class="line">   vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">   <span class="keyword">if</span>(!root) <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">   queue&lt;TreeNode&lt;<span class="type">int</span>&gt;*&gt; q;</span><br><span class="line">   q.<span class="built_in">push</span>(root);</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">while</span>(q.<span class="built_in">size</span>())&#123;</span><br><span class="line">      <span class="type">int</span> len = q.<span class="built_in">size</span>();        <span class="comment">// 队列保存当前层的节点, 所以len是当前层节点的数量</span></span><br><span class="line">      vector&lt;<span class="type">int</span>&gt; tmp;           <span class="comment">// 存放当前层节点的值</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;      <span class="comment">// 只处理当前层的节点</span></span><br><span class="line">         TreeNode&lt;<span class="type">int</span>&gt;* node = q.<span class="built_in">front</span>();    <span class="comment">// 取出队头元素处理</span></span><br><span class="line">         q.<span class="built_in">pop</span>();                            <span class="comment">// 删除队头元素</span></span><br><span class="line">         tmp.<span class="built_in">push_back</span>(node-&gt;val);           <span class="comment">// 访问队头元素</span></span><br><span class="line"></span><br><span class="line">         <span class="keyword">if</span>(node-&gt;left) q.<span class="built_in">push</span>(node-&gt;left);     <span class="comment">// 如果左节点不为空, 把左节点入队</span></span><br><span class="line">         <span class="keyword">if</span>(node-&gt;right) q.<span class="built_in">push</span>(node-&gt;right);</span><br><span class="line">      &#125;</span><br><span class="line">      res.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>【文章】<a target="_blank" rel="noopener" href="https://algo.itcharge.cn/07.Tree/01.Binary-Tree/02.Binary-Tree-Traverse/">二叉树的遍历知识</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ffo
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://northffo.github.io/2024/04/04/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/" title="二叉树的遍历">https://northffo.github.io/2024/04/04/二叉树的遍历/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag"># 数据结构 算法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/15/%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A0%87%E5%87%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/" rel="prev" title="类Unix系统中进程的标准的文件描述符">
+                  <i class="fa fa-angle-left"></i> 类Unix系统中进程的标准的文件描述符
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/18/unordered-map%E7%9A%84%E6%8E%92%E5%BA%8F/" rel="next" title="unordered_map的排序">
+                  unordered_map的排序 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ffo</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<!-- <br /> -->
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<!-- <span id="times">载入时分秒...</span> -->
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("2/18/2024 18:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); 
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        // var times = document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "+hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Northffo/Northffo.github.io","repo_id":"R_kgDOLTOWzQ","category":"General","category_id":"DIC_kwDOLTOWzc4CdVaO","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

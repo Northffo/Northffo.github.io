@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="pPn8k9CfIz8y7g4mPGuQXy0898iOd2qKEwBHzo94s7k">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="时间的线性是温柔的骗局">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ffo&#39;s Blog">
+<meta property="og:url" content="https://northffo.github.io/index.html">
+<meta property="og:site_name" content="ffo&#39;s Blog">
+<meta property="og:description" content="时间的线性是温柔的骗局">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="ffo">
+<meta property="article:tag" content="linux, Debian, C++&#x2F;C">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://northffo.github.io/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ffo's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/Northffo/Northffo.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">ffo's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ffo"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ffo</p>
+  <div class="site-description" itemprop="description">时间的线性是温柔的骗局</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/06/22/Rust-Ownership/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/06/22/Rust-Ownership/" class="post-title-link" itemprop="url">Rust_Ownership</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-06-22 14:29:07" itemprop="dateCreated datePublished" datetime="2025-06-22T14:29:07+08:00">2025-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-09-20 13:10:22" itemprop="dateModified" datetime="2025-09-20T13:10:22+08:00">2025-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/The-Rust-Programming-Language/" itemprop="url" rel="index"><span itemprop="name">The Rust Programming Language</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>Rust在编译时避免未定义行为而不是在运行时</strong></p>
+<ul>
+<li><p>使用<code>Box</code>来在堆中定义变量:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span> = <span class="type">Box</span>::<span class="title function_ invoke__">new</span>([<span class="number">0</span>; <span class="number">1_000_000</span>]);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">b</span> = a;			<span class="comment">// a的所有权被移动到b</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/hip/Box.png" alt="Box"> </p>
+</li>
+<li><pre><code class="rust">fn dereferencing() &#123;
+    let mut x: Box&lt;i32&gt; = Box::new(1);
+    println!(&quot;x = &#123;&#125;&quot;, x);
+    let a: i32 = *x;
+    *x += 1;
+
+    let r1: &amp;Box&lt;i32&gt; = &amp;x;     // r1 points to x on the stack
+    /**
+     * println!(&quot;&#123;&#125;&quot;, variable)：用于用户友好的显示。它会通过 Display trait 自动解引用指针和引用，直到找到一个具体的值来显示。
+     * println!(&quot;&#123;:p&#125;&quot;, variable)：用于调试和底层观察。它会打印出引用或指针变量本身存储的那个内存地址。
+     */
+    println!(&quot;r1 = &#123;:p&#125;&quot;, r1);
+    /**
+     * 下面是错误的, 因为rust为了内存安全规定: 一个值在同一时间只能有一个owner;
+     */
+    // let b: Box&lt;i32&gt; = *r1;  
+    let b: i32 = **r1;
+    println!(&quot;b = &#123;&#125;&quot;, b);
+
+    let r2: &amp;i32 = &amp;*x;     // &amp;*x 确实得到了 *x 所在位置的“地址”，但 Rust 把它包装成了一个更安全、更受限制的类型，叫做“引用 (&amp;)” 
+    println!(&quot;r2 = &#123;&#125;&quot;, r2);
+    let c = *r2;
+    println!(&quot;c = &#123;&#125;&quot;, c);
+&#125;
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```mermaid</span><br><span class="line">graph LR</span><br><span class="line">    subgraph <span class="string">&quot;内存区域&quot;</span></span><br><span class="line">        subgraph <span class="string">&quot;栈 (Stack Memory)&quot;</span></span><br><span class="line">            direction TB</span><br><span class="line">            </span><br><span class="line">            addr_x[<span class="string">&quot;@ 0x7ffc_A0&quot;</span>] -- <span class="string">&quot;变量 x&quot;</span> --&gt; val_x[<span class="string">&quot;&lt;b&gt;值: 0x55ef_B0&lt;/b&gt;&lt;br/&gt;(类型: Box&amp;lt;i32&amp;gt;)&quot;</span>]</span><br><span class="line">            addr_a[<span class="string">&quot;@ 0x7ffc_A8&quot;</span>] -- <span class="string">&quot;变量 a&quot;</span> --&gt; val_a[<span class="string">&quot;值: 1&lt;br/&gt;(类型: i32)&quot;</span>]</span><br><span class="line">            addr_r1[<span class="string">&quot;@ 0x7ffc_AC&quot;</span>] -- <span class="string">&quot;变量 r1&quot;</span> --&gt; val_r1[<span class="string">&quot;&lt;b&gt;值: 0x7ffc_A0&lt;/b&gt;&lt;br/&gt;(类型: &amp;amp;Box&amp;lt;i32&amp;gt;)&quot;</span>]</span><br><span class="line">            addr_b[<span class="string">&quot;@ 0x7ffc_B4&quot;</span>] -- <span class="string">&quot;变量 b&quot;</span> --&gt; val_b[<span class="string">&quot;值: 2&lt;br/&gt;(类型: i32)&quot;</span>]</span><br><span class="line">            addr_r2[<span class="string">&quot;@ 0x7ffc_B8&quot;</span>] -- <span class="string">&quot;变量 r2&quot;</span> --&gt; val_r2[<span class="string">&quot;&lt;b&gt;值: 0x55ef_B0&lt;/b&gt;&lt;br/&gt;(类型: &amp;amp;i32)&quot;</span>]</span><br><span class="line">            addr_c[<span class="string">&quot;@ 0x7ffc_C0&quot;</span>] -- <span class="string">&quot;变量 c&quot;</span> --&gt; val_c[<span class="string">&quot;值: 2&lt;br/&gt;(类型: i32)&quot;</span>]</span><br><span class="line">        end</span><br><span class="line"></span><br><span class="line">        subgraph <span class="string">&quot;堆 (Heap Memory)&quot;</span></span><br><span class="line">            addr_heap[<span class="string">&quot;@ 0x55ef_B0&quot;</span>] -- <span class="string">&quot;Box&amp;lt;T&amp;gt;指向的数据&quot;</span> --&gt; val_heap[<span class="string">&quot;值: 2&lt;br/&gt;(类型: i32)&quot;</span>]</span><br><span class="line">        end</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    %% 箭头表示“指向”关系</span><br><span class="line">    val_x -- <span class="string">&quot;指向堆数据&quot;</span> --&gt; addr_heap</span><br><span class="line">    val_r1 -- <span class="string">&quot;引用栈上的 x&quot;</span> --&gt; addr_x</span><br><span class="line">    val_r2 -- <span class="string">&quot;引用堆上的数据&quot;</span> --&gt; addr_heap</span><br><span class="line">    </span><br><span class="line">    %% 样式</span><br><span class="line">    style val_x fill:#f9f,stroke:#<span class="number">333</span></span><br><span class="line">    style val_r1 fill:#ccf,stroke:#<span class="number">333</span></span><br><span class="line">    style val_r2 fill:#<span class="number">9</span>cf,stroke:#<span class="number">333</span></span><br><span class="line">    style addr_heap fill:#f96,stroke:#<span class="number">333</span>,stroke-width:<span class="number">2</span>px</span><br></pre></td></tr></table></figure>
+
+一些误区: 
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="type">Box</span>::<span class="title function_ invoke__">new</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">y</span> = <span class="type">Box</span>:<span class="title function_ invoke__">new</span>(&amp;x);</span><br></pre></td></tr></table></figure>
+
+这时候`***y` 才指向值`0`,  `*y`是`x`的引用(`&amp;x`)类型是`&amp;Box&lt;i32&gt;`, `**y`指向`x`本身(`x: Box&lt;i32&gt;`), `***y`才指向`*x`(即x指向的堆的值`0`).
+</code></pre>
+</li>
+<li><h3 id="Rust-Avoids-Simultaneous-Aliasing-and-Mutation"><a href="#Rust-Avoids-Simultaneous-Aliasing-and-Mutation" class="headerlink" title="Rust Avoids Simultaneous Aliasing and Mutation"></a>Rust Avoids Simultaneous Aliasing and Mutation</h3><p><strong>Pointer Safety Principle</strong>: data should never be aliased and mutated at the same time.</p>
+<p><strong>数据不允许同时别名和修改</strong></p>
+<p>以<code>Vec</code>为例:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">v.<span class="title function_ invoke__">push</span>(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>Vec</code>的结构是这样的:<img src="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/hip/Vec-struct.png" alt="vec-struct">, <code>Vec</code> 是一个在<strong>栈上</strong>的结构体，它包含三个部分：一个指向<strong>堆内存</strong>的指针 (pointer)、长度 (length) 和容量 (capacity). 其中<code>len</code>代表<code>Vec</code>中实际有多少个元素, <code>capacity</code>代表<code>v</code>的容量是多少(可以放多少元素), <strong>如果<code>v.push</code>之后超过了<code>capacity</code>, <code>buf</code>中的指针就会重新开辟一块内存转移数据并且释放掉原先的内存.</strong></p>
+<p>那么如果进行下面的操作</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];		<span class="comment">// 这里使用vec!宏来初始化Vec容器, 那么默认len = capacity = 3</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">n</span>: &amp;<span class="type">i32</span> = &amp;v[<span class="number">2</span>];				<span class="comment">// n 是v[2]的不可变引用immutable reference</span></span><br><span class="line">v.<span class="title function_ invoke__">push</span>(<span class="number">4</span>);				<span class="comment">// 这里因为capacity不够, 所以v会重新开辟内存转移数据, 并且释放掉原先的内存</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;n&#125;&quot;</span>);		<span class="comment">// 这里就会报错, 因为n指向的地址已经被释放掉了, 所以这里会报错, 但是如果没有这一句, 编译器则不会报错: 虽然n现在还是指向已经释放的地址,但是编译器会自动判断n在释放地址之后没有再次使用,所以这里编译器不会报错 </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="References-Change-Permissions-on-Places"><a href="#References-Change-Permissions-on-Places" class="headerlink" title="*References Change Permissions on Places"></a>*<a target="_blank" rel="noopener" href="https://rust-book.cs.brown.edu/ch04-02-references-and-borrowing.html#references-change-permissions-on-places">References Change Permissions on Places</a></h3><p>Permission:</p>
+<ul>
+<li><strong>Read</strong> (<strong>R</strong>): data can be copied to another location.</li>
+<li><strong>Write</strong> (<strong>W</strong>): data can be mutated.</li>
+<li><strong>Own</strong> (<strong>O</strong>): data can be moved or dropped.</li>
+</ul>
+<p>Place: 任何可以放在赋值符号左侧的都可以是place, 比如: Variables, Dereferences of places, Array accesses of places, Field of places like tuples or <code>a.field</code> for structs, any combination of the above</p>
+<p>place默认有<code>R(ead)</code>, <code>O(wn)</code>的权限, 如果赋值的时候使用<code>mut</code>符号, 那么还会增加<strong>W</strong>权限</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];		<span class="comment">// v 只有R和O权限</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">v1</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];	<span class="comment">// v1 有W,R,O权限</span></span><br></pre></td></tr></table></figure>
+
+<p>**首先要明确, 如果place离开作用域, 权限就会被收回, eg: **</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];	<span class="comment">// 此时v有R和O权限</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">v1</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];		<span class="comment">// 此时v1有R和O的权限</span></span><br><span class="line">    &#125;		<span class="comment">// 这里v1的作用域结束, v1失去所有权限</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);</span><br><span class="line">    </span><br><span class="line">    <span class="title function_ invoke__">change</span>(v);			<span class="comment">// 因为Vec没有实现Copy Trait所以v是被move到了这个函数中, v的权限也随之移动到了函数中, 当函数结束时, 意味着v的作用域结束, v的权限此时被收回;</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);		<span class="comment">// 这里会报错, v已经失去了所有权限</span></span><br><span class="line">    </span><br><span class="line">&#125;	<span class="comment">// main函数是v的作用域, 所以只有在main函数结束的时候, v才会失去所有权限</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">change</span>(v: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个解决方法:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一个解决方法</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">v_again</span> = <span class="title function_ invoke__">change</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">change</span>(v: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;) <span class="punctuation">-&gt;</span> <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);</span><br><span class="line">    v</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v_again);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二个解决方法</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="title function_ invoke__">change</span>(v.<span class="title function_ invoke__">clone</span>());			<span class="comment">// 使用clone方法, 但是clone方法会在堆中新开辟一块内存, 所以会有性能问题</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">change</span>(v: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第三个方法 immutable references</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="title function_ invoke__">change</span>(&amp;v);			<span class="comment">// 使用引用的方式, 这里不会在heap中创建副本</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">change</span>(v: &amp;<span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**immutable references(shared references): ** 可以在不移动所有权的情况下提供临时的访问, 但是不能修改数据. 同一时间可以有很多Immutable references</p>
+<p>**mutable references(unique references): ** 可以对数据进行修改, 但是同一时间只能有一个mutable reference</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">v</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">num</span>: &amp;<span class="keyword">mut</span> <span class="type">i32</span> = &amp;<span class="keyword">mut</span> v[<span class="number">2</span>];</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 此时v失去所有权限</span></span><br><span class="line"><span class="comment">* num只是一个存储v[2]地址的一个指针(引用), 所以num对于它自己本身有R和O的权限(没有使用mut), 注意: v[2]是v内部buf中的ptr地址, 但是v结构的地址不会变</span></span><br><span class="line"><span class="comment">* *num 此时才是存储的v[2]的值, 此时*num有R和W权限(因为是mutable reference), 但是引用就是引用, 所以没有O权限</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">*num += <span class="number">1</span>;</span><br><span class="line">v.<span class="title function_ invoke__">push</span>(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>O</code> (Own) 权限永远属于数据的所有者（在这里是 <code>v</code>）。引用 (<code>&amp;</code> 或 <code>&amp;mut</code>) 只是临时“借用”了 <code>R</code> 或 <code>R</code>+<code>W</code> 权限。<code>*num</code> 作为一个“位置 (place)”，它允许被读取和写入，但对这块数据的“生杀大权”（移动或销毁）仍然在 <code>v</code> 手里。</strong></p>
+<blockquote>
+<p>some questions:</p>
+<p>Q&amp;A: </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">t</span> = &amp;<span class="keyword">mut</span> s;</span><br><span class="line"><span class="comment">/* here */</span>			<span class="comment">// s在这里没有任何权限, 因为t是mutable reference, 所以当t生命周期没有结束的时候, s失去了所有权限</span></span><br><span class="line">t.<span class="title function_ invoke__">push_str</span>(<span class="string">&quot; world&quot;</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><h3 id="Data-Must-Outlive-All-Of-Its-References"><a href="#Data-Must-Outlive-All-Of-Its-References" class="headerlink" title="*Data Must Outlive All Of Its References"></a>*<a target="_blank" rel="noopener" href="https://rust-book.cs.brown.edu/ch04-02-references-and-borrowing.html#data-must-outlive-all-of-its-references">Data Must Outlive All Of Its References</a></h3><p>直接来看例子:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;Hello world&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s_ref</span> = &amp;s;</span><br><span class="line"><span class="title function_ invoke__">drop</span>(s);	<span class="comment">// 这里s还有引用s_ref, 所以如果这里drop掉, s_ref就会指向无效地址, 如果后续s_ref还有使用(生命周期没有结束), 编译器就会自动检测并报错</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s_ref);		<span class="comment">// s_ref生命周期没有结束, 但是现在s_ref指向无效地址了, 所以编译器会报错</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为编译器无法看到所有函数的周期, 他只能看到函数的signature(输入和输出), 所以如果引用从函数中返回的时候是安全的, 就会获得<code>F</code>权限</p>
+<p><code>F(low)</code>权限: 视为 <strong>“出口许可证”。</strong> 只有当编译器能够证明该引用从其当前上下文中“流出”（例如从函数返回）是安全的时，引用才会获得 <code>F</code> 权限。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">first</span>(strings: &amp;<span class="type">Vec</span>&lt;<span class="type">String</span>&gt;) <span class="punctuation">-&gt;</span> &amp;<span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s_ref</span> = &amp;strings[<span class="number">0</span>];</span><br><span class="line">    s_ref</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不安全的行为:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 这里的函数是会报错的,因为函数不知道返回的String生命周期和哪个输入一致, 具体在main函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">first_or</span>&lt;<span class="symbol">&#x27;a</span>, <span class="symbol">&#x27;b</span>, <span class="symbol">&#x27;c</span>&gt;(strings: &amp;<span class="symbol">&#x27;a</span> <span class="type">Vec</span>&lt;<span class="type">String</span>&gt;, default: &amp;<span class="symbol">&#x27;b</span> <span class="type">String</span>) <span class="punctuation">-&gt;</span> &amp;<span class="symbol">&#x27;c</span> <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> strings.<span class="title function_ invoke__">len</span>() &gt; <span class="number">0</span> &#123;	</span><br><span class="line">        &amp;strings[<span class="number">0</span>]</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        default</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">strings</span> = <span class="built_in">vec!</span>[];		<span class="comment">// 这里strings是一个空的Vec</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">default</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;default&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s</span> = <span class="title function_ invoke__">first_or</span>(&amp;strings, &amp;default);	<span class="comment">// 根据first_or函数的定义: 这里会返回default, 所以s的生命周期也和defalut保持一致,但是这里有个问题: 编译器事先并不知道应该返回的生命周期该和strings保持一致还是和default保持一致, 如果和strings保持一致, 那么最后的println!宏会报一个清晰的错误:那么s的生命周期已经结束了, 因为string的生命周期在这一行结束就结束了, 如果和default保持一致, 那么经过下一句, s就会变成悬垂指针也会报错</span></span><br><span class="line">    <span class="title function_ invoke__">drop</span>(default);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另一个例子:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">default</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;I live for a long time&quot;</span>); <span class="comment">// `default` 的生命周期很长</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">final_ref</span>;</span><br><span class="line"></span><br><span class="line">    &#123; <span class="comment">// 进入一个新的、更短的生命周期范围</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">strings</span> = <span class="built_in">vec!</span>[<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;I live for a short time&quot;</span>)]; <span class="comment">// `strings` 的生命周期很短</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 调用这份模糊的合同</span></span><br><span class="line">        final_ref = <span class="title function_ invoke__">first_or</span>(&amp;strings, &amp;default);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="comment">// `strings` 在这里被销毁了！它的内存被回收了！</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 灾难发生点：</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, final_ref); <span class="comment">// `final_ref` 现在指向的是谁？</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改后: </p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">first_or2</span>&lt;<span class="symbol">&#x27;a</span>&gt;(strings: &amp;<span class="symbol">&#x27;a</span> <span class="type">Vec</span>&lt;<span class="type">String</span>&gt;, default: &amp;<span class="symbol">&#x27;a</span> <span class="type">String</span>) <span class="punctuation">-&gt;</span> &amp;<span class="symbol">&#x27;a</span> <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(strings.<span class="title function_ invoke__">len</span>() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        &amp;strings[<span class="number">0</span>]</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        default</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>我们定义了一个<strong>生命周期标签</strong>，名叫 <code>&#39;a</code>。</li>
+<li>输入 <code>strings</code> 必须至少活得和 <code>&#39;a&#39;</code> 一样长。</li>
+<li>输入 <code>default</code> 也必须至少活得和 <code>&#39;a&#39;</code> 一样长。</li>
+<li>最重要的承诺：函数返回的引用，其有效期<strong>最多</strong>和 <code>&#39;a&#39;</code> 一样长。</li>
+</ol>
+<p>这里的 <code>&#39;a</code> 实际上代表了 <code>strings</code> 和 <code>default</code> 中<strong>较短</strong>的那个生命周期。</p>
+<p>编译器看到调用 <code>first_or(&amp;strings, &amp;default)</code>。</p>
+<p>它比较了 <code>strings</code>（生命周期短）和 <code>default</code>（生命周期长）的有效期。</p>
+<p>它确定了那个更短的有效期，并将其作为这次调用的 <code>&#39;a</code>。</p>
+<p>函数返回的 <code>final_ref</code> 因此也获得了这个<strong>较短</strong>的生命周期 <code>&#39;a</code>。</p>
+<p>所以，<code>final_ref</code> 的有效范围被严格限定在了那个内部 <code>&#123;&#125;</code> 之中。</p>
+<p>当代码试图在 <code>&#123;&#125;</code> 外部使用 <code>println!(&quot;&#123;&#125;&quot;, final_ref)</code> 时，审查员会立刻发现：<code>final_ref</code> 的生命周期已经结束了，它已经失效了！</p>
+<p>审查员报告一个新的、明确的错误：“你正在使用一个已经过期的引用。”</p>
+<p><strong>重点: ** 当一个函数返回的引用可能来自多个不同的输入时，编译器会因为无法判断这个引用的“保质期”而拒绝编译。</strong>生命周期 <code>&#39;a</code> 就是你给编译器提供的一个明确的“保质期”标签**，你向它承诺，返回的引用的有效期不会超过所有相关输入中最先失效的那个。这样，编译器就能确保安全了。</p>
+<blockquote>
+<p><strong>Q1:</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">incr</span>(n: &amp;<span class="keyword">mut</span> <span class="type">i32</span>) &#123;</span><br><span class="line">  *n += <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">n</span> = <span class="number">1</span>;</span><br><span class="line">  <span class="title function_ invoke__">incr</span>(&amp;n);</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;&#123;n&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这个程序不会通过编译, 因为<code>incr(&amp;n)</code> 传递的是immutable reference, 应该修改为<code>incr(&amp;mut n)</code></p>
+<p><strong>Q2:</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">s2</span> = &amp;s;</span><br><span class="line">  <span class="keyword">let</span> <span class="variable">s3</span> = &amp;<span class="keyword">mut</span> s;</span><br><span class="line">  s3.<span class="title function_ invoke__">push_str</span>(<span class="string">&quot; world&quot;</span>);</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;&#123;s2&#125;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个程序也无法通过编译, 因为s2是immutable reference,所以在s2生命周期还没有结束的时候, 对s3操作是不合法的:<br><strong>借用规则</strong>：“你不能在存在一个活跃的不可变借用的同时，再创建一个可变借用。”</p>
+<p><strong>Q3:</strong></p>
+<p>Consider this Rust function that pushes a number onto the end of a vector, and then removes and returns the number from the front of the vector:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">give_and_take</span>(v: &amp;<span class="type">Vec</span>&lt;<span class="type">i32</span>&gt;, n: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span> &#123;</span><br><span class="line">	v.<span class="title function_ invoke__">push</span>(n);    </span><br><span class="line">	v.<span class="title function_ invoke__">remove</span>(<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Normally, if you try to compile this function, the compiler returns the following error:</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error[E0596]: cannot borrow `*v` <span class="keyword">as</span> mutable, <span class="keyword">as</span> <span class="literal">it</span> <span class="keyword">is</span> behind a `&amp;` reference --&gt; test.rs:<span class="number">2</span>:<span class="number">5</span>  |<span class="number">1</span> | fn give_and_take<span class="function"><span class="params">(v: &amp;Vec&lt;i32&gt;, n: i32)</span> -&gt;</span> i32 &#123;  |                     --------- help: consider changing this <span class="keyword">to</span> be a mutable reference: `&amp;mut Vec&lt;i32&gt;`<span class="number">2</span> |     v.push(n);  |     ^^^^^^^^^ `v` <span class="keyword">is</span> a `&amp;` reference, so the data <span class="literal">it</span> refers <span class="keyword">to</span> cannot be borrowed <span class="keyword">as</span> mutable</span><br></pre></td></tr></table></figure>
+
+<p>Assume that the compiler did NOT reject this function. Select each (if any) of the following programs that could possibly cause undefined behavior if executed. If none of these programs could cause undefined behavior, then check “None of these programs” .</p>
+<p>**A: **这里主要的错误是<code>Vec</code>push的时候可能超过capacity, 导致v内部值的地址改变, 最终导致悬垂指针</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">v</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">n</span> = &amp;v[<span class="number">0</span>];</span><br><span class="line"><span class="title function_ invoke__">give_and_take</span>(&amp;v, <span class="number">4</span>);	</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, n);		<span class="comment">// 这里就会导致错误, 此时n为悬垂指针</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">v</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">n</span> = &amp;v[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">k</span> = <span class="title function_ invoke__">give_and_take</span>(&amp;v, <span class="number">4</span>);		<span class="comment">// 这里结束之后, n为悬垂指针了, 但是n在后续并没有使用(生命周期已经结束), 所以编译器不会报错</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, k);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">v</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">v2</span> = &amp;v;</span><br><span class="line"><span class="title function_ invoke__">give_and_take</span>(&amp;v, <span class="number">4</span>);			<span class="comment">// 这里改变的是v内部buf中ptr的值, 而不是v结构体的地址,所以当内部地址改变的时候v2内部也会发生改变, 不会报错</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, v2[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+</blockquote>
+</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a><a target="_blank" rel="noopener" href="https://rust-book.cs.brown.edu/ch04-02-references-and-borrowing.html#summary">Summary</a></h3><p>References provide the ability to read and write data without consuming ownership of it. References are created with borrows (<code>&amp;</code> and <code>&amp;mut</code>) and used with dereferences (<code>*</code>), often implicitly.</p>
+<p>However, references can be easily misused. Rust’s borrow checker enforces a system of permissions that ensures references are used safely:</p>
+<ul>
+<li>All variables can read, own, and (optionally) write their data.</li>
+<li>Creating a reference will transfer permissions from the borrowed place to the reference.</li>
+<li>Permissions are returned once the reference’s lifetime has ended.</li>
+<li>Data must outlive all references that point to it.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/06/17/Rust-CommonConcept/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/06/17/Rust-CommonConcept/" class="post-title-link" itemprop="url">Rust_CommonConcept</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-06-17 16:09:37" itemprop="dateCreated datePublished" datetime="2025-06-17T16:09:37+08:00">2025-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-22 14:26:23" itemprop="dateModified" datetime="2025-06-22T14:26:23+08:00">2025-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/The-Rust-Programming-Language/" itemprop="url" rel="index"><span itemprop="name">The Rust Programming Language</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><p>Rust中的变量默认是不可变的, 但是可以添加<code>mut</code>关键字使之可变</p>
+<p>Rust有单次赋值(Single assignment)原则, 尽管Rust变量默认是不可变的, 但是它允许你在声明变量后延迟赋值一次, 只要编译器能确定该变量只会被赋值一次即可.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面的语句是可以通过编译的</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">x</span>;</span><br><span class="line"><span class="keyword">if</span> cond &#123;</span><br><span class="line">	x = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	x = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>常量声明方式:
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/06/17/Rust-CommonConcept/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/06/16/Rust-GuessingGame/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/06/16/Rust-GuessingGame/" class="post-title-link" itemprop="url">Rust_GuessingGame</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-06-16 16:31:17 / 修改时间：18:17:12" itemprop="dateCreated datePublished" datetime="2025-06-16T16:31:17+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/The-Rust-Programming-Language/" itemprop="url" rel="index"><span itemprop="name">The Rust Programming Language</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><p>一般crate使用<code>use</code>导入, 但是Rust会自动导入<code>prelude</code>,里面包含了基本的功能, 详见<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/prelude/index.html">standard library documentation</a>.</p>
+</li>
+<li><p>Rust中的变量默认是不可变的, 可以添加<code>mut</code>关键字使之改变</p>
+</li>
+<li><p><code>read_line</code>读取用户输入,并将其<strong>添加</strong>到字符串尾端(append), 而不是覆盖, 不同于<code>cin</code> </p>
+</li>
+<li><p><code>read_line</code>会返回一个Result值</p>
+</li>
+<li><p><code>Result</code>是一个枚举类型,其中有<code>Ok</code>和<code>Err</code>, 所以可以使用<code>read_line(&amp;mut guess).expect(&quot;Failed to read&quot;)</code>  expect函数来处理错误读入, <strong>任何类型的值都有其方法</strong></p>
+</li>
+<li><p>正常情况下,<code>expect()</code>方法会返回用户输入的字节数</p>
+</li>
+<li><p><code>println!()</code> 可以使用{}来输出变量, 但是如果变量名称不存在就会报错</p>
+</li>
+<li><p><code>crate</code>是一组Rust源代码文件,用户构建的项目是一个二进制<code>crate</code>, 它是一个可执行文件. <code>rand crate</code>是一个库crate, <strong>它包含的代码用于其他程序, 并不能单独运行</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/06/16/Rust-GuessingGame/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/06/16/Rust-Intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/06/16/Rust-Intro/" class="post-title-link" itemprop="url">Rust_Intro</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-06-16 16:01:07 / 修改时间：18:17:23" itemprop="dateCreated datePublished" datetime="2025-06-16T16:01:07+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/The-Rust-Programming-Language/" itemprop="url" rel="index"><span itemprop="name">The Rust Programming Language</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>此分类（<em>The Rust Programming Language</em>）采用brown university的<a target="_blank" rel="noopener" href="https://rust-book.cs.brown.edu/">实验版本</a>, 对细节进行解释同时进行学习记录</p>
+</blockquote>
+<p><img src="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/Ferris.png" alt="image-20250616162739328"></p>
+<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a><a target="_blank" rel="noopener" href="https://rust-book.cs.brown.edu/ch01-00-getting-started.html#getting-started">Getting Started</a></h2><ul>
+<li><p><code>rustup</code> 来管理机器上的Rust版本</p>
+</li>
+<li><pre><code class="shell">rustc main.rs				// rustc的用法, rustfmt也可以这么使用
+rustfmt main.rs				// 使用rust的语法格式化文档
+./main
+</code></pre>
+</li>
+<li><p><code>cargo init</code>: 自动获取cargo.toml文件\</p>
+</li>
+<li><p>cargo.lock文件追踪准确的版本依赖</p>
+</li>
+<li><p><code>cargo run</code>  只有代码发生改变的时候才会重新编译运行, 否则直接运行</p>
+</li>
+<li><p><code>cargo build --release</code>会在target&#x2F;release下生成目标文件, 会让Rust代码运行更快,没有debug. 如果要衡量代码效率就是用此命令编译</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/06/16/Rust-Intro/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/04/06/UNIX%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/04/06/UNIX%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-1/" class="post-title-link" itemprop="url">UNIX网络编程_1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-06 04:31:59" itemprop="dateCreated datePublished" datetime="2025-04-06T04:31:59+08:00">2025-04-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:18" itemprop="dateModified" datetime="2025-06-16T15:51:18+08:00">2025-06-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一个简单的时间获取客户程序"><a href="#一个简单的时间获取客户程序" class="headerlink" title="一个简单的时间获取客户程序"></a>一个简单的时间获取客户程序</h1><blockquote>
+<p>本系统： Debian 12</p>
+</blockquote>
+<blockquote>
+<p>如何下载源码并编译运行</p>
+</blockquote>
+<p>官方源码地址：<a target="_blank" rel="noopener" href="https://github.com/unpbook/unpv13e">https://github.com/unpbook/unpv13e</a></p>
+<p><code>git clone https://github.com/unpbook/unpv13e.git </code></p>
+<p>克隆到本地之后，根据README文件一步一步make配置</p>
+<p>接下来可以直接<code> make 想要运行的源码</code> 然后执行即可</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/04/06/UNIX%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/26/%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/26/%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB-1/" class="post-title-link" itemprop="url">分层领域模型解读</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-26 23:02:31" itemprop="dateCreated datePublished" datetime="2025-02-26T23:02:31+08:00">2025-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:34" itemprop="dateModified" datetime="2025-06-16T15:51:34+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>最近在开发项目的时候碰到了领域模型，但是并没有对其中的各层关系以及各层传递数据方式理解清晰。在此记录下分层领域模型数据的传递过程</p>
+<h2 id="所谓领域模型"><a href="#所谓领域模型" class="headerlink" title="所谓领域模型"></a>所谓领域模型</h2><p>所谓领域模型，其实就是<strong>C++类</strong>，再详细一点就是有作用范围的实体类。</p>
+<p>其核心目标是<strong>业务抽象</strong>：将现实业务中的实体、流程和规则转化为可被代码理解和操作的结构。</p>
+<p>其中的领域对象描述是这样的：</p>
+<ul>
+<li><code>DO</code>（Data Object）：此对象与数据库表结构一一对应，通过 <code>DAO</code> 层向上传输数据源对象。</li>
+<li><code>DTO</code>（Data Transfer Object）：数据传输对象，Service 或 Manager 向外传输的对象。 </li>
+<li><code>BO</code>（Business Object）：业务对象，可以由 Service 层输出的封装业务逻辑的对象。</li>
+<li><code>Query</code>：数据查询对象，各层接收上层的查询请求。</li>
+<li><code>VO</code>（View Object）：显示层对象，通常是 Web 向模板渲染引擎层传输的对象。</li>
+</ul>
+<p><img src="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/layer.png" alt="img"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/26/%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%A3%E8%AF%BB-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="post-title-link" itemprop="url">浅谈智能指针</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-20 00:18:41" itemprop="dateCreated datePublished" datetime="2025-02-20T00:18:41+08:00">2025-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:54:12" itemprop="dateModified" datetime="2025-06-16T15:54:12+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>野指针（Wild Pointer）： 野指针是指指向任意未知位置的指针，它没有被初始化或者指向无效的内存。</p>
+<p>悬挂指针（dangling pointer）：指指向已释放或无效内存的指针。当一个指向动态分配内存的指针所指向的内存被释放后，该指针仍然保留着原来的指向，但此时使用该指针访问所指向的内存将导致未定义的行为。</p>
+<p>RAII (Resource Acquisition Is Initialization): 资源获取即初始化， R使用一个对象，在其构造时获取对应的资源，在对象生命期内控制对资源的访问，使之始终保持有效，最后在对象析构的时候，释放构造时获取的资源。像下面的例子：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/20/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/17/oatpp%E7%9A%84%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/17/oatpp%E7%9A%84%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2/" class="post-title-link" itemprop="url">oatpp的初步探索</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-17 17:35:24" itemprop="dateCreated datePublished" datetime="2025-02-17T17:35:24+08:00">2025-02-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:49:58" itemprop="dateModified" datetime="2025-06-16T15:49:58+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-CPP/" itemprop="url" rel="index"><span itemprop="name">C/CPP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一些基本概念"><a href="#一些基本概念" class="headerlink" title="一些基本概念"></a>一些基本概念</h2><p>CORS(跨域资源共享)：浏览器的安全特性，允许你控制哪些外部域名访问你的API</p>
+<p>API路由：简单来说就是根据客户端发起的请求（包括请求的方法，如GET、POST、PUT等，以及请求的URL路径）将请求映射到不同的处理逻辑中：</p>
+<p>1.匹配客户端发来的请求</p>
+<p>2.根据请求的路径和方法，找到并执行相应的代码（处理逻辑）</p>
+<p>3.返回一个响应给客户端</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/02/17/oatpp%E7%9A%84%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/05/Docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">(转载)Docker常用命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-05 14:06:31" itemprop="dateCreated datePublished" datetime="2025-02-05T14:06:31+08:00">2025-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-27 18:34:56" itemprop="dateModified" datetime="2025-02-27T18:34:56+08:00">2025-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BD%AC%E8%BD%BD/" itemprop="url" rel="index"><span itemprop="name">转载</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.yuque.com/leifengyang/sutong/au0lv3sv3eldsmn8">docker常用命令</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2025/01/06/%E5%AE%89%E8%A3%85Anolis%E7%9A%84%E5%9D%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/01/06/%E5%AE%89%E8%A3%85Anolis%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">实机安装Anolis的坑及安装之后的网络修复</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-01-06 16:31:53" itemprop="dateCreated datePublished" datetime="2025-01-06T16:31:53+08:00">2025-01-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:51:39" itemprop="dateModified" datetime="2025-06-16T15:51:39+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>前两天突发奇想想把一直在用的实机(Debian 12)换成Anolis OS,在安装这个系统的时候碰到了不少问题,现记录于此.</p>
+<blockquote>
+<h3 id="机器配置"><a href="#机器配置" class="headerlink" title="机器配置:"></a>机器配置:</h3><p><strong>笔记本品牌:</strong> HUAWEI MateBook D 14</p>
+</blockquote>
+<p><strong>CPU型号:</strong> R5 4500U</p>
+<p><strong>内存:</strong> DDR4 16GB 2666MHz</p>
+<p><strong>硬盘:</strong> SSD 512GB </p>
+<p><strong>网络通信:</strong> Realtek RTL8821CE&#x2F;RTL8822CE Wi-Fi</p>
+<blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装:"></a>安装:</h3><p><strong>准备:</strong> 至少16GB的U盘</p>
+</blockquote>
+<ol>
+<li><p>从<a target="_blank" rel="noopener" href="https://openanolis.cn/">Anolis官网</a>下载需要的镜像</p>
+</li>
+<li><p>通过u盘刻录软件将镜像刻录到U盘(我用的是rufus), 其中刻录的时候要注意的是: </p>
+<p> 1.分区类型(MBR或GPT)一定要选择与系统相匹配的类型, MateBook D 14要选择GPT,不然会导致启动u盘的时候被验证失败(Error: Vertification failed).</p>
+<p> 2.写入模式要选择DD模式, 不要选择ISO模式, 不然会导致进入安装界面的时候本地仓库识别不到.</p>
+</li>
+<li><p>最后根据引导完成安装即可.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/01/06/%E5%AE%89%E8%A3%85Anolis%E7%9A%84%E5%9D%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ffo</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<!-- <br /> -->
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<!-- <span id="times">载入时分秒...</span> -->
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("2/18/2024 18:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); 
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        // var times = document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "+hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Northffo/Northffo.github.io","repo_id":"R_kgDOLTOWzQ","category":"General","category_id":"DIC_kwDOLTOWzc4CdVaO","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

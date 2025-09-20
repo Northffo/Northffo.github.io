@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="pPn8k9CfIz8y7g4mPGuQXy0898iOd2qKEwBHzo94s7k">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="使用strace工具追踪main.c的gcc编译过程及a.out的执行过程 追踪gcc编译过程  1strace -o &#x2F;dev&#x2F;stdout gcc hello.c 2&gt;&amp;1 | vim -  将strace追踪信息利用|(管道) 传递给vim, 这边要注意的是strace的输出是直接发送到标准错误输出stderr, 而不是标准输出stdout, 所以用-o dev&#x2F;stdout将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="追踪一个main.c的周期">
+<meta property="og:url" content="https://northffo.github.io/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/index.html">
+<meta property="og:site_name" content="ffo&#39;s Blog">
+<meta property="og:description" content="使用strace工具追踪main.c的gcc编译过程及a.out的执行过程 追踪gcc编译过程  1strace -o &#x2F;dev&#x2F;stdout gcc hello.c 2&gt;&amp;1 | vim -  将strace追踪信息利用|(管道) 传递给vim, 这边要注意的是strace的输出是直接发送到标准错误输出stderr, 而不是标准输出stdout, 所以用-o dev&#x2F;stdout将">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-14T12:55:36.000Z">
+<meta property="article:modified_time" content="2025-06-16T07:52:22.274Z">
+<meta property="article:author" content="ffo">
+<meta property="article:tag" content="linux C">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://northffo.github.io/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://northffo.github.io/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/","path":"2024/03/14/追踪一个main-c的周期/","title":"追踪一个main.c的周期"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>追踪一个main.c的周期 | ffo's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/Northffo/Northffo.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ffo's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8strace%E5%B7%A5%E5%85%B7%E8%BF%BD%E8%B8%AAmain-c%E7%9A%84gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E5%8F%8Aa-out%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">使用strace工具追踪main.c的gcc编译过程及a.out的执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E8%A7%A3%E9%87%8A"><span class="nav-number">2.</span> <span class="nav-text">系统调用解释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GCC%E7%BC%96%E8%AF%91%E5%99%A8%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number"></span> <span class="nav-text">GCC编译器执行过程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC1%E6%AE%B5%EF%BC%9A%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88%E8%A1%8C1-15%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">第1段：程序启动和初始化（行1-15）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC2%E6%AE%B5%EF%BC%9A%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE%EF%BC%88%E8%A1%8C16-27%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">第2段：环境设置（行16-27）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC3%E6%AE%B5%EF%BC%9A%E6%9C%AC%E5%9C%B0%E5%8C%96%E5%92%8C%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%EF%BC%88%E8%A1%8C28-49%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">第3段：本地化和错误消息处理（行28-49）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%8C%96"><span class="nav-number">0.1.</span> <span class="nav-text">本地化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC4%E6%AE%B5%EF%BC%9A%E7%BC%96%E8%AF%91%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87%EF%BC%88%E8%A1%8C50-95%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">第4段：编译前的准备（行50-95）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC5%E6%AE%B5%EF%BC%9A%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%EF%BC%88%E8%A1%8C96-204%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">第5段：编译过程（行96-204）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC6%E6%AE%B5%EF%BC%9A%E6%B8%85%E7%90%86%E5%92%8C%E9%80%80%E5%87%BA%EF%BC%88%E8%A1%8C205-210%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">第6段：清理和退出（行205-210）</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ffo"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ffo</p>
+  <div class="site-description" itemprop="description">时间的线性是温柔的骗局</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="追踪一个main.c的周期 | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          追踪一个main.c的周期
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-14 20:55:36" itemprop="dateCreated datePublished" datetime="2024-03-14T20:55:36+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:52:22" itemprop="dateModified" datetime="2025-06-16T15:52:22+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="使用strace工具追踪main-c的gcc编译过程及a-out的执行过程"><a href="#使用strace工具追踪main-c的gcc编译过程及a-out的执行过程" class="headerlink" title="使用strace工具追踪main.c的gcc编译过程及a.out的执行过程"></a>使用strace工具追踪main.c的gcc编译过程及a.out的执行过程</h3><blockquote>
+<p>追踪gcc编译过程</p>
+</blockquote>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">strace</span> -o /dev/stdout gcc hello.c <span class="number">2</span>&gt;&amp;<span class="number">1</span> | vim -</span><br></pre></td></tr></table></figure>
+
+<p>将strace追踪信息利用<code>|</code>(管道) 传递给vim, 这边要注意的是strace的输出是直接发送到标准错误输出<code>stderr</code>, 而不是标准输出<code>stdout</code>, 所以用<code>-o dev/stdout</code>将输出写到标准输出中， <code>2&gt;&amp;1</code>是将标准错误stderr（文件描述符2）重定向到标准输出stdout（文件描述符1）中， 详情见<a href="./%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A0%87%E5%87%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6.md">此处</a>. </p>
+<span id="more"></span>
+
+<p>那么我们可以得到这些信息：</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br></pre></td><td class="code"><pre><span class="line">execve(<span class="string">&quot;/usr/bin/gcc&quot;</span>, [<span class="string">&quot;gcc&quot;</span>, <span class="string">&quot;hello.c&quot;</span>], <span class="number">0</span>x7ffde6f6a6e8 <span class="comment">/* 57 vars */</span>) = <span class="number">0</span></span><br><span class="line">brk(NULL)                               = <span class="number">0</span>x198a000</span><br><span class="line">mmap(NULL, <span class="number">8192</span>, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -<span class="number">1</span>, <span class="number">0</span>) = <span class="number">0</span>x7f1a6461f000</span><br><span class="line">access(<span class="string">&quot;/etc/ld.so.preload&quot;</span>, R_OK)      = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/etc/ld.so.cache&quot;</span>, O_RDONLY|O_CLOEXEC) = <span class="number">3</span></span><br><span class="line">newfstatat(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0644</span>, st_size=<span class="number">94102</span>, ...&#125;, AT_EMPTY_PATH) = <span class="number">0</span></span><br><span class="line">mmap(NULL, <span class="number">94102</span>, PROT_READ, MAP_PRIVATE, <span class="number">3</span>, <span class="number">0</span>) = <span class="number">0</span>x7f1a64608000</span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span>, O_RDONLY|O_CLOEXEC) = <span class="number">3</span></span><br><span class="line">read(<span class="number">3</span>, <span class="string">&quot;\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0\20t\2\0\0\0\0\0&quot;</span>..., <span class="number">832</span>) = <span class="number">832</span></span><br><span class="line">pread64(<span class="number">3</span>, <span class="string">&quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;</span>..., <span class="number">784</span>, <span class="number">64</span>) = <span class="number">784</span></span><br><span class="line">newfstatat(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0755</span>, st_size=<span class="number">1922136</span>, ...&#125;, AT_EMPTY_PATH) = <span class="number">0</span></span><br><span class="line">pread64(<span class="number">3</span>, <span class="string">&quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;</span>..., <span class="number">784</span>, <span class="number">64</span>) = <span class="number">784</span></span><br><span class="line">mmap(NULL, <span class="number">1970000</span>, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, <span class="number">3</span>, <span class="number">0</span>) = <span class="number">0</span>x7f1a64427000</span><br><span class="line">mmap(<span class="number">0</span>x7f1a6444d000, <span class="number">1396736</span>, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, <span class="number">3</span>, <span class="number">0</span>x26000) = <span class="number">0</span>x7f1a6444d000</span><br><span class="line">mmap(<span class="number">0</span>x7f1a645a2000, <span class="number">339968</span>, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, <span class="number">3</span>, <span class="number">0</span>x17b000) = <span class="number">0</span>x7f1a645a2000</span><br><span class="line">mmap(<span class="number">0</span>x7f1a645f5000, <span class="number">2457</span>第<span class="number">1</span>段：程序启动和初始化（行<span class="number">1</span>-<span class="number">15</span>）</span><br><span class="line">解释：这一段描述了gcc编译器启动的初始步骤。execve系统调用用于执行gcc程序，后续的brk和mmap调用进行内存分配和管理，为程序的运行准备必要的资源。接着，通过openat和read系统调用，程序尝试访问和读取系统的动态链接器配置（/etc/ld.so.cache）和标准C库（libc.so.<span class="number">6</span>），这是程序运行前的必要准备，以确保能够正确链接到所需的共享库。</span><br><span class="line">第<span class="number">2</span>段：环境设置（行<span class="number">16</span>-<span class="number">27</span>）</span><br><span class="line">解释：程序继续进行环境设置，包括通过mmap为特定的数据结构分配更多内存，设置线程特定的数据（如arch_prctl调用设定线程的FS寄存器），并进行一些内存保护设置（mprotect调用）。这一部分的操作主要关注于为程序的执行和系统调用提供必要的环境配置。</span><br><span class="line">第<span class="number">3</span>段：本地化和错误消息处理（行<span class="number">28</span>-<span class="number">49</span>）</span><br><span class="line">解释：gcc尝试加载本地化支持文件，以便能够显示本地化的错误消息。通过一系列的openat调用搜索本地化文件，所有尝试均返回ENOENT（文件不存在），说明在指定的路径下没有找到相应的本地化文件。此外，ioctl调用的失败表明尝试获取终端属性未成功，这通常是因为gcc可能在没有终端的环境中运行（例如，脚本或其他自动化工具中）。</span><br><span class="line">第<span class="number">4</span>段：编译前的准备（行<span class="number">50</span>-<span class="number">95</span>）</span><br><span class="line">解释：这段涉及到编译前的准备工作，包括对信号处理的设置（如rt_sigaction调用），以确保在编译过程中能够正确处理诸如中断（SIGINT）和挂起（SIGHUP）等信号。接着，gcc进行一系列的路径和文件检查，确认编译器组件和工具链的位置（如查找gcc，cc1，以及相关库文件的位置）。这些步骤确保了编译过程可以找到所有必要的编译器组件和工具。</span><br><span class="line">第<span class="number">5</span>段：编译过程（行<span class="number">96</span>-<span class="number">204</span>）</span><br><span class="line">解释：这是实际编译过程的核心部分，涉及多个阶段，包括预处理、编译、汇编和链接。在这一段中，gcc生成了临时文件（如汇编代码文件），调用子进程（通过vfork和execve）来执行如cc1（gcc的编译器前端），汇编器（as），以及链接器（ld或collect2）。此外，通过pipe2和wait4等系统调用进行进程间通信和同步，确保编译过程按顺序进行。各种临时文件被创建和删除（unlink），是编译过程中间步骤的产物。</span><br><span class="line">第<span class="number">6</span>段：清理和退出（行<span class="number">205</span>-<span class="number">210</span>）</span><br><span class="line">解释：在编译任务完成后，gcc进行清理工作，包括删除临时文件，并最终通过exit_group系统调用退出程序。这表示编译过程已经全部完成，所有资源被适当地释放，gcc以返回状态码<span class="number">0</span>正常退出，标志着编译成功。, <span class="number">0</span>) = <span class="number">0</span>x7f1a645fb000</span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">mmap(NULL, <span class="number">12288</span>, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -<span class="number">1</span>, <span class="number">0</span>) = <span class="number">0</span>x7f1a64424000</span><br><span class="line">arch_prctl(ARCH_SET_FS, <span class="number">0</span>x7f1a64424740) = <span class="number">0</span></span><br><span class="line">set_tid_address(<span class="number">0</span>x7f1a64424a10)         = <span class="number">16201</span></span><br><span class="line">set_robust_list(<span class="number">0</span>x7f1a64424a20, <span class="number">24</span>)     = <span class="number">0</span></span><br><span class="line">rseq(<span class="number">0</span>x7f1a64425060, <span class="number">0</span>x20, <span class="number">0</span>, <span class="number">0</span>x53053053) = <span class="number">0</span></span><br><span class="line">mprotect(<span class="number">0</span>x7f1a645f5000, <span class="number">16384</span>, PROT_READ) = <span class="number">0</span></span><br><span class="line">mprotect(<span class="number">0</span>x539000, <span class="number">12288</span>, PROT_READ)    = <span class="number">0</span></span><br><span class="line">mprotect(<span class="number">0</span>x7f1a64651000, <span class="number">8192</span>, PROT_READ) = <span class="number">0</span></span><br><span class="line">prlimit64(<span class="number">0</span>, RLIMIT_STACK, NULL, &#123;rlim_cur=<span class="number">8192</span>*<span class="number">1024</span>, rlim_max=RLIM64_INFINITY&#125;) = <span class="number">0</span></span><br><span class="line">munmap(<span class="number">0</span>x7f1a64608000, <span class="number">94102</span>)           = <span class="number">0</span></span><br><span class="line">getrandom(<span class="string">&quot;\xe0\xcb\x2e\x04\x26\xb5\x6a\x8e&quot;</span>, <span class="number">8</span>, GRND_NONBLOCK) = <span class="number">8</span></span><br><span class="line">brk(NULL)                               = <span class="number">0</span>x198a000</span><br><span class="line">brk(<span class="number">0</span>x19ab000)                          = <span class="number">0</span>x19ab000</span><br><span class="line">brk(<span class="number">0</span>x19cd000)                          = <span class="number">0</span>x19cd000</span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/lib/locale/locale-archive&quot;</span>, O_RDONLY|O_CLOEXEC) = <span class="number">3</span></span><br><span class="line">newfstatat(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0644</span>, st_size=<span class="number">6209168</span>, ...&#125;, AT_EMPTY_PATH) = <span class="number">0</span></span><br><span class="line">mmap(NULL, <span class="number">6209168</span>, PROT_READ, MAP_PRIVATE, <span class="number">3</span>, <span class="number">0</span>) = <span class="number">0</span>x7f1a63e00000</span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/share/locale/locale.alias&quot;</span>, O_RDONLY|O_CLOEXEC) = <span class="number">3</span></span><br><span class="line">newfstatat(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0644</span>, st_size=<span class="number">2996</span>, ...&#125;, AT_EMPTY_PATH) = <span class="number">0</span></span><br><span class="line">read(<span class="number">3</span>, <span class="string">&quot;# Locale name alias data base.\n#&quot;</span>..., <span class="number">4096</span>) = <span class="number">2996</span></span><br><span class="line">read(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, <span class="number">4096</span>)                       = <span class="number">0</span></span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/share/locale/en_US.UTF-8/LC_MESSAGES/gcc-12.mo&quot;</span>, O_RDONLY) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/share/locale/en_US.utf8/LC_MESSAGES/gcc-12.mo&quot;</span>, O_RDONLY) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/share/locale/en_US/LC_MESSAGES/gcc-12.mo&quot;</span>, O_RDONLY) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/share/locale/en.UTF-8/LC_MESSAGES/gcc-12.mo&quot;</span>, O_RDONLY) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/share/locale/en.utf8/LC_MESSAGES/gcc-12.mo&quot;</span>, O_RDONLY) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/usr/share/locale/en/LC_MESSAGES/gcc-12.mo&quot;</span>, O_RDONLY) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">ioctl(<span class="number">2</span>, TCGETS, <span class="number">0</span>x7ffea2eb7580)        = -<span class="number">1</span> ENOTTY (Inappropriate ioctl for device)</span><br><span class="line">ioctl(<span class="number">2</span>, TCGETS, <span class="number">0</span>x7ffea2eb7590)        = -<span class="number">1</span> ENOTTY (Inappropriate ioctl for device)</span><br><span class="line">ioctl(<span class="number">2</span>, TCGETS, <span class="number">0</span>x7ffea2eb7580)        = -<span class="number">1</span> ENOTTY (Inappropriate ioctl for device)</span><br><span class="line">rt_sigaction(SIGINT, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[INT], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_DFL, s<span class="built_in">a_mask</span>=[], s<span class="built_in">a_flags</span>=<span class="number">0</span>&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGINT, &#123;s<span class="built_in">a_handler</span>=<span class="number">0</span>x4079b0, s<span class="built_in">a_mask</span>=[INT], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[INT], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGHUP, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[HUP], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_DFL, s<span class="built_in">a_mask</span>=[], s<span class="built_in">a_flags</span>=<span class="number">0</span>&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGHUP, &#123;s<span class="built_in">a_handler</span>=<span class="number">0</span>x4079b0, s<span class="built_in">a_mask</span>=[HUP], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[HUP], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGTERM, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[TERM], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_DFL, s<span class="built_in">a_mask</span>=[], s<span class="built_in">a_flags</span>=<span class="number">0</span>&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGTERM, &#123;s<span class="built_in">a_handler</span>=<span class="number">0</span>x4079b0, s<span class="built_in">a_mask</span>=[TERM], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[TERM], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGPIPE, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[PIPE], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_DFL, s<span class="built_in">a_mask</span>=[], s<span class="built_in">a_flags</span>=<span class="number">0</span>&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGPIPE, &#123;s<span class="built_in">a_handler</span>=<span class="number">0</span>x4079b0, s<span class="built_in">a_mask</span>=[PIPE], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_IGN, s<span class="built_in">a_mask</span>=[PIPE], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">rt_sigaction(SIGCHLD, &#123;s<span class="built_in">a_handler</span>=SIG_DFL, s<span class="built_in">a_mask</span>=[CHLD], s<span class="built_in">a_flags</span>=S<span class="built_in">A_RESTORER</span>|S<span class="built_in">A_RESTART</span>, s<span class="built_in">a_restorer</span>=<span class="number">0</span>x7f1a64463050&#125;, &#123;s<span class="built_in">a_handler</span>=SIG_DFL, s<span class="built_in">a_mask</span>=[], s<span class="built_in">a_flags</span>=<span class="number">0</span>&#125;, <span class="number">8</span>) = <span class="number">0</span></span><br><span class="line">prlimit64(<span class="number">0</span>, RLIMIT_STACK, NULL, &#123;rlim_cur=<span class="number">8192</span>*<span class="number">1024</span>, rlim_max=RLIM64_INFINITY&#125;) = <span class="number">0</span></span><br><span class="line">prlimit64(<span class="number">0</span>, RLIMIT_STACK, &#123;rlim_cur=<span class="number">65536</span>*<span class="number">1024</span>, rlim_max=RLIM64_INFINITY&#125;, NULL) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/local/bin/gcc&quot;</span>, X_OK)      = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/bin/gcc&quot;</span>, X_OK)            = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/bin/gcc&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0755</span>, st_size=<span class="number">1301496</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">readlink(<span class="string">&quot;/usr&quot;</span>, <span class="number">0</span>x7ffea2eb5f60, <span class="number">1023</span>)  = -<span class="number">1</span> EINVAL (Invalid argument)</span><br><span class="line">readlink(<span class="string">&quot;/usr/bin&quot;</span>, <span class="number">0</span>x7ffea2eb5f60, <span class="number">1023</span>) = -<span class="number">1</span> EINVAL (Invalid argument)</span><br><span class="line">readlink(<span class="string">&quot;/usr/bin/gcc&quot;</span>, <span class="string">&quot;gcc-12&quot;</span>, <span class="number">1023</span>) = <span class="number">6</span></span><br><span class="line">readlink(<span class="string">&quot;/usr/bin/gcc-12&quot;</span>, <span class="string">&quot;x86_64-linux-gnu-gcc-12&quot;</span>, <span class="number">1023</span>) = <span class="number">23</span></span><br><span class="line">readlink(<span class="string">&quot;/usr/bin/x86_64-linux-gnu-gcc-12&quot;</span>, <span class="number">0</span>x7ffea2eb5f60, <span class="number">1023</span>) = -<span class="number">1</span> EINVAL (Invalid argument)</span><br><span class="line">access(<span class="string">&quot;/usr/local/bin/gcc&quot;</span>, X_OK)      = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/bin/gcc&quot;</span>, X_OK)            = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/bin/gcc&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0755</span>, st_size=<span class="number">1301496</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">readlink(<span class="string">&quot;/usr&quot;</span>, <span class="number">0</span>x7ffea2eb5f60, <span class="number">1023</span>)  = -<span class="number">1</span> EINVAL (Invalid argument)</span><br><span class="line">readlink(<span class="string">&quot;/usr/bin&quot;</span>, <span class="number">0</span>x7ffea2eb5f60, <span class="number">1023</span>) = -<span class="number">1</span> EINVAL (Invalid argument)</span><br><span class="line">readlink(<span class="string">&quot;/usr/bin/gcc&quot;</span>, <span class="string">&quot;gcc-12&quot;</span>, <span class="number">1023</span>) = <span class="number">6</span></span><br><span class="line">readlink(<span class="string">&quot;/usr/bin/gcc-12&quot;</span>, <span class="string">&quot;x86_64-linux-gnu-gcc-12&quot;</span>, <span class="number">1023</span>) = <span class="number">23</span></span><br><span class="line">readlink(<span class="string">&quot;/usr/bin/x86_64-linux-gnu-gcc-12&quot;</span>, <span class="number">0</span>x7ffea2eb5f60, <span class="number">1023</span>) = -<span class="number">1</span> EINVAL (Invalid argument)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/&quot;</span>, X_OK) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/&quot;</span>, X_OK) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/specs&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/12/specs&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/specs&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/specs&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/&quot;</span>, X_OK) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/lto-wrapper&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0755</span>, st_size=<span class="number">1180024</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/lto-wrapper&quot;</span>, X_OK) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/tmp&quot;</span>, R_OK|W_OK|X_OK)          = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/tmp&quot;</span>, &#123;st_mode=S_IFDIR|S_ISVTX|<span class="number">0777</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">clock_gettime(CLOCK_MONOTONIC, &#123;tv_sec=<span class="number">2059</span>, tv_nsec=<span class="number">553951022</span>&#125;) = <span class="number">0</span></span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/tmp/ccbdUzto.s&quot;</span>, O_RDWR|O_CREAT|O_EXCL, <span class="number">0600</span>) = <span class="number">3</span></span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/cc1&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0755</span>, st_size=<span class="number">33342568</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/cc1&quot;</span>, X_OK) = <span class="number">0</span></span><br><span class="line">pipe2([<span class="number">3</span>, <span class="number">4</span>], O_CLOEXEC)                = <span class="number">0</span></span><br><span class="line">vfork()                                 = <span class="number">16202</span></span><br><span class="line">close(<span class="number">4</span>)                                = <span class="number">0</span></span><br><span class="line">read(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, <span class="number">16</span>)                         = <span class="number">0</span></span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">wait4(<span class="number">16202</span>, [&#123;WIFEXITED(s) &amp;&amp; WEXITSTATUS(s) == <span class="number">0</span>&#125;], <span class="number">0</span>, NULL) = <span class="number">16202</span></span><br><span class="line">--- SIGCHLD &#123;si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=<span class="number">16202</span>, si_uid=<span class="number">1000</span>, si_status=<span class="number">0</span>, si_utime=<span class="number">1</span> <span class="comment">/* 0.01 s */</span>, si_stime=<span class="number">1</span> <span class="comment">/* 0.01 s */</span>&#125; ---</span><br><span class="line">clock_gettime(CLOCK_MONOTONIC, &#123;tv_sec=<span class="number">2059</span>, tv_nsec=<span class="number">601463828</span>&#125;) = <span class="number">0</span></span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/tmp/ccvZGP4P.o&quot;</span>, O_RDWR|O_CREAT|O_EXCL, <span class="number">0600</span>) = <span class="number">3</span></span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/12/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/12/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu-as&quot;</span>, <span class="number">0</span>x7ffea2eb7230, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/as&quot;</span>, <span class="number">0</span>x7ffea2eb72f0, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">pipe2([<span class="number">3</span>, <span class="number">4</span>], O_CLOEXEC)                = <span class="number">0</span></span><br><span class="line">vfork()                                 = <span class="number">16203</span></span><br><span class="line">close(<span class="number">4</span>)                                = <span class="number">0</span></span><br><span class="line">read(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, <span class="number">16</span>)                         = <span class="number">0</span></span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">wait4(<span class="number">16203</span>, [&#123;WIFEXITED(s) &amp;&amp; WEXITSTATUS(s) == <span class="number">0</span>&#125;], <span class="number">0</span>, NULL) = <span class="number">16203</span></span><br><span class="line">--- SIGCHLD &#123;si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=<span class="number">16203</span>, si_uid=<span class="number">1000</span>, si_status=<span class="number">0</span>, si_utime=<span class="number">0</span>, si_stime=<span class="number">0</span>&#125; ---</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/collect2&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0755</span>, st_size=<span class="number">639192</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/collect2&quot;</span>, X_OK) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/liblto_plugin.so&quot;</span>, R_OK) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/bin/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/../lib/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">126976</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/lib/x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/lib/x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">126976</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/lib/../lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">126976</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/../lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/.&quot;</span>, <span class="number">0</span>x7ffea2eb7420, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">clock_gettime(CLOCK_MONOTONIC, &#123;tv_sec=<span class="number">2059</span>, tv_nsec=<span class="number">611785599</span>&#125;) = <span class="number">0</span></span><br><span class="line">openat(AT_FDCWD, <span class="string">&quot;/tmp/ccmo4bus.res&quot;</span>, O_RDWR|O_CREAT|O_EXCL, <span class="number">0600</span>) = <span class="number">3</span></span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/Scrt1.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/12/Scrt1.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/Scrt1.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/../lib/Scrt1.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/12/Scrt1.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/Scrt1.o&quot;</span>, R_OK) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/crti.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/12/crti.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/crti.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/../lib/crti.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/12/crti.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/crti.o&quot;</span>, R_OK) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/crtbeginS.o&quot;</span>, R_OK) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb6640, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/.&quot;</span>, <span class="number">0</span>x7ffea2eb6640, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/../lib/.&quot;</span>, <span class="number">0</span>x7ffea2eb6640, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb6640, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">126976</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/lib/x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb6640, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/lib/x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">126976</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/lib/../lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/x86_64-linux-gnu/12/.&quot;</span>, <span class="number">0</span>x7ffea2eb6640, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/x86_64-linux-gnu/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">126976</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/../lib/.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/.&quot;</span>, <span class="number">0</span>x7ffea2eb6640, <span class="number">0</span>) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../.&quot;</span>, &#123;st_mode=S_IFDIR|<span class="number">0755</span>, st_size=<span class="number">4096</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/crtendS.o&quot;</span>, R_OK) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/crtn.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/12/crtn.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/crtn.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../../x86_64-linux-gnu/lib/../lib/crtn.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/12/crtn.o&quot;</span>, R_OK) = -<span class="number">1</span> ENOENT (No such file <span class="literal">or</span> directory)</span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/../../../x86_64-linux-gnu/crtn.o&quot;</span>, R_OK) = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/collect2&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0755</span>, st_size=<span class="number">639192</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">access(<span class="string">&quot;/usr/lib/gcc/x86_64-linux-gnu/12/collect2&quot;</span>, X_OK) = <span class="number">0</span></span><br><span class="line">pipe2([<span class="number">3</span>, <span class="number">4</span>], O_CLOEXEC)                = <span class="number">0</span></span><br><span class="line">vfork()                                 = <span class="number">16204</span></span><br><span class="line">close(<span class="number">4</span>)                                = <span class="number">0</span></span><br><span class="line">read(<span class="number">3</span>, <span class="string">&quot;&quot;</span>, <span class="number">16</span>)                         = <span class="number">0</span></span><br><span class="line">close(<span class="number">3</span>)                                = <span class="number">0</span></span><br><span class="line">wait4(<span class="number">16204</span>, [&#123;WIFEXITED(s) &amp;&amp; WEXITSTATUS(s) == <span class="number">0</span>&#125;], <span class="number">0</span>, NULL) = <span class="number">16204</span></span><br><span class="line">--- SIGCHLD &#123;si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=<span class="number">16204</span>, si_uid=<span class="number">1000</span>, si_status=<span class="number">0</span>, si_utime=<span class="number">0</span>, si_stime=<span class="number">0</span>&#125; ---</span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/tmp/ccmo4bus.res&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0600</span>, st_size=<span class="number">0</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">unlink(<span class="string">&quot;/tmp/ccmo4bus.res&quot;</span>)             = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/tmp/ccvZGP4P.o&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0600</span>, st_size=<span class="number">1384</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">unlink(<span class="string">&quot;/tmp/ccvZGP4P.o&quot;</span>)               = <span class="number">0</span></span><br><span class="line">newfstatat(AT_FDCWD, <span class="string">&quot;/tmp/ccbdUzto.s&quot;</span>, &#123;st_mode=S_IFREG|<span class="number">0600</span>, st_size=<span class="number">541</span>, ...&#125;, <span class="number">0</span>) = <span class="number">0</span></span><br><span class="line">unlink(<span class="string">&quot;/tmp/ccbdUzto.s&quot;</span>)               = <span class="number">0</span></span><br><span class="line">exit_group(<span class="number">0</span>)                           = ?</span><br><span class="line">+++ exited with <span class="number">0</span> +++</span><br></pre></td></tr></table></figure>
+
+<p>信息非常乱， 但是我先列出每个函数的作用（生成自gpt）：</p>
+<h3 id="系统调用解释"><a href="#系统调用解释" class="headerlink" title="系统调用解释"></a>系统调用解释</h3><p>以下是对提供的<code>strace</code>输出中每行开头的系统调用或相关函数的解释：</p>
+<ul>
+<li><p><strong><code>execve</code></strong>: 执行一个程序，是程序运行的起点。替换当前进程的映像、数据和堆栈等为新程序的映像和数据，新程序从<code>main</code>开始执行。</p>
+</li>
+<li><p><strong><code>brk</code></strong>: 调整数据段末尾的地址，用于增加或减少数据段的大小，即动态分配或释放内存。</p>
+</li>
+<li><p><strong><code>mmap</code></strong>: 创建一个新的映射（mapping）在调用进程的虚拟地址空间，用于分配内存或将文件直接映射到内存中。</p>
+</li>
+<li><p><strong><code>access</code></strong>: 检查调用进程是否可以访问指定的文件路径，用于检查文件是否存在及其读写权限。</p>
+</li>
+<li><p><strong><code>openat</code></strong>: 打开一个文件或目录，<code>AT_FDCWD</code>表示相对于当前工作目录的路径。</p>
+</li>
+<li><p><strong><code>newfstatat</code></strong>: 获取文件的状态信息，如大小、权限、最后修改时间等。</p>
+</li>
+<li><p><strong><code>close</code></strong>: 关闭一个文件描述符，释放其所占用的资源。</p>
+</li>
+<li><p><strong><code>read</code></strong>: 从文件描述符指向的文件中读取数据。</p>
+</li>
+<li><p><strong><code>pread64</code></strong>: 从文件描述符指向的文件中读取数据，可以指定从哪个位置开始读取，不改变文件的当前偏移量。</p>
+</li>
+<li><p><strong><code>arch_prctl</code></strong>: 设置特定架构的进程或线程的状态，如线程局部存储区域。</p>
+</li>
+<li><p><strong><code>set_tid_address</code></strong>: 设置线程ID的存储地址，用于内核在特定事件（如线程退出）时更新信息。</p>
+</li>
+<li><p><strong><code>set_robust_list</code></strong>: 设置线程的鲁棒列表（robust list），用于处理锁的死亡解锁。</p>
+</li>
+<li><p><strong><code>rseq</code></strong>: 重启序列系统调用，用于在用户空间实现快速的锁和同步机制。</p>
+</li>
+<li><p><strong><code>mprotect</code></strong>: 改变一块内存区域的保护属性，如设置为只读。</p>
+</li>
+<li><p><strong><code>ioctl</code></strong>: 对设备特定的输入&#x2F;输出操作进行控制。</p>
+</li>
+<li><p><strong><code>rt_sigaction</code></strong>: 检查或修改与特定信号相关联的处理动作。</p>
+</li>
+<li><p><strong><code>prlimit64</code></strong>: 获取或设置进程资源限制，如最大可用内存、最大打开文件数等。</p>
+</li>
+<li><p><strong><code>getrandom</code></strong>: 从内核的随机数生成器获取随机数。</p>
+</li>
+<li><p><strong><code>unlink</code></strong>: 删除一个文件的链接，如果是文件的最后一个链接，并且没有进程打开该文件，则文件被删除。</p>
+</li>
+<li><p><strong><code>exit_group</code></strong>: 终止调用进程所在的整个进程组，通常在程序结束时调用。</p>
+</li>
+</ul>
+<p>下面对追踪信息进行基本解释：</p>
+<h1 id="GCC编译器执行过程分析"><a href="#GCC编译器执行过程分析" class="headerlink" title="GCC编译器执行过程分析"></a>GCC编译器执行过程分析</h1><h2 id="第1段：程序启动和初始化（行1-15）"><a href="#第1段：程序启动和初始化（行1-15）" class="headerlink" title="第1段：程序启动和初始化（行1-15）"></a>第1段：程序启动和初始化（行1-15）</h2><p>这一段描述了gcc编译器启动的初始步骤。<code>execve</code>系统调用用于执行gcc程序，后续的<code>brk</code>和<code>mmap</code>调用进行内存分配和管理，为程序的运行准备必要的资源。接着，通过<code>openat</code>和<code>read</code>系统调用，程序尝试访问和读取系统的动态链接器配置（<code>/etc/ld.so.cache</code>）和标准C库（<code>libc.so.6</code>），这是程序运行前的必要准备，以确保能够正确链接到所需的共享库。</p>
+<h2 id="第2段：环境设置（行16-27）"><a href="#第2段：环境设置（行16-27）" class="headerlink" title="第2段：环境设置（行16-27）"></a>第2段：环境设置（行16-27）</h2><p>程序继续进行环境设置，包括通过<code>mmap</code>为特定的数据结构分配更多内存，设置线程特定的数据（如<code>arch_prctl</code>调用设定线程的FS寄存器），并进行一些内存保护设置（<code>mprotect</code>调用）。这一部分的操作主要关注于为程序的执行和系统调用提供必要的环境配置。</p>
+<h2 id="第3段：本地化和错误消息处理（行28-49）"><a href="#第3段：本地化和错误消息处理（行28-49）" class="headerlink" title="第3段：本地化和错误消息处理（行28-49）"></a>第3段：本地化和错误消息处理（行28-49）</h2><p>gcc尝试加载本地化支持文件，以便能够显示本地化的错误消息。通过一系列的<code>openat</code>调用搜索本地化文件，所有尝试均返回<code>ENOENT</code>（文件不存在），说明在指定的路径下没有找到相应的本地化文件。我没有下载本地化文件，所以这一步会加载失败，并且如果GCC未找到对应的.mo文件，它会回退到默认的（通常是英文）消息。此外，<code>ioctl</code>调用的失败表明尝试获取终端属性未成功，这通常是因为gcc可能在没有终端的环境中运行（例如，脚本或其他自动化工具中）。</p>
+<blockquote>
+<h4 id="本地化"><a href="#本地化" class="headerlink" title="本地化"></a>本地化</h4><p>本地化（Localization），通常简写为l10n（因为单词中”L”和”n”之间有10个字母），指的是将产品（如软件、文档、网站等）或内容调整以适应特定地区或语言的用户的过程。这不仅涉及到翻译文本内容，还包括符合当地文化、法律和需求的各种适应性调整。本地化的目标是为用户提供尽可能亲切和自然的使用体验，使产品看起来像是为特定的用户群体量身定做的。以下是本地化过程中常涉及的一些关键方面：</p>
+<ol>
+<li>语言和文本翻译</li>
+</ol>
+<p>将产品界面、帮助文档、用户手册等文本从一种语言翻译到另一种语言，确保语言的准确性和地道性。</p>
+<ol start="2">
+<li>文化适应性</li>
+</ol>
+<p>考虑和适应目标地区的文化习俗和预期，如颜色、图标的文化含义，以及布局方式等，以避免文化冲突或误解。</p>
+<ol start="3">
+<li>法律和规范遵循</li>
+</ol>
+<p>确保产品符合目标地区的法律法规和业务习惯，包括隐私政策、版权信息、数据保护规则等。</p>
+<ol start="4">
+<li>技术适应性</li>
+</ol>
+<p>适应目标地区的技术标准和习惯，如日期和时间格式、数字格式（小数点和千位分隔符）、度量单位（公制或英制）、货币单位等。</p>
+<ol start="5">
+<li>排版和界面调整</li>
+</ol>
+<p>根据语言的阅读方向（如从左到右或从右到左）调整用户界面的布局和排版，确保界面元素的适当展示和用户交互的便利性。<br>通过本地化，可以大大增强用户体验，提高产品的市场接受度和用户满意度。对于全球市场的软件开发者而言，本地化是一个重要的步骤，有助于将产品推广到不同语言和文化背景的用户中。</p>
+</blockquote>
+<h2 id="第4段：编译前的准备（行50-95）"><a href="#第4段：编译前的准备（行50-95）" class="headerlink" title="第4段：编译前的准备（行50-95）"></a>第4段：编译前的准备（行50-95）</h2><p>这段涉及到编译前的准备工作，包括对信号处理的设置（如<code>rt_sigaction</code>调用），以确保在编译过程中能够正确处理诸如中断（SIGINT）和挂起（SIGHUP）等信号。接着，gcc进行一系列的路径和文件检查，确认编译器组件和工具链的位置（如查找gcc，cc1，以及相关库文件的位置）。这些步骤确保了编译过程可以找到所有必要的编译器组件和工具。</p>
+<h2 id="第5段：编译过程（行96-204）"><a href="#第5段：编译过程（行96-204）" class="headerlink" title="第5段：编译过程（行96-204）"></a>第5段：编译过程（行96-204）</h2><p>这是实际编译过程的核心部分，涉及多个阶段，包括预处理、编译、汇编和链接。在这一段中，gcc生成了临时文件（如汇编代码文件），调用子进程（通过<code>vfork</code>和<code>execve</code>）来执行如cc1（gcc的编译器前端），汇编器（as），以及链接器（ld或collect2）。此外，通过<code>pipe2</code>和<code>wait4</code>等系统调用进行进程间通信和同步，确保编译过程按顺序进行。各种临时文件被创建和删除（<code>unlink</code>），是编译过程中间步骤的产物。</p>
+<h2 id="第6段：清理和退出（行205-210）"><a href="#第6段：清理和退出（行205-210）" class="headerlink" title="第6段：清理和退出（行205-210）"></a>第6段：清理和退出（行205-210）</h2><p>在编译任务完成后，gcc进行清理工作，包括删除临时文件，并最终通过<code>exit_group</code>系统调用退出程序。这表示编译过程已经全部完成，所有资源被适当地释放，gcc以返回状态码0正常退出，标志着编译成功。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ffo
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://northffo.github.io/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/" title="追踪一个main.c的周期">https://northffo.github.io/2024/03/14/追踪一个main-c的周期/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/linux-C/" rel="tag"># linux C</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/" rel="prev" title="gcc常用选项">
+                  <i class="fa fa-angle-left"></i> gcc常用选项
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/15/%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A0%87%E5%87%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/" rel="next" title="类Unix系统中进程的标准的文件描述符">
+                  类Unix系统中进程的标准的文件描述符 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ffo</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<!-- <br /> -->
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<!-- <span id="times">载入时分秒...</span> -->
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("2/18/2024 18:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); 
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        // var times = document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "+hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Northffo/Northffo.github.io","repo_id":"R_kgDOLTOWzQ","category":"General","category_id":"DIC_kwDOLTOWzc4CdVaO","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

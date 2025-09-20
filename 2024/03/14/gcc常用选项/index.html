@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="pPn8k9CfIz8y7g4mPGuQXy0898iOd2qKEwBHzo94s7k">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"northffo.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一些gcc常用的选项 -c: 只编译但不链接， 生成目标文件(.o)， 无法识别的文件将被忽略; 原文：  Compile or assemble the source files, but do not link. The linking stage simply is not done. The ultimate output is in the form of an object file">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gcc常用选项">
+<meta property="og:url" content="https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/index.html">
+<meta property="og:site_name" content="ffo&#39;s Blog">
+<meta property="og:description" content="一些gcc常用的选项 -c: 只编译但不链接， 生成目标文件(.o)， 无法识别的文件将被忽略; 原文：  Compile or assemble the source files, but do not link. The linking stage simply is not done. The ultimate output is in the form of an object file">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-14T02:39:45.000Z">
+<meta property="article:modified_time" content="2025-06-16T07:50:46.344Z">
+<meta property="article:author" content="ffo">
+<meta property="article:tag" content="C&#x2F;CPP 编译器">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/","path":"2024/03/14/gcc常用选项/","title":"gcc常用选项"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>gcc常用选项 | ffo's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/Northffo/Northffo.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ffo's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9Bgcc%E5%B8%B8%E7%94%A8%E7%9A%84%E9%80%89%E9%A1%B9"><span class="nav-number">1.</span> <span class="nav-text">一些gcc常用的选项</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ffo"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ffo</p>
+  <div class="site-description" itemprop="description">时间的线性是温柔的骗局</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ffo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ffo's Blog">
+      <meta itemprop="description" content="时间的线性是温柔的骗局">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="gcc常用选项 | ffo's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gcc常用选项
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-14 10:39:45" itemprop="dateCreated datePublished" datetime="2024-03-14T10:39:45+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-16 15:50:46" itemprop="dateModified" datetime="2025-06-16T15:50:46+08:00">2025-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="一些gcc常用的选项"><a href="#一些gcc常用的选项" class="headerlink" title="一些gcc常用的选项"></a>一些gcc常用的选项</h3><ul>
+<li><code>-c</code>: 只编译但不链接， 生成目标文件(.o)， 无法识别的文件将被忽略; 原文：</li>
+</ul>
+<p>Compile or assemble the source files, but do not link. The linking stage simply is not done. The ultimate output is in the form of an object file for each source file.</p>
+<p>By default, the object file name for a source file is made by replacing the suffix ‘.c’, ‘.i’, ‘.s’, etc., with ‘.o’.</p>
+<p>Unrecognized input files, not requiring compilation or assembly, are ignored.</p>
+<ul>
+<li><p><code>-S</code> ： 将源代码编译成汇编代码，而不是直接生成机器代码或可执行文件。使用这个选项时，GCC会执行编译过程中的前几个步骤（如预处理、编译），但会停在生成汇编代码这一步，不会进一步进行汇编成目标代码或进行链接。</p>
+</li>
+<li><p><code>-E</code>: -E选项用于仅执行预处理步骤。GCC会处理源代码中的预处理指令，如宏定义的扩展、条件编译指令的处理、包含文件的插入等，但它不会编译、汇编或链接代码。注意： 默认情况下，这个输出会直接发送到标准输出（即屏幕）， 所以可以使用<code>|</code>传到vim或者其他编辑器中查看:</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E helloworld.c <span class="string">| vim -  </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>-o</code>: 这一部分强烈推荐看<a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc-13.2.0/gcc/Overall-Options.html">原文</a>, <code>-o</code>选项允许指定主输出文件的名称和位置，这适用于任何类型的输出，无论是可执行文件、目标文件、汇编文件还是预处理的C代码。</p>
+<span id="more"></span>
+
+<ul>
+<li><p>这一部分我直接贴出gpt对原文的解读：</p>
+<p><strong>主输出定位</strong>：如果没有指定-o选项，默认情况下，可执行文件会被放置在a.out中，源文件source.suffix的目标文件会命名为source.o，其汇编文件命名为source.s，预编译头文件命名为source.suffix.gch，所有预处理的C源代码输出到标准输出（屏幕）。</p>
+<p><strong>辅助输出和转储输出</strong>：虽然-o仅指定主输出，但它也影响辅助输出和转储输出的命名和定位。除非有其他指定，这些输出文件默认被放置在主输出文件相同的目录下。对于辅助输出，输入文件的后缀会被替换为辅助输出文件类型的后缀；对于转储输出，转储文件的后缀会被添加到输入文件后缀之后。在编译命令中，辅助输出和转储输出的基础名称是主输出的名称；在编译并链接命令中，主输出名称（去掉可执行文件后缀）与输入文件名称结合使用。如果它们的基础名称相同，结果就是该基础名称，否则，它们通过短横线连接。</p>
+<p> <strong>示例</strong>：</p>
+<p> <code>gcc -c foo.c ...</code>会产生<code>foo.o</code>作为主输出，辅助输出和转储输出也会放置在它旁边，例如辅助文件<code>foo.dwo</code>（对于<code>-gsplit-dwarf</code>）和转储文件<code>foo.c.???r.final</code>（对于<code>-fdump-rtl-final</code>）。</p>
+<p>如果明确指定了非链接器的输出文件，辅助和转储文件默认使用相同的基础名称。例如，<code>gcc -c foo.c -o dir/foobar.o ...</code>将辅助输出命名为<code>dir/foobar.*</code>，转储输出命名为<code>dir/foobar.c.*</code>。</p>
+<p>链接输出会为辅助和转储输出添加前缀。例如，<code>gcc foo.c bar.c -o dir/foobar ...</code>通常会将辅助输出命名为<code>dir/foobar-foo.*和dir/foobar-bar.*</code>，转储输出命名为<code>dir/foobar-foo.c.*</code>和<code>dir/foobar-bar.c.*</code>。</p>
+<p>唯一的例外是当可执行文件与单一输入文件共享基础名称时，例如<code>gcc foo.c -o dir/foo ...</code>，这种情况下，辅助输出被命名为<code>dir/foo.*</code>，转储输出被命名为<code>dir/foo.c.*</code>。</p>
+<p><strong>调整辅助和转储输出的位置和名称</strong>：可以通过<code>-dumpbase</code>、<code>-dumpbase-ext</code>、<code>-dumpdir</code>、<code>-save-temps=cwd</code>和<code>-save-temps=obj</code>选项调整辅助和转储输出的位置和名称。</p>
+<p>简而言之，-o选项不仅允许你指定主输出文件的名称和位置，它还间接影响了辅助输出和转储输出的命名和定位规则。这在管理大型项目和自定义构建过程时非常有用。</p>
+</li>
+</ul>
+</li>
+<li><p><code>-g</code>: 在可执行文件中生成标准调试信息。<code>-g</code>选项生成的调试信息会尽量适配不同的调试器，但主要还是以GDB（GNU Debugger）为主。</p>
+</li>
+<li><p><code>-ggdb</code> :为GDB调试器优化，生成最丰富的调试信息,包括一些特定于GDB的优化，以提供更好的调试体验。</p>
+</li>
+<li><p><code>-Wall</code>: 开启大多数编译器警告，有助于发现潜在的错误。</p>
+</li>
+<li><p><code>Werror</code>: 将所有的警告当作错误处理。</p>
+</li>
+<li><p><code>-D</code>: 定义宏，即在编译时从命令行向源代码中引入宏定义。 基本语法如下： <code>-Dname</code>或者<code>-Dname=definition</code>, 其中，name是要定义的宏的名称，definition是这个宏的值。如果没有指定definition，宏name的值默认为1。</p>
+<ul>
+<li>eg:  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Debug mode is enabled.\n&quot;</span>);</span><br><span class="line">    <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Debug mode is not enabled.\n&quot;</span>);</span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>  使用-D选项来定义DEBUG宏：<br>  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -DDEBUG <span class="built_in">example</span>.c -o <span class="built_in">example</span></span><br></pre></td></tr></table></figure><br>  这将使得编译的程序在运行时输出：“Debug mode is enabled.” 因为DEBUG宏在编译时被定义了，所以预处理器会包含#ifdef DEBUG和#endif之间的代码。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ffo
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://northffo.github.io/2024/03/14/gcc%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9/" title="gcc常用选项">https://northffo.github.io/2024/03/14/gcc常用选项/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN,en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/C-CPP-%E7%BC%96%E8%AF%91%E5%99%A8/" rel="tag"># C/CPP 编译器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/11/concat%E5%AE%8F%E6%B5%85%E6%9E%90/" rel="prev" title="concat宏浅析">
+                  <i class="fa fa-angle-left"></i> concat宏浅析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/14/%E8%BF%BD%E8%B8%AA%E4%B8%80%E4%B8%AAmain-c%E7%9A%84%E5%91%A8%E6%9C%9F/" rel="next" title="追踪一个main.c的周期">
+                  追踪一个main.c的周期 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">ffo</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<!-- <br /> -->
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<!-- <span id="times">载入时分秒...</span> -->
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("2/18/2024 18:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); 
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        // var times = document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "+hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Northffo/Northffo.github.io","repo_id":"R_kgDOLTOWzQ","category":"General","category_id":"DIC_kwDOLTOWzc4CdVaO","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
